@@ -24,8 +24,18 @@ public class StudentView implements Serializable
     public void init()
     {
         student = new Student() ;
-        student.setFirstName("Oana");
-    }
+        student.setFirstName("Oana-Maria");
+        student.setLastName("Gidei");
+        student.setGender(Student.Gender.FEMALE);
+//        student.setBirthDate(01,09,1996);
+        student.setEmail("gidei_oanamaria@yahoo.com");
+        student.setPhoneNumber("0743932246");
+        student.setFaculty(Student.Faculty.AUTOMATICA_CALCULATOARE_SI_ELECTRONICA);
+        Integer i = new Integer(2014);
+        student.setFacultyStartYear(i);
+     
+    } 
+
     public Student getStudent() {
         return student;
     }
@@ -33,5 +43,5 @@ public class StudentView implements Serializable
     public void setStudent(Student student) {
         this.student = student;
     }
-            
+    
 }
