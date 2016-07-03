@@ -15,8 +15,32 @@
 
         <h:body>
             <h:form>
-                <p:outputLabel value = "firstName: "/>
-                <p:outputLabel value ="#{studentView.student.firstName}"/>
+                <p:outputLabel value = "First Name: "/>
+                <p:inputText placeholder="First Name: " value="#{studentView.student.firstName}"/><br/>
+                
+              
+                <p:outputLabel value = "Last Name: "/>
+                <p:inputText placeholder="Last Name: " value ="#{studentView.student.lastName}"/><br/>
+                
+                <p:outputLabel for="select" value = "Gender: "/>
+                <p:selectOneMenu id="select">
+                    <f:selectItem itemLabel="female" itemValue="female"/>
+                    <f:selectItem itemLabel="male" itemValue="male"/>
+                </p:selectOneMenu><br/>   
+                <!--<p:inputText placeholder="Gender: " value ="#{studentView.student.gender}"/><br/>-->
+                
+                <p:outputLabel value = "Email: "/>
+                <p:inputText placeholder="Email: " value ="#{studentView.student.email}"/><br/>
+                
+                <p:outputLabel value = "Phone numbers: "/>
+                <p:inputText placeholder="Phone numbers: " value ="#{studentView.student.phoneNumbers}"/><br/>
+                
+                <p:outputLabel value = "Faculty: "/>
+                <p:inputText placeholder="Faculty: " value ="#{studentView.student.faculty}"/><br/>
+                
+                <p:outputLabel value = "Faculty start year: "/>
+                <p:inputText placeholder="Faculty start year: " value ="#{studentView.student.facultyStartYear}"/><br/>
+               
             </h:form>
 
         </h:body>
