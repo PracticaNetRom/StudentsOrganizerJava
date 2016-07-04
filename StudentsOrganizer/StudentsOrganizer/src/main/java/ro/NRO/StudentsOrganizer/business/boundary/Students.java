@@ -5,15 +5,33 @@
  */
 package ro.NRO.StudentsOrganizer.business.boundary;
 
+import java.io.Serializable;
+import java.time.Clock;
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import ro.NRO.StudentsOrganizer.business.entity.Student;
 
 /**
  *
  * @author practice6
  */
-public class Students {
-    
-  @PersistenceContext(name = "StudentsOrganizerPU")  
-  private EntityManager em;
+@Stateless
+public class Students implements Serializable {
+
+    @PersistenceContext(name = "StudentsOrganizerPU")
+    private EntityManager em;
+
+    public void saveStudent(Student student) {
+
+        em.persist(student);
+    }
+
+    public List<Student> getAll() {
+        TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s", Student.class);
+        return query.getResultList();
+    }
 }

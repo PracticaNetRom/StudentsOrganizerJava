@@ -6,9 +6,14 @@
 package ro.NRO.StudentsOrganizer.prezentation;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import ro.NRO.StudentsOrganizer.business.boundary.Students;
 import ro.NRO.StudentsOrganizer.business.entity.Student;
 
 /**
@@ -18,8 +23,13 @@ import ro.NRO.StudentsOrganizer.business.entity.Student;
 @Named
 @ViewScoped
 public class StudentView implements Serializable {
-    
+
+    @Inject
+    private Students studentBoundary;
+
     private Student student;
+    
+    private List<Student> students;
 
     public Student getStudent() {
         return student;
@@ -28,10 +38,29 @@ public class StudentView implements Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
-    
+
     @PostConstruct
-     public void init() {
+    public void init() {
         student = new Student();
-        student.setFirstName("Catalin");
+        students = studentBoundary.getAll();
     }
+
+    public void saveStudent() {
+        studentBoundary.saveStudent(student);
+        student = new Student();
+        
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Student Saved!!!",  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+    
+    
+   
 }

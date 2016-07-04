@@ -9,49 +9,88 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>Students Organizer</title>
             </f:facet>
         </h:head>
 
         <h:body>
 
-            <h:form>
-                 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                     
-                <p:outputLabel value="First Name: " ></p:outputLabel>
-                <p:inputText value="#{studentView.student.firstName}"></p:inputText>
-                
-                <p:outputLabel value="Last Name: " ></p:outputLabel>
-                <p:inputText value="#{studentView.student.firstName}"></p:inputText>
-                
-                <p:outputLabel for="console" value="Gender:" />
-                 <p:selectOneMenu id="console" value="#{selectOneMenuView.console}" style="width:125px">
-                     <f:selectItem itemLabel="Male" itemValue="Male" />
-                     <f:selectItem itemLabel="Female" itemValue="Female" />
-                 </p:selectOneMenu>
+            <h:form id="studentForm">
+                <p:growl id="growl" life="2000" />
+                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
 
-                <p:outputLabel value="Birth Date: " ></p:outputLabel>
-               <p:calendar value="#{calendarView.date1}" showOn="button" />
+                    <p:outputLabel value="First Name: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.firstName}"></p:inputText>
 
-                <p:outputLabel value="Email: " ></p:outputLabel>
-                <p:inputText></p:inputText>
-                
-                 <p:outputLabel value="Phone Number: " ></p:outputLabel>
-                 <p:inputText></p:inputText>
+                    <p:outputLabel value="Last Name: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.lastname}"></p:inputText>
 
-                 <p:outputLabel for="console" value="Faculty:" />
-                 <p:selectOneMenu  style="width:150px">
-                     <f:selectItem itemLabel="MATE_INFO" itemValue="MATE_INFO" />
-                     <f:selectItem itemLabel="AUTOMATICA" itemValue="AUTOMATICA" />
-                 </p:selectOneMenu>
-                
-                 <p:outputLabel value="Faculty Start Year: " ></p:outputLabel>
-                 <p:inputText></p:inputText>
-                 
-                 <p:commandButton value="Save" />
-                 
+                    <p:outputLabel  value="Gender:" />
+                    <p:selectOneMenu  value="#{studentView.student.gender}" style="width:125px">
+                        <f:selectItem itemLabel="Male" itemValue="MALE" />
+                        <f:selectItem itemLabel="Female" itemValue="FEMALE" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Birth Date: " ></p:outputLabel>
+                    <p:calendar value="#{studentView.student.birthDay}" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+
+                    <p:outputLabel value="Email: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.email}"></p:inputText>
+
+                    <p:outputLabel value="Phone Number: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.phoneNumber}"></p:inputText>
+
+                    <p:outputLabel  value="Faculty:" />
+                    <p:selectOneMenu value="#{studentView.student.faculty}"  style="width:150px">
+                        <f:selectItem itemLabel="MATE INFO" itemValue="MATE_INFO" />
+                        <f:selectItem itemLabel="AUTOMATICA" itemValue="AUTOMATICA" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Faculty Start Year: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.facultystartYear}"></p:inputText>
+                    <p:spacer/>
+                    <p:spacer/>
+                    <p:commandButton value="Save" actionListener="#{studentView.saveStudent()}" update="growl studentForm" />
+
                 </h:panelGrid>
-            </h:form>    
+            </h:form>  
+
+            <h:form id="tableForm">
+
+                <p:dataTable var="student" value="#{studentView.students}">
+                    <p:column headerText="First Name">
+                        <h:outputText value="#{student.firstName}" />
+                    </p:column>
+
+                    <p:column headerText="Last Name">
+                        <h:outputText value="#{student.lastname}" />
+                    </p:column>
+
+                    <p:column headerText="Gender">
+                        <h:outputText value="#{student.gender}" />
+                    </p:column>
+
+                    <p:column headerText="Birth Day">
+                        <h:outputText value="#{student.birthDay}" />
+                    </p:column>
+                    
+                    <p:column headerText="Email">
+                        <h:outputText value="#{student.email}" />
+                    </p:column>
+                    
+                    <p:column headerText="Phone Number">
+                        <h:outputText value="#{student.phoneNumber}" />
+                    </p:column>
+                    
+                    <p:column headerText="Faculty">
+                        <h:outputText value="#{student.faculty}" />
+                    </p:column>
+                    
+                    <p:column headerText="Faculty Start Year">
+                        <h:outputText value="#{student.facultystartYear}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
 
         </h:body>
 
