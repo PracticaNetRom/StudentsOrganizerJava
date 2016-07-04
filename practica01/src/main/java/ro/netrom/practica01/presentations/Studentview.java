@@ -24,7 +24,14 @@ public class Studentview implements Serializable{
     @PostConstruct
     public void imit() {
        student = new Student();
-       student.setFirstName("Dogaru Valentin");
+       student.setId(Long.MIN_VALUE); 
+       student.setFirstName("Valentin");
+       student.setLastName("Dogaru"); 
+       student.setGender(Student.Gender.MALE);
+       student.setEmail("valentin.f.dogaru@gmail.com");
+       student.setPhoneNumber("+40766756575");
+       student.setFaculty(Student.Faculty.AUTOMATICA);
+       student.setFacultyStartyear(Integer.SIZE);
     }
 
     public Student getStudent() {

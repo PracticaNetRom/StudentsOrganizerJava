@@ -15,11 +15,39 @@
 
         <h:body>
 
+             <h:form>
+                <p:outputLabel value="Id:"/>
+                <p:inputText value="#{studentview.student.id}"/>
+            </h:form>
             <h:form>
                 <p:outputLabel value="First Name:"/>
                 <p:inputText value="#{studentview.student.firstName}"/>
-            </h:form> 
-
+            </h:form>
+            <h:form>
+                <p:outputLabel value="Last Name:"/>
+                <p:inputText value="#{studentview.student.lastName}"/>
+            </h:form>
+            <h:form>
+                <p:outputLabel value="Gender:"/>
+                <p:inputText value="#{studentview.student.gender}"/>
+            </h:form>
+            <h:form>
+                <p:outputLabel value="Email:"/>
+                <p:inputText value="#{studentview.student.email}"/>
+            </h:form>
+            <h:form>
+                <p:outputLabel value="Phone Number:"/>
+                <p:inputText value="#{studentview.student.phoneNumber}"/>
+            </h:form>
+            <h:form>
+                <p:outputLabel value="Faculty:"/>
+                <p:inputText value="#{studentview.student.faculty}"/>
+            </h:form>
+            <h:form>
+                <p:outputLabel value="Faculty Start Year:"/>
+                <p:inputText value="#{studentview.student.facultyStartyear}"/>
+            </h:form>
+        
         </h:body>
 
     </f:view>
