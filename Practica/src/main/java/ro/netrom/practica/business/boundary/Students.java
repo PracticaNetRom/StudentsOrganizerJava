@@ -5,16 +5,32 @@
  */
 package ro.netrom.practica.business.boundary;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContexts;
+import ro.netrom.practica.business.entity.Student;
 
 /**
  *
  * @author practice8
  */
-public class Students 
-{
-    @PersistenceContext( name = "practicaPU")
+@Stateless
+public class Students implements Serializable{
+
+    @PersistenceContext(name = "practicaPU")
     private EntityManager em;
+
+    public void saveStudent(Student student) {
+        em.persist(student);
+    }
+
+    public List<Student> getStudentsList() {
+        List<Student> rezult = em
+                      .createQuery("Select a from Student a", Student.class)
+                      .getResultList();
+        return rezult;
+    }
 }

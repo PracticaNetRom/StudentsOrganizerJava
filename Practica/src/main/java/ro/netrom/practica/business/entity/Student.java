@@ -41,6 +41,8 @@ public class Student implements Serializable {
     @OneToMany
     private List<Event> events;
 
+
+
     public enum Gender {
 
         MALE, FEMALE
@@ -130,5 +132,7 @@ public class Student implements Serializable {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
+    
 
 }
