@@ -15,39 +15,78 @@
 
         <h:body>
 
-             <h:form>
-                <p:outputLabel value="Id:"/>
-                <p:inputText value="#{studentview.student.id}"/>
+            <h:form id="studentForm">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="First Name:"/>
+                    <p:inputText value="#{studentView.student.firstName}"/>
+
+                    <p:outputLabel value="Last Name:"/>
+                    <p:inputText value="#{studentView.student.lastName}"/>
+
+                    <p:outputLabel value="Gender:"/>
+                    <p:selectOneMenu id="gender" value="#{studentView.student.gender}" style="width:203px">
+                        <f:selectItem itemLabel="Male" itemValue="MALE"/>
+                        <f:selectItem itemLabel="Female" itemValue="FEMALE"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Birth Date:" />
+                    <p:calendar id="mask" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
+
+                    <p:outputLabel value="Email:"/>
+                    <p:inputText value="#{studentView.student.email}"/>
+
+                    <p:outputLabel value="Phone Number:"/>
+                    <p:inputText value="#{studentView.student.phoneNumber}"/>
+
+                    <p:outputLabel value="Faculty:"/>
+                    <p:selectOneMenu id="faculty" value="#{studentView.student.faculty}" style="width:203px">
+                        <f:selectItem itemLabel="Automatica" itemValue="AUTOMATICA"/>
+                        <f:selectItem itemLabel="Matematica-Informatica" itemValue="MATEMATICA_INFORMATICA"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Faculty Start Year:"/>
+                    <p:selectOneMenu id="facultyStartyear" value="#{studentView.student.facultyStartyear}" style="width:200px">
+                        <f:selectItems value="#{studentView.years}" />   
+                    </p:selectOneMenu>
+
+                </p:panelGrid>
+                <p:commandButton value="Save Student" id="save"  actionListener="#{studentView.saveStudent}" update="studentForm" />
+                <p:dataTable var="student" value="#{studentView.studentList}" id="dataForm">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{student.id}" />
+                    </p:column>
+
+                    <p:column headerText="First Name">
+                        <h:outputText value="#{student.firstName}" />
+                    </p:column>
+
+                    <p:column headerText="Last Name">
+                        <h:outputText value="#{student.lastName}" />
+                    </p:column>
+
+                    <p:column headerText="Gender">
+                        <h:outputText value="#{student.gender}" />
+                    </p:column>
+                    <p:column headerText="Birth Date">
+                        <h:outputText value="#{student.birthDate}" />
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{student.email}" />
+                    </p:column>
+                    <p:column headerText="Phone Number">
+                        <h:outputText value="#{student.phoneNumber}" />
+                    </p:column>
+                    <p:column headerText="Faculty Start Year">
+                        <h:outputText value="#{student.facultyStartyear}" />
+                    </p:column>
+                    <p:column headerText="Actions">
+                        <p:commandButton value="EDIT"/>
+                        <p:commandButton value="DELETE"/>
+                    </p:column>
+                </p:dataTable>
+
             </h:form>
-            <h:form>
-                <p:outputLabel value="First Name:"/>
-                <p:inputText value="#{studentview.student.firstName}"/>
-            </h:form>
-            <h:form>
-                <p:outputLabel value="Last Name:"/>
-                <p:inputText value="#{studentview.student.lastName}"/>
-            </h:form>
-            <h:form>
-                <p:outputLabel value="Gender:"/>
-                <p:inputText value="#{studentview.student.gender}"/>
-            </h:form>
-            <h:form>
-                <p:outputLabel value="Email:"/>
-                <p:inputText value="#{studentview.student.email}"/>
-            </h:form>
-            <h:form>
-                <p:outputLabel value="Phone Number:"/>
-                <p:inputText value="#{studentview.student.phoneNumber}"/>
-            </h:form>
-            <h:form>
-                <p:outputLabel value="Faculty:"/>
-                <p:inputText value="#{studentview.student.faculty}"/>
-            </h:form>
-            <h:form>
-                <p:outputLabel value="Faculty Start Year:"/>
-                <p:inputText value="#{studentview.student.facultyStartyear}"/>
-            </h:form>
-        
+
+
         </h:body>
 
     </f:view>
