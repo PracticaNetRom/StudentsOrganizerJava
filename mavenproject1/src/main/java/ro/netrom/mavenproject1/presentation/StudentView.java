@@ -6,6 +6,7 @@
 package ro.netrom.mavenproject1.presentation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -62,6 +63,8 @@ public class StudentView implements Serializable{
         date.setDate(27);
         date.setMonth(6);
         date.setYear(2016);
+              
         student.setEvents((List<Event>) event);*/
-    }
-}
+    };
+        
+ }

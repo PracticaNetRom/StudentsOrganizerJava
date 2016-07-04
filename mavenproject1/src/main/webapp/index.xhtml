@@ -26,9 +26,11 @@
                 <p:selectOneMenu id="select">
                     <f:selectItem itemLabel="female" itemValue="female"/>
                     <f:selectItem itemLabel="male" itemValue="male"/>
-                </p:selectOneMenu><br/>   
-                <!--<p:inputText placeholder="Gender: " value ="#{studentView.student.gender}"/><br/>-->
+                </p:selectOneMenu><br/>
                 
+                <p:outputLabel value = "Birth Date: "/>
+                <p:inputText placeholder="Birth Date: " value ="16/05/1995"/><br/>
+                                
                 <p:outputLabel value = "Email: "/>
                 <p:inputText placeholder="Email: " value ="#{studentView.student.email}"/><br/>
                 
@@ -40,6 +42,38 @@
                 
                 <p:outputLabel value = "Faculty start year: "/>
                 <p:inputText placeholder="Faculty start year: " value ="#{studentView.student.facultyStartYear}"/><br/>
+                
+                <p:outputLabel for="selectOne" value = "Type of event: "/>
+                <p:selectOneMenu id="selectOne">
+                    <f:selectItem itemLabel="practice" itemValue="practice"/>
+                    <f:selectItem itemLabel="internship" itemValue="internship"/>
+                    <f:selectItem itemLabel="NSA" itemValue="NSA"/>
+                </p:selectOneMenu><br/>  
+                
+                <p:outputLabel for="selectt" value = "Department: "/>
+                <p:selectOneMenu id="selectt">
+                    <f:selectItem itemLabel="Java" itemValue="Java"/>
+                    <f:selectItem itemLabel=".Net" itemValue=".Net"/>
+                </p:selectOneMenu><br/> 
+                
+                <h3>Task</h3>
+                <p:inputTextarea rows="2" cols="33" /><br/>
+                
+                <h3>Remarks</h3>
+                <p:inputTextarea rows="4" cols="33" /><br/>
+
+                
+                
+                
+                <p:button value="Save">
+                </p:button>
+                
+                <p:button value="Edit">
+                </p:button>
+                
+                <p:button value="Delete">
+                </p:button>
+
                
             </h:form>
 
