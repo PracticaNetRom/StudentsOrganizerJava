@@ -6,8 +6,10 @@
 package ro.netrom.practica_2016.business.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,7 +26,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Student implements Serializable {
-   
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,13 +40,18 @@ public class Student implements Serializable {
     private String phoneNumbers;
     private String faculty;
     private int facultyStartYear;
-    
-    @OneToMany
-    private List<Event> events;  
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Event> events;
 
     public enum Gender {
-    FEMALE, MALE
-}
+
+        FEMALE, MALE
+    }
+    
+    public Student(){
+        events = new ArrayList<>();
+    }
 
     public String getFirstName() {
         return firstName;

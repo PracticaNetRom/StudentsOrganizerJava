@@ -14,15 +14,96 @@
         </h:head>
 
         <h:body>
-            <h:form>
-                <p:outputLabel value="firstName"/>
-                <p:inputText value="#{studentView.student.firstName}"/>
-                <p:commandButton value="save"/>
-        </h:form>
+            <h:form id="studentForm">
+                <p:growl id="growl" showDetail="true" sticky="true" />  
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="First Name"/>
+                    <p:inputText value="#{studentView.student.firstName}"/>
+
+                    <p:outputLabel value="Last Name"/>
+                    <p:inputText value="#{studentView.student.lastName}"/>
 
 
-    </h:body>
+                    <p:outputLabel for="gender" value="Gender: " />
+                    <p:selectOneMenu id="gender" value="#{studentView.student.gender}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="female" itemValue="FEMALE" />
+                        <f:selectItem itemLabel="male" itemValue="MALE" />
+                    </p:selectOneMenu>
 
-</f:view>
+                    <p:outputLabel for="mask" value="Birthay date:" />
+                    <p:calendar id="mask" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
+
+                    <p:outputLabel value="Email"/>
+                    <p:inputText value="#{studentView.student.email}"/>
+
+                    <p:outputLabel for="phone" value="Phone:" />
+                    <p:inputMask id="phone"  value="#{studentView.student.phoneNumbers}"  mask="(999) 999-9999"/>
+
+                    <p:outputLabel value="Faculty"/>
+                    <p:inputText value="#{studentView.student.faculty}"/>
+
+                    <p:outputLabel value="Faculty start year"/>
+                    <p:inputText value="#{studentView.student.facultyStartYear}"/>
+
+
+                    <p:outputLabel value="Event: " />
+                    <p:selectOneMenu id="studentEvent" value="#{studentView.studentevent.eventName}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="NSA" itemValue="NSA" />
+                        <f:selectItem itemLabel="Practice" itemValue="PRACTICE" />
+                        <f:selectItem itemLabel="Internship" itemValue="INTERNSHIP" />
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Save"  actionListener="#{studentView.save()}" update="studentForm"/>
+                </p:panelGrid>
+            </h:form>
+
+            <p:dataTable var="students" value="#{studentView.student}">
+
+
+                <p:column headerText="First Name">
+                    <h:outputText value="#{students.firstName}" />
+                </p:column>
+
+                <p:column headerText="Last Name">
+                    <h:outputText value="#{students.lastName}" />
+                </p:column>
+
+                <p:column headerText="Gender">
+                    <h:outputText value="#{students.gender}" />
+                </p:column>
+
+                <p:column headerText="Phone number">
+                    <h:outputText value="#{students.phoneNumbers}" />
+                </p:column>
+
+                <p:column headerText="Birth date ">
+                    <h:outputText value="#{students.birthDate}" />
+                </p:column>
+
+                <p:column headerText="Email ">
+                    <h:outputText value="#{students.email}" />
+                </p:column>
+
+                <p:column headerText="Faculty">
+                    <h:outputText value="#{students.faculty}" />
+                </p:column>
+
+                <p:column headerText="First Name">
+                    <h:outputText value="#{students.facultyStartYear}" />
+                </p:column>
+
+                <p:column headerText="Events">
+                    <h:outputText value="#{students.events}" />
+                </p:column>
+
+
+            </p:dataTable>
+
+
+        </h:body>
+
+    </f:view>
 </html>
 

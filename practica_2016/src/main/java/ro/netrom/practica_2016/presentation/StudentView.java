@@ -6,19 +6,45 @@
 package ro.netrom.practica_2016.presentation;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.New;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
+
+import ro.netrom.practica_2016.business.boundary.Students;
+import ro.netrom.practica_2016.business.entity.Event;
 import ro.netrom.practica_2016.business.entity.Student;
-
-
 
 @Named
 @ViewScoped
-public class StudentView implements Serializable{
+public class StudentView implements Serializable {
+
     // form to add a student (formular)
+    @Inject
+    private Students studentBoundary;
     private Student student;
+    private Event studentevent;
+    private List<Student> students;
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public Event getStudentevent() {
+        return studentevent;
+    }
+
+    public void setStudentevent(Event studentevent) {
+        this.studentevent = studentevent;
+    }
 
     public Student getStudent() {
         return student;
@@ -27,9 +53,29 @@ public class StudentView implements Serializable{
     public void setStudent(Student student) {
         this.student = student;
     }
+
     @PostConstruct
-    public void init(){
+    public void init() {
         student = new Student();
-        student.setFirstName("Andreea"); 
+        studentevent = new Event();
+        students = studentBoundary.getStudents();
+
     }
+
+    public void save() {
+        student.getEvents().add(studentevent);
+        studentBoundary.saveStudent(student);
+        student = new Student();
+        studentevent = new Event();
+        context.addMessage(null, new FacesMessage("Message", "Success  "));
+    }
+
+    public void update() {
+        studentBoundary.updateStudent(student);
+    }
+
+    public void delete() {
+        studentBoundary.deleteStudent(student);
+    }
+
 }
