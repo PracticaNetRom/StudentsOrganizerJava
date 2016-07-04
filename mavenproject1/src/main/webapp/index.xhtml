@@ -3,7 +3,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"> 
 
     <f:view contentType="text/html">
         <h:head>
@@ -14,67 +15,104 @@
         </h:head>
 
         <h:body>
-            <h:form>
+            <h:form id="studentForm">
+                
+                <p:growl id="growl" showDetail="true" sticky="true" />  
+                
                 <p:outputLabel value = "First Name: "/>
                 <p:inputText placeholder="First Name: " value="#{studentView.student.firstName}"/><br/>
-                
-              
+
+
                 <p:outputLabel value = "Last Name: "/>
                 <p:inputText placeholder="Last Name: " value ="#{studentView.student.lastName}"/><br/>
-                
+
                 <p:outputLabel for="select" value = "Gender: "/>
-                <p:selectOneMenu id="select">
-                    <f:selectItem itemLabel="female" itemValue="female"/>
-                    <f:selectItem itemLabel="male" itemValue="male"/>
+                <p:selectOneMenu id="select" value="#{studentView.student.gender}">
+                    <f:selectItem itemLabel="-" itemValue=""/>
+                    <f:selectItem itemLabel="Female" itemValue="FEMALE"/>
+                    <f:selectItem itemLabel="Male" itemValue="MALE"/>
                 </p:selectOneMenu><br/>
-                
+
                 <p:outputLabel value = "Birth Date: "/>
-                <p:inputText placeholder="Birth Date: " value ="16/05/1995"/><br/>
-                                
+                <p:calendar id="mask" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" /><br/>
+
+
                 <p:outputLabel value = "Email: "/>
                 <p:inputText placeholder="Email: " value ="#{studentView.student.email}"/><br/>
-                
+
                 <p:outputLabel value = "Phone numbers: "/>
                 <p:inputText placeholder="Phone numbers: " value ="#{studentView.student.phoneNumbers}"/><br/>
-                
+
                 <p:outputLabel value = "Faculty: "/>
                 <p:inputText placeholder="Faculty: " value ="#{studentView.student.faculty}"/><br/>
-                
+
                 <p:outputLabel value = "Faculty start year: "/>
-                <p:inputText placeholder="Faculty start year: " value ="#{studentView.student.facultyStartYear}"/><br/>
-                
-                <p:outputLabel for="selectOne" value = "Type of event: "/>
-                <p:selectOneMenu id="selectOne">
-                    <f:selectItem itemLabel="practice" itemValue="practice"/>
-                    <f:selectItem itemLabel="internship" itemValue="internship"/>
-                    <f:selectItem itemLabel="NSA" itemValue="NSA"/>
-                </p:selectOneMenu><br/>  
-                
-                <p:outputLabel for="selectt" value = "Department: "/>
-                <p:selectOneMenu id="selectt">
-                    <f:selectItem itemLabel="Java" itemValue="Java"/>
-                    <f:selectItem itemLabel=".Net" itemValue=".Net"/>
-                </p:selectOneMenu><br/> 
-                
-                <h3>Task</h3>
-                <p:inputTextarea rows="2" cols="33" /><br/>
-                
-                <h3>Remarks</h3>
-                <p:inputTextarea rows="4" cols="33" /><br/>
+                <pe:inputNumber value ="#{studentView.student.facultyStartYear}" decimalPlaces="0" thousandSeparator="" maxlength="4" /><br/>
 
-                
-                
-                
-                <p:button value="Save">
-                </p:button>
-                
-                <p:button value="Edit">
-                </p:button>
-                
-                <p:button value="Delete">
-                </p:button>
+                <!--                <p:outputLabel for="selectOne" value = "Type of event: "/>
+                                <p:selectOneMenu id="selectOne" value="">
+                                    <f:selectItem itemLabel="practice" itemValue="practice"/>
+                                    <f:selectItem itemLabel="internship" itemValue="internship"/>
+                                    <f:selectItem itemLabel="NSA" itemValue="NSA"/>
+                                </p:selectOneMenu><br/>  -->
 
-               
+                <!--                <p:outputLabel for="selectt" value = "Department: "/>
+                                <p:selectOneMenu id="selectt">
+                                    <f:selectItem itemLabel="Java" itemValue="Java"/>
+                                    <f:selectItem itemLabel=".Net" itemValue=".Net"/>
+                                </p:selectOneMenu><br/> 
+                                
+                                <h3>Task</h3>
+                                <p:inputTextarea rows="2" cols="33" /><br/>
+                                
+                                <h3>Remarks</h3>
+                                <p:inputTextarea rows="4" cols="33" /><br/>-->
+
+
+                <p:commandButton value="Save" id="save" actionListener="#{studentView.saveStudent()}" update="studentForm"/>
+
+                <p:commandButton value="Edit" id="edit" actionListener="#{studentView.editStudent()}" update="studentForm" />
+
+                <p:commandButton value="Delete" id="delete" actionListener="#{studentView.deletestudent()}" update="studentForm" />
+
+
+                <p:dataTable var="student" value="#{studentView.students}">
+                <p:column headerText="First Name">
+                    <h:outputText value="#{student.firstName}" />
+                </p:column>
+
+                <p:column headerText="Last Name">
+                    <h:outputText value="#{student.lastName}" />
+                </p:column>
+
+                <p:column headerText="Birth Date">
+                    <h:outputText value="#{student.birthDate}" />
+                </p:column>
+
+                <p:column headerText="Email">
+                    <h:outputText value="#{student.email}" />
+                </p:column>
+                    
+                <p:column headerText="Gender">
+                    <h:outputText value="#{student.gender}" />
+                </p:column>
+                    
+                <p:column headerText="Phone Numbers">
+                    <h:outputText value="#{student.phoneNumbers}" />
+                </p:column>
+                
+                <p:column headerText="Faculty">
+                    <h:outputText value="#{student.faculty}" />
+                </p:column>    
+                
+                <p:column headerText="Faculty start year">
+                    <h:outputText value="#{student.facultyStartYear}" />
+                </p:column>    
+                    
+                    
+                </p:dataTable>
+
+
             </h:form>
 
         </h:body>
