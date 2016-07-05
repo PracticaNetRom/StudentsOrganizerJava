@@ -63,22 +63,31 @@ public class StudentView implements Serializable{
         this.students = students;
     }
  
-    public void  saveStudent(){
+    public void  save(){
         studentBoundary.saveStudent(student);
         students.add(student);
         student = new Student();
-        FacesContext context = FacesContext.getCurrentInstance();
-         
-        context.addMessage(null, new FacesMessage("Successful!") );
+        
+        FacesContext context = FacesContext.getCurrentInstance();         
+        context.addMessage(null, new FacesMessage("Student successfully added!") );
 
     }
     
-     public void  editStudent(){
+     public void  edit(){
         studentBoundary.editStudent(student);
+        student = new Student();
+        
+        FacesContext context = FacesContext.getCurrentInstance();         
+        context.addMessage(null, new FacesMessage("Student edited!") );
     }
      
-      public void  deleteStudent(){
+      public void  delete(){
         studentBoundary.deleteStudent(student);
+        students.remove(student);
+        student = new Student();
+        
+        FacesContext context = FacesContext.getCurrentInstance();         
+        context.addMessage(null, new FacesMessage("Student deleted!") );        
     }
         
  }

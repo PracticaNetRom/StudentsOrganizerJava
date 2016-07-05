@@ -29,11 +29,25 @@ public class Students implements Serializable{
     }
     
     public void editStudent(Student student){
+        Student aux = em.find(Student.class, student.getId());
+         if(aux != null){
+            aux.setFirstName(student.getFirstName());
+            aux.setLastName(student.getLastName());
+            aux.setBirthDate(student.getBirthDate());
+            aux.setEmail(student.getEmail());
+            aux.setGender(student.getGender());
+            aux.setPhoneNumbers(student.getPhoneNumbers());
+            aux.setFaculty(student.getFaculty());
+            aux.setFacultyStartYear(student.getFacultyStartYear());
+        }    
         
     }
     
     public void deleteStudent(Student student){
-        em.remove(student);
+        Student aux = em.find(Student.class, student.getId());
+         if(aux != null){
+            em.remove(aux);
+        }        
     }
     
     public List<Student> getStudents(){

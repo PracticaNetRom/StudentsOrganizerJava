@@ -69,14 +69,19 @@
                                 <p:inputTextarea rows="4" cols="33" /><br/>-->
 
 
-                <p:commandButton value="Save" id="save" actionListener="#{studentView.saveStudent()}" update="studentForm"/>
+                <p:commandButton value="Save" id="save" actionListener="#{studentView.save()}" update="studentForm"/>
 
-                <p:commandButton value="Edit" id="edit" actionListener="#{studentView.editStudent()}" update="studentForm" />
+                <p:commandButton value="Edit" id="edit" actionListener="#{studentView.edit()}" update="studentForm" />
 
-                <p:commandButton value="Delete" id="delete" actionListener="#{studentView.deletestudent()}" update="studentForm" />
+                <p:commandButton value="Delete" id="delete" actionListener="#{studentView.delete()}" update="studentForm" />
 
 
                 <p:dataTable var="student" value="#{studentView.students}">
+                
+                <p:column headerText="Index">
+                    <h:outputText value="#{student.id}" />
+                </p:column>
+                    
                 <p:column headerText="First Name">
                     <h:outputText value="#{student.firstName}" />
                 </p:column>
