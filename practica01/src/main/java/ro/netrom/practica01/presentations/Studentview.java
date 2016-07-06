@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,15 +26,15 @@ import ro.netrom.practica01.bussnies.entity.Student;
 public class StudentView implements Serializable {
 
     @Inject
-    private Students students;
+    private Students studentBoundary;
     private Student student;
-    private List<Student> allstudents;
+    private List<Student> allStudents;
+   
 
     @PostConstruct
     public void init() {
         student = new Student();
-        allstudents = students.getAllStudents();
-        
+        allStudents = studentBoundary.getAllStudents();
     }
 
     public Student getStudent() {
@@ -52,16 +54,32 @@ public class StudentView implements Serializable {
     }
 
     public void saveStudent() {
-        students.studentSave(student);
+        if (student.getId() == null) {
+            studentBoundary.studentSave(student);
+            allStudents.add(student);
+        }
+        else {
+            studentBoundary.studentEdit(student);
+        }
+        student = new Student();
+        FacesContext context = FacesContext.getCurrentInstance();
+         
+        context.addMessage(null, new FacesMessage("Successful",  null) ); 
+
+    }
+    
+    public void deleteStudent() {
+        studentBoundary.studentDelete(student);
+        allStudents.remove(student);
         student = new Student();
     }
 
-    public List<Student> getAllstudents() {
-        return allstudents;
+    public List<Student> getAllStudents() {
+        return allStudents;
     }
 
-    public void setAllstudents(List<Student> allstudents) {
-        this.allstudents = allstudents;
+    public void setAllStudents(List<Student> allStudents) {
+        this.allStudents = allStudents;
     }
-    
+
 }
