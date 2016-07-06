@@ -26,6 +26,18 @@ public class Students implements Serializable{
     public void saveStudent(Student student) {
         em.persist(student);
     }
+    public void deleteStudent(Student student)
+    {
+        
+        em.remove(em.merge(student));
+       
+    }
+     public void editStudent(Student student)
+    {
+        
+        em.merge(student);
+       
+    }
 
     public List<Student> getStudentsList() {
         List<Student> rezult = em

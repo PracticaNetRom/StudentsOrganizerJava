@@ -9,12 +9,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import ro.netrom.practica.business.boundary.Students;
 import ro.netrom.practica.business.entity.Student;
+import ro.netrom.practica.business.entity.Student_;
 
 /**
  *
@@ -28,7 +31,7 @@ public class StudentView implements Serializable {
     private Students students;
     private Student student;
     private List<Student> studentsList;
-    private Object response;
+    private String message;
 
     @PostConstruct
     public void init() {
@@ -37,10 +40,23 @@ public class StudentView implements Serializable {
     }
 
     public void saveStudent() {
-        students.saveStudent(student);
+
+        if (student.getId() == null) {
+            students.saveStudent(student);
+            studentsList.add(student);
+
+        } else {
+            students.editStudent(student);
+        }
         student = new Student();
     }
-    
+
+    public void deleteStudent() {
+        students.deleteStudent(student);
+        studentsList.remove(student);
+
+    }
+
     public Student getStudent() {
         return student;
     }
@@ -57,12 +73,20 @@ public class StudentView implements Serializable {
         this.studentsList = studentsList;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public List<Integer> getYears() {
         ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 2000; i <= 2020; i++) {
             list.add(i);
         }
         return list;
-    }    
+    }
 
 }
