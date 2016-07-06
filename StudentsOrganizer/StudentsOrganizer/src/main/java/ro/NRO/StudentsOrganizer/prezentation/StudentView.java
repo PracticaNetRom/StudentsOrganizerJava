@@ -43,10 +43,12 @@ public class StudentView implements Serializable {
     public void init() {
         student = new Student();
         students = studentBoundary.getAll();
+        
     }
 
     public void saveStudent() {
         studentBoundary.saveStudent(student);
+        students.add(student);
         student = new Student();
         
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Student Saved!!!",  null);

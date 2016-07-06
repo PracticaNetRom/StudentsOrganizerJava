@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+        <p:dialog  id="dialogS" widgetVar="dialogS" header="New Student" showEffect="clip" hideEffect="clip">
+
+            <h1 align="center" >  <img  src="Image/Student-3-icon.png" width="70" height="70" alt="Student-3-icon" /></h1>
+            <h:form id="studentForm">
+                <p:growl id="growl" life="2000" />
+                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+
+                    <p:outputLabel value="First Name: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.firstName}"></p:inputText>
+
+                    <p:outputLabel value="Last Name: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.lastname}"></p:inputText>
+
+                    <p:outputLabel  value="Gender:" />
+                    <p:selectOneMenu  value="#{studentView.student.gender}" style="width:125px">
+                        <f:selectItem itemLabel="Male" itemValue="MALE" />
+                        <f:selectItem itemLabel="Female" itemValue="FEMALE" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Birth Date: " ></p:outputLabel>
+                    <p:calendar value="#{studentView.student.birthDay}" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+
+                    <p:outputLabel value="Email: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.email}"></p:inputText>
+
+                    <p:outputLabel value="Phone Number: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.phoneNumber}"></p:inputText>
+
+                    <p:outputLabel  value="Faculty:" />
+                    <p:selectOneMenu value="#{studentView.student.faculty}"  style="width:150px">
+                        <f:selectItem itemLabel="MATE INFO" itemValue="MATE_INFO" />
+                        <f:selectItem itemLabel="AUTOMATICA" itemValue="AUTOMATICA" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Faculty Start Year: " ></p:outputLabel>
+                    <p:inputText value="#{studentView.student.facultystartYear}"></p:inputText>
+                    <p:spacer/>
+                    <p:spacer/>
+                    <p:commandButton value="Save" actionListener="#{studentView.saveStudent()}" update="growl studentForm :tableForm"
+                                     oncomplete="PF('dialogS').hide();"/>
+
+                </h:panelGrid>
+            </h:form>  
+        </p:dialog>
+    </ui:composition>
+
+</html>
+
