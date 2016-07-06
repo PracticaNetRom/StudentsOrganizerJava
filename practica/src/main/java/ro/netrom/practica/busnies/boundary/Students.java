@@ -17,7 +17,7 @@ import ro.netrom.practica.busnies.entity.Student;
  * @author practice10
  */
 @Stateless
-public class Students implements Serializable{
+public class Students implements Serializable {
 
     @PersistenceContext(name = "practicaPU")
     private EntityManager em;
@@ -26,10 +26,18 @@ public class Students implements Serializable{
         em.persist(student);
     }
 
+    public void studentEdit(Student student) {
+        em.merge(student);
+           }
+
+    public void studentDelete(Student student) {
+        em.remove(em.merge(student));
+    }
+
     public List<Student> getAll() {
         List<Student> results = em
-                      .createQuery("Select a from Student a", Student.class)
-                      .getResultList();
+                .createQuery("Select a from Student a", Student.class)
+                .getResultList();
         return results;
     }
 

@@ -22,15 +22,16 @@ import ro.netrom.practica.busnies.entity.Student;
 @Named
 @ViewScoped
 public class Studentview implements Serializable {
+
     @Inject
     private Students students;
     private Student student;
-    private List <Student> allstudents;
+    private List<Student> allStudents;
 
     @PostConstruct
     public void init() {
         student = new Student();
-allstudents=students.getAll();
+        allStudents = students.getAll();
     }
 
     public Student getStudent() {
@@ -50,16 +51,44 @@ allstudents=students.getAll();
     }
 
     public void saveStudent() {
-        students.studentSave(student);
+        if (student.getId() == null) {
+            students.studentSave(student);
+            allStudents.add(student);
+            
+        }
+               else{
+                 students.studentEdit(student);
+                }
+         student = new Student();
+    }
+
+
+
+    public void deleteStudent() {
+        
+        students.studentDelete(student);
+        allStudents.remove(student);
         student = new Student();
     }
 
-    public List<Student> getAllstudents() {
-        return allstudents;
+    public List<Student> getAllStudents() {
+        return allStudents;
     }
 
-    public void setAllstudents(List<Student> allstudents) {
-        this.allstudents = allstudents;
+    public void setAllStudents(List<Student> allStudents) {
+        this.allStudents = allStudents;
     }
+public class GrowlView {
+     
+    private String message;
 
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    
+}
 }
