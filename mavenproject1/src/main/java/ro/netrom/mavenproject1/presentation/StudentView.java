@@ -29,8 +29,7 @@ public class StudentView implements Serializable {
     private Students studentBoundary;
 
     private Student selectedStudent;
-    private Event event;
-
+    
     private List<Student> students;
 
     @PostConstruct
@@ -39,14 +38,7 @@ public class StudentView implements Serializable {
         students = studentBoundary.getStudents();
     }
 
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
+    
     public Student getSelectedStudent() {
         return selectedStudent;
     }

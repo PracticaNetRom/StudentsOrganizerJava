@@ -49,26 +49,6 @@
                 <p:outputLabel value = "Faculty start year: "/>
                 <pe:inputNumber value ="#{studentView.selectedStudent.facultyStartYear}" decimalPlaces="0" thousandSeparator="" maxlength="4" /><br/>
 
-                <!--                <p:outputLabel for="selectOne" value = "Type of event: "/>
-                                <p:selectOneMenu id="selectOne" value="">
-                                    <f:selectItem itemLabel="practice" itemValue="practice"/>
-                                    <f:selectItem itemLabel="internship" itemValue="internship"/>
-                                    <f:selectItem itemLabel="NSA" itemValue="NSA"/>
-                                </p:selectOneMenu><br/>  -->
-
-                <!--                <p:outputLabel for="selectt" value = "Department: "/>
-                                <p:selectOneMenu id="selectt">
-                                    <f:selectItem itemLabel="Java" itemValue="Java"/>
-                                    <f:selectItem itemLabel=".Net" itemValue=".Net"/>
-                                </p:selectOneMenu><br/> 
-                                
-                                <h3>Task</h3>
-                                <p:inputTextarea rows="2" cols="33" /><br/>
-                                
-                                <h3>Remarks</h3>
-                                <p:inputTextarea rows="4" cols="33" /><br/>-->
-
-
                 <p:commandButton value="Save" id="save" 
                                  actionListener="#{studentView.save()}" 
                                  update="studentForm :studentsDTForm"/>
@@ -118,7 +98,7 @@
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.selectedStudent}"/>
                         </p:commandButton>
                     </p:column>                    
-                    
+
                 </p:dataTable>
 
 
