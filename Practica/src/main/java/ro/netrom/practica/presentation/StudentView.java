@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,6 +28,7 @@ public class StudentView implements Serializable {
     private Students students;
     private Student student;
     private List<Student> studentsList;
+    private Object response;
 
     @PostConstruct
     public void init() {
@@ -38,7 +40,7 @@ public class StudentView implements Serializable {
         students.saveStudent(student);
         student = new Student();
     }
-
+    
     public Student getStudent() {
         return student;
     }
@@ -61,6 +63,6 @@ public class StudentView implements Serializable {
             list.add(i);
         }
         return list;
-    }
+    }    
 
 }
