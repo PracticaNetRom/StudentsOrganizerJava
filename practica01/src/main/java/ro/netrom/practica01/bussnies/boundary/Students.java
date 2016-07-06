@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -36,10 +36,10 @@ public class Students implements Serializable {
     }
 
     public List<Student> getAllStudents() {
-        final String query = "SELECT s from Student s";       
-    TypedQuery<Student> query1 = em.createQuery(query, Student.class);
-    final List<Student> students = query1.getResultList();
-    return students;
+        final String query = "SELECT s from Student s";
+        TypedQuery<Student> query1 = em.createQuery(query, Student.class);
+        final List<Student> students = query1.getResultList();
+        return students;
     }
-
+    
 }
