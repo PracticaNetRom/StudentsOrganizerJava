@@ -32,7 +32,7 @@ public class Students implements Serializable {
     }
 
     public void deleteStudent(Student student) {
-        em.remove(student);
+        em.remove(em.merge(student));
     }
 
     public List<Student> getStudents() {

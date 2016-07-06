@@ -38,7 +38,7 @@
                     <p:inputText value="#{studentView.student.email}"/>
 
                     <p:outputLabel for="phone" value="Phone:" />
-                    <p:inputMask id="phone"  value="#{studentView.student.phoneNumbers}"  mask="(999) 999-9999"/>
+                    <p:inputMask id="phone"  value="#{studentView.student.phoneNumbers}"  mask="(9999) 999-999"/>
 
                     <p:outputLabel value="Faculty"/>
                     <p:inputText value="#{studentView.student.faculty}"/>
@@ -55,50 +55,73 @@
                         <f:selectItem itemLabel="Internship" itemValue="INTERNSHIP" />
                     </p:selectOneMenu>
 
-                    <p:commandButton value="Save"  actionListener="#{studentView.save()}" update="studentForm" />
+                    <p:commandButton value="Save"  actionListener="#{studentView.save()}" update=":studentForm :datatableForm" />
                 </p:panelGrid>
             </h:form>
 
-            <p:dataTable var="students" value="#{studentView.students}" id="studentTable" >
+            <h:form id="datatableForm">
+                <p:growl id="message" showDetail="true" />
+                <p:dataTable id="studentTable" var="student" value="#{studentView.students}"  
+                             rowKey="#{student.id}" selection="#{studentView.student}" selectionMode="single">
 
 
-                <p:column headerText="First Name">
-                    <h:outputText value="#{students.firstName}" />
-                </p:column>
+                    <!--<p:column selectionMode="single" style="width:16px;text-align:center"/>-->
+                    <p:column headerText="First Name">
+                        <h:outputText value="#{student.firstName}" />
+                    </p:column>
 
-                <p:column headerText="Last Name">
-                    <h:outputText value="#{students.lastName}" />
-                </p:column>
+                    <p:column headerText="Last Name">
+                        <h:outputText value="#{student.lastName}" />
+                    </p:column>
 
-                <p:column headerText="Gender">
-                    <h:outputText value="#{students.gender}" />
-                </p:column>
+                    <p:column headerText="Gender">
+                        <h:outputText value="#{student.gender}" />
+                    </p:column>
 
-                <p:column headerText="Phone number">
-                    <h:outputText value="#{students.phoneNumbers}" />
-                </p:column>
+                    <p:column headerText="Phone number">
+                        <h:outputText value="#{student.phoneNumbers}" />
+                    </p:column>
 
-                <p:column headerText="Birth date ">
-                    <h:outputText value="#{students.birthDate}" />
-                </p:column>
+                    <p:column headerText="Birth date ">
+                        <h:outputText value="#{student.birthDate}" />
+                    </p:column>
 
-                <p:column headerText="Email ">
-                    <h:outputText value="#{students.email}" />
-                </p:column>
+                    <p:column headerText="Email ">
+                        <h:outputText value="#{student.email}" />
+                    </p:column>
 
-                <p:column headerText="Faculty">
-                    <h:outputText value="#{students.faculty}" />
-                </p:column>
+                    <p:column headerText="Faculty">
+                        <h:outputText value="#{student.faculty}" />
+                    </p:column>
 
-                <p:column headerText="Faculty start year">
-                    <h:outputText value="#{students.facultyStartYear}" />
-                </p:column>
+                    <p:column headerText="Faculty start year">
+                        <h:outputText value="#{student.facultyStartYear}" />
+                    </p:column>
 
-                
-            </p:dataTable>
 
-                    <p:commandButton value="Delete"  actionListener="#{studentView.delete()}" update="studentTable"/>
-                    <p:commandButton value="Update"  actionListener="#{studentView.update()}" update="studentTable"/>
+                    <f:facet name="footer">
+
+
+
+                        <p:commandButton update=":studentForm:growl :datatableForm" value="Delete" action="#{studentView.delete()}" >
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+
+
+                        
+                        <p:commandButton update=":datatableForm :studentForm"  value="Update" actionListener="#{studentView.update()}" />
+
+                    </f:facet>
+
+                </p:dataTable>
+            </h:form>
+<!--            <p:commandButton value="Delete"  actionListener="#{studentView.delete()}" update=":studentTable"/>
+            <p:commandButton value="Update"  actionListener="#{studentView.update()}" update=":studentTable"/>-->
 
         </h:body>
 

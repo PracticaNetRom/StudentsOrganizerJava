@@ -8,13 +8,11 @@ package ro.netrom.practica_2016.presentation;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.New;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.context.RequestContext;
 import ro.netrom.practica_2016.business.boundary.Students;
 import ro.netrom.practica_2016.business.entity.Event;
 import ro.netrom.practica_2016.business.entity.Student;
@@ -26,13 +24,21 @@ public class StudentView implements Serializable {
     // form to add a student (formular)
     @Inject
     private Students studentBoundary;
+
     private Student student;
+    private List<Student> selectedStudents;
 
     private Event studentevent;
     private List<Student> students;
 
-        
-    
+    public List<Student> getSelectedStudents() {
+        return selectedStudents;
+    }
+
+    public void setSelectedStudents(List<Student> selectedStudents) {
+        this.selectedStudents = selectedStudents;
+    }
+
     public List<Student> getStudents() {
         return students;
     }
@@ -66,23 +72,35 @@ public class StudentView implements Serializable {
     }
 
     public void save() {
-        student.getEvents().add(studentevent);
-        studentBoundary.saveStudent(student);
-        students.add(student);
+        if (student.getId() == null) {
+            student.getEvents().add(studentevent);
+            studentBoundary.saveStudent(student);
+            students.add(student);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Student successfully added  "));
+        } else {
+            studentBoundary.updateStudent(student);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Student successfully edited  "));
+        }
+
         student = new Student();
         studentevent = new Event();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Student successfully added  "));
+
     }
 
     public void update() {
         studentBoundary.updateStudent(student);
     }
 
-    public void delete(Student student) {
+    /**
+     *
+     */
+    public void delete() {
         studentBoundary.deleteStudent(student);
-       
-        
+        students.remove(student);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Student successfully deleted  "));
     }
 
 }

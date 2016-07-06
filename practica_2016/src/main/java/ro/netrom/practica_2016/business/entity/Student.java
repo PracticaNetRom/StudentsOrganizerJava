@@ -124,4 +124,14 @@ public class Student implements Serializable {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
 }
