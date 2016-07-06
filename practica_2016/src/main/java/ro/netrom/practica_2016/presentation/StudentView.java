@@ -10,11 +10,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.New;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
-
 import ro.netrom.practica_2016.business.boundary.Students;
 import ro.netrom.practica_2016.business.entity.Event;
 import ro.netrom.practica_2016.business.entity.Student;
@@ -27,9 +27,12 @@ public class StudentView implements Serializable {
     @Inject
     private Students studentBoundary;
     private Student student;
+
     private Event studentevent;
     private List<Student> students;
 
+        
+    
     public List<Student> getStudents() {
         return students;
     }
@@ -65,17 +68,21 @@ public class StudentView implements Serializable {
     public void save() {
         student.getEvents().add(studentevent);
         studentBoundary.saveStudent(student);
+        students.add(student);
         student = new Student();
         studentevent = new Event();
-        context.addMessage(null, new FacesMessage("Message", "Success  "));
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Student successfully added  "));
     }
 
     public void update() {
         studentBoundary.updateStudent(student);
     }
 
-    public void delete() {
+    public void delete(Student student) {
         studentBoundary.deleteStudent(student);
+       
+        
     }
 
 }

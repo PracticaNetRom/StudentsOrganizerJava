@@ -55,11 +55,11 @@
                         <f:selectItem itemLabel="Internship" itemValue="INTERNSHIP" />
                     </p:selectOneMenu>
 
-                    <p:commandButton value="Save"  actionListener="#{studentView.save()}" update="studentForm"/>
+                    <p:commandButton value="Save"  actionListener="#{studentView.save()}" update="studentForm" />
                 </p:panelGrid>
             </h:form>
 
-            <p:dataTable var="students" value="#{studentView.student}">
+            <p:dataTable var="students" value="#{studentView.students}" id="studentTable" >
 
 
                 <p:column headerText="First Name">
@@ -90,17 +90,15 @@
                     <h:outputText value="#{students.faculty}" />
                 </p:column>
 
-                <p:column headerText="First Name">
+                <p:column headerText="Faculty start year">
                     <h:outputText value="#{students.facultyStartYear}" />
                 </p:column>
 
-                <p:column headerText="Events">
-                    <h:outputText value="#{students.events}" />
-                </p:column>
-
-
+                
             </p:dataTable>
 
+                    <p:commandButton value="Delete"  actionListener="#{studentView.delete()}" update="studentTable"/>
+                    <p:commandButton value="Update"  actionListener="#{studentView.update()}" update="studentTable"/>
 
         </h:body>
 
