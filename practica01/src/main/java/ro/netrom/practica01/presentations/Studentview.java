@@ -6,32 +6,33 @@
 package ro.netrom.practica01.presentations;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import ro.netrom.practica01.bussnies.boundary.Students;
 import ro.netrom.practica01.bussnies.entity.Student;
-
-
 
 /**
  *
- * @author practice11
+ * @author practice01
  */
 @Named
 @ViewScoped
-public class Studentview implements Serializable{
+public class StudentView implements Serializable {
+
+    @Inject
+    private Students students;
     private Student student;
+    private List<Student> allstudents;
+
     @PostConstruct
-    public void imit() {
-       student = new Student();
-       student.setId(Long.MIN_VALUE); 
-       student.setFirstName("Valentin");
-       student.setLastName("Dogaru"); 
-       student.setGender(Student.Gender.MALE);
-       student.setEmail("valentin.f.dogaru@gmail.com");
-       student.setPhoneNumber("+40766756575");
-       student.setFaculty(Student.Faculty.AUTOMATICA);
-       student.setFacultyStartyear(Integer.SIZE);
+    public void init() {
+        student = new Student();
+        allstudents = students.getAllStudents();
+        
     }
 
     public Student getStudent() {
@@ -41,6 +42,26 @@ public class Studentview implements Serializable{
     public void setStudent(Student student) {
         this.student = student;
     }
-    
+
+    public List<Integer> getYears() {
+        ArrayList<Integer> lista = new ArrayList<>();
+        for (int i = 2010; i < 2030; i++) {
+            lista.add(i);
+        }
+        return lista;
+    }
+
+    public void saveStudent() {
+        students.studentSave(student);
+        student = new Student();
+    }
+
+    public List<Student> getAllstudents() {
+        return allstudents;
+    }
+
+    public void setAllstudents(List<Student> allstudents) {
+        this.allstudents = allstudents;
+    }
     
 }
