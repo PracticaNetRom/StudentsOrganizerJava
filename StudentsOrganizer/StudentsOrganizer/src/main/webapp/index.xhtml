@@ -3,7 +3,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <f:view contentType="text/html">
         <h:head>
@@ -13,83 +13,165 @@
             </f:facet>
         </h:head>
 
-        <h:body>
+        <h:body style="background-color: activecaption">
 
-            <h:form id="studentForm">
-                <p:growl id="growl" life="2000" />
-                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+            <h1 align="left" > 
+                <h:graphicImage  value="Image/logo.png" width="150" height="150" /> 
+                <h:graphicImage   value="Image/logo1.png" width="150" height="150" style="alignment-adjust: central" /> 
+                <h1 align="center" style="background-color: #d5da32">Students Organizer</h1>
+            </h1>
 
-                    <p:outputLabel value="First Name: " ></p:outputLabel>
-                    <p:inputText value="#{studentView.student.firstName}"></p:inputText>
+            <form>
+                <p:growl id="messages" showDetail="true" />
+                <p:schedule  id="schedule" value="#{scheduleView.eventModel}"  style="width:600px"  widgetVar="myschedule" timeZone="GMT+2">
 
-                    <p:outputLabel value="Last Name: " ></p:outputLabel>
-                    <p:inputText value="#{studentView.student.lastname}"></p:inputText>
+                    <p:ajax event="dateSelect" listener="#{eventView.onDateSelect}"   oncomplete="PF('dialogE').show();" />
+                    <p:ajax event="eventSelect" listener="#{eventView.onEventSelect}"  oncomplete="PF('dialogE').show();" />
+                    <p:ajax event="eventMove" listener="#{eventView.onEventMove}" update="messages" />
+                    <p:ajax event="eventResize" listener="#{eventView.onEventResize()}" update="messages"  />            
+                </p:schedule>
+            </form>
 
-                    <p:outputLabel  value="Gender:" />
-                    <p:selectOneMenu  value="#{studentView.student.gender}" style="width:125px">
-                        <f:selectItem itemLabel="Male" itemValue="MALE" />
-                        <f:selectItem itemLabel="Female" itemValue="FEMALE" />
-                    </p:selectOneMenu>
 
-                    <p:outputLabel value="Birth Date: " ></p:outputLabel>
-                    <p:calendar value="#{studentView.student.birthDay}" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
-
-                    <p:outputLabel value="Email: " ></p:outputLabel>
-                    <p:inputText value="#{studentView.student.email}"></p:inputText>
-
-                    <p:outputLabel value="Phone Number: " ></p:outputLabel>
-                    <p:inputText value="#{studentView.student.phoneNumber}"></p:inputText>
-
-                    <p:outputLabel  value="Faculty:" />
-                    <p:selectOneMenu value="#{studentView.student.faculty}"  style="width:150px">
-                        <f:selectItem itemLabel="MATE INFO" itemValue="MATE_INFO" />
-                        <f:selectItem itemLabel="AUTOMATICA" itemValue="AUTOMATICA" />
-                    </p:selectOneMenu>
-
-                    <p:outputLabel value="Faculty Start Year: " ></p:outputLabel>
-                    <p:inputText value="#{studentView.student.facultystartYear}"></p:inputText>
+            <h:form>
+                <h:panelGrid  columns="2" >
                     <p:spacer/>
                     <p:spacer/>
-                    <p:commandButton value="Save" actionListener="#{studentView.saveStudent()}" update="growl studentForm" />
-
+                    <p:spacer/>
+                    <p:spacer/>
+                    <!-- <img src="Image/Student-3-icon.png" width="50" height="55" alt="Student-3-icon"/>
+                    <p:commandButton   value="New Student" onclick="PF('dialogS').show();"></p:commandButton>
+                     <img align="" src="Image/Calendar-icon.png" width="48" height="48" alt="Calendar-icon"/>
+                      <p:commandButton  value="New Event" onclick="PF('dialogE').show();"></p:commandButton>-->
                 </h:panelGrid>
-            </h:form>  
+            </h:form>
+
+
+            <p:dialog  id="dialogS" widgetVar="dialogS" header="New Student" showEffect="clip" hideEffect="clip">
+
+                <h1 align="center" >  <img  src="Image/Student-3-icon.png" width="70" height="70" alt="Student-3-icon" /></h1>
+                <h:form id="studentForm">
+                    <p:growl id="growl" life="2000" />
+                    <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+
+                        <p:outputLabel value="First Name: " ></p:outputLabel>
+                        <p:inputText value="#{studentView.student.firstName}"></p:inputText>
+
+                        <p:outputLabel value="Last Name: " ></p:outputLabel>
+                        <p:inputText value="#{studentView.student.lastname}"></p:inputText>
+
+                        <p:outputLabel  value="Gender:" />
+                        <p:selectOneMenu  value="#{studentView.student.gender}" style="width:125px">
+                            <f:selectItem itemLabel="Male" itemValue="MALE" />
+                            <f:selectItem itemLabel="Female" itemValue="FEMALE" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Birth Date: " ></p:outputLabel>
+                        <p:calendar value="#{studentView.student.birthDay}" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+
+                        <p:outputLabel value="Email: " ></p:outputLabel>
+                        <p:inputText value="#{studentView.student.email}"></p:inputText>
+
+                        <p:outputLabel value="Phone Number: " ></p:outputLabel>
+                        <p:inputText value="#{studentView.student.phoneNumber}"></p:inputText>
+
+                        <p:outputLabel  value="Faculty:" />
+                        <p:selectOneMenu value="#{studentView.student.faculty}"  style="width:150px">
+                            <f:selectItem itemLabel="MATE INFO" itemValue="MATE_INFO" />
+                            <f:selectItem itemLabel="AUTOMATICA" itemValue="AUTOMATICA" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Faculty Start Year: " ></p:outputLabel>
+                        <p:inputText value="#{studentView.student.facultystartYear}"></p:inputText>
+                        <p:spacer/>
+                        <p:spacer/>
+                        <p:commandButton value="Save" actionListener="#{studentView.saveStudent()}" update="growl studentForm" />
+
+                    </h:panelGrid>
+                </h:form>  
+            </p:dialog>
+
+            <p:dialog id="dialogE"  widgetVar="dialogE" header="New Event" showEffect="clip" hideEffect="clip">
+                <h1 align="center" >  <img  src="Image/Calendar-icon.png" width="70" height="70" alt="Student-3-icon" /></h1>
+                <h:form id="eventForm">
+                    <p:growl id="growl" life="2000" />
+                    <h:panelGrid id="eventDetails" columns="1" style="margin-bottom:10px" cellpadding="5">
+
+                        <p:outputLabel  value="Type" />
+                        <p:selectOneMenu  value="#{eventView.event.type}" style="width:150px">
+                            <f:selectItem itemLabel="PRACTICE" itemValue="PRACTICE" />
+                            <f:selectItem itemLabel="INTERNSHIP" itemValue="INTERNSHIP" />
+                            <f:selectItem itemLabel="NSA" itemValue="NSA" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Start Date " ></p:outputLabel>
+                        <p:calendar value="#{eventView.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+
+                        <p:outputLabel value="End Date" ></p:outputLabel>
+                        <p:calendar value="#{eventView.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+
+                        <p:outputLabel  value="Technology" />
+                        <p:selectOneMenu  value="#{eventView.event.technology}" style="width:125px">
+                            <f:selectItem itemLabel="NET" itemValue="NET" />
+                            <f:selectItem itemLabel="JAVA EE" itemValue="JAVA" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel  value="Task Received" />
+                        <p:inputTextarea rows="5" cols="50" completeMethod="#{eventView.event.taskReceived}" queryDelay="750" minQueryLength="4" />
+
+                        <p:outputLabel  value="Remarks" />
+                        <p:inputTextarea rows="5" cols="50" completeMethod="#{eventView.event.remarks}" queryDelay="750" minQueryLength="4" />
+
+                        <p:commandButton value="Save" actionListener="#{eventView.addEvent}" oncomplete="PF('myschedule').update();PF('dialogE').hide();" />
+
+                    </h:panelGrid>
+                </h:form>
+
+            </p:dialog>
 
             <h:form id="tableForm">
 
-                <p:dataTable var="student" value="#{studentView.students}">
-                    <p:column headerText="First Name">
-                        <h:outputText value="#{student.firstName}" />
-                    </p:column>
+                <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 
-                    <p:column headerText="Last Name">
-                        <h:outputText value="#{student.lastname}" />
-                    </p:column>
+                    <h1 align="center">Participants</h1>
+                    <h:panelGrid columns="2" style="margin-bottom:10px">
+                        <img src="Image/Student-3-icon.png" width="50" height="55" alt="Student-3-icon"/>
+                        <p:commandButton   value="New Participant" onclick="PF('dialogS').show();"></p:commandButton>
+                    </h:panelGrid>
+                    <p:dataTable var="student" value="#{studentView.students}">
+                        <p:column headerText="First Name">
+                            <h:outputText value="#{student.firstName}" />
+                        </p:column>
 
-                    <p:column headerText="Gender">
-                        <h:outputText value="#{student.gender}" />
-                    </p:column>
+                        <p:column headerText="Last Name">
+                            <h:outputText value="#{student.lastname}" />
+                        </p:column>
 
-                    <p:column headerText="Birth Day">
-                        <h:outputText value="#{student.birthDay}" />
-                    </p:column>
-                    
-                    <p:column headerText="Email">
-                        <h:outputText value="#{student.email}" />
-                    </p:column>
-                    
-                    <p:column headerText="Phone Number">
-                        <h:outputText value="#{student.phoneNumber}" />
-                    </p:column>
-                    
-                    <p:column headerText="Faculty">
-                        <h:outputText value="#{student.faculty}" />
-                    </p:column>
-                    
-                    <p:column headerText="Faculty Start Year">
-                        <h:outputText value="#{student.facultystartYear}" />
-                    </p:column>
-                </p:dataTable>
+                        <p:column headerText="Gender">
+                            <h:outputText value="#{student.gender}" />
+                        </p:column>
+
+                        <p:column headerText="Birth Day">
+                            <h:outputText value="#{student.birthDay}" />
+                        </p:column>
+
+                        <p:column headerText="Email">
+                            <h:outputText value="#{student.email}" />
+                        </p:column>
+
+                        <p:column headerText="Phone Number">
+                            <h:outputText value="#{student.phoneNumber}" />
+                        </p:column>
+
+                        <p:column headerText="Faculty">
+                            <h:outputText value="#{student.faculty}" />
+                        </p:column>
+
+                        <p:column headerText="Faculty Start Year">
+                            <h:outputText value="#{student.facultystartYear}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
             </h:form>
 
         </h:body>
