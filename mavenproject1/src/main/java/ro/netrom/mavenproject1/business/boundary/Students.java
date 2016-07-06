@@ -19,40 +19,30 @@ import ro.netrom.mavenproject1.business.entity.Student;
  */
 @Stateless
 
-public class Students implements Serializable{
+public class Students implements Serializable {
 
     @PersistenceContext(name = "practicaPu")
     private EntityManager em;
-    
-    public void saveStudent(Student student){
+
+    public void saveStudent(Student student) {
         em.persist(student);
     }
-    
-    public void editStudent(Student student){
-        Student aux = em.find(Student.class, student.getId());
-         if(aux != null){
-            aux.setFirstName(student.getFirstName());
-            aux.setLastName(student.getLastName());
-            aux.setBirthDate(student.getBirthDate());
-            aux.setEmail(student.getEmail());
-            aux.setGender(student.getGender());
-            aux.setPhoneNumbers(student.getPhoneNumbers());
-            aux.setFaculty(student.getFaculty());
-            aux.setFacultyStartYear(student.getFacultyStartYear());
-        }    
-        
+
+    public void editStudent(Student student) {
+        em.merge(student);
     }
     
-    public void deleteStudent(Student student){
+    
+
+    public void deleteStudent(Student student) {
         Student aux = em.find(Student.class, student.getId());
-         if(aux != null){
+        if (aux != null) {
             em.remove(aux);
-        }        
+        }
     }
-    
-    public List<Student> getStudents(){
+
+    public List<Student> getStudents() {
         List<Student> studentsList = em.createQuery("Select s from Student s", Student.class).getResultList();
         return studentsList;
     }
 }
-

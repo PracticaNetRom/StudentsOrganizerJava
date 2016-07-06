@@ -21,21 +21,21 @@ import ro.netrom.mavenproject1.business.entity.Student;
  *
  * @author practice7
  */
-
 @Named
 @ViewScoped
-public class StudentView implements Serializable{
+public class StudentView implements Serializable {
+
     @Inject
     private Students studentBoundary;
-    
-    private Student student;
+
+    private Student selectedStudent;
     private Event event;
-    
+
     private List<Student> students;
-    
+
     @PostConstruct
-    public void init(){
-        student = new Student();
+    public void init() {
+        selectedStudent = new Student();
         students = studentBoundary.getStudents();
     }
 
@@ -47,12 +47,12 @@ public class StudentView implements Serializable{
         this.event = event;
     }
 
-    public Student getStudent() {
-        return student;
+    public Student getSelectedStudent() {
+        return selectedStudent;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setSelectedStudent(Student selectedStudent) {
+        this.selectedStudent = selectedStudent;
     }
 
     public List<Student> getStudents() {
@@ -62,32 +62,37 @@ public class StudentView implements Serializable{
     public void setStudents(List<Student> students) {
         this.students = students;
     }
- 
-    public void  save(){
-        studentBoundary.saveStudent(student);
-        students.add(student);
-        student = new Student();
-        
-        FacesContext context = FacesContext.getCurrentInstance();         
-        context.addMessage(null, new FacesMessage("Student successfully added!") );
+
+    public void save() {
+        if (selectedStudent.getId() == null) {
+            studentBoundary.saveStudent(selectedStudent);
+            students.add(selectedStudent);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Student saved!"));
+        } else {
+            studentBoundary.editStudent(selectedStudent);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Student edited!"));
+        }
+        selectedStudent = new Student();
 
     }
-    
-     public void  edit(){
-        studentBoundary.editStudent(student);
-        student = new Student();
-        
-        FacesContext context = FacesContext.getCurrentInstance();         
-        context.addMessage(null, new FacesMessage("Student edited!") );
+
+    public void edit() {
+
+        studentBoundary.editStudent(selectedStudent);
+
     }
-     
-      public void  delete(){
-        studentBoundary.deleteStudent(student);
-        students.remove(student);
-        student = new Student();
+
+    public void delete() {
         
-        FacesContext context = FacesContext.getCurrentInstance();         
-        context.addMessage(null, new FacesMessage("Student deleted!") );        
+        
+        studentBoundary.deleteStudent(selectedStudent);
+        students.remove(selectedStudent);
+        selectedStudent = new Student();
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Student deleted!"));
     }
-        
- }
+
+}
