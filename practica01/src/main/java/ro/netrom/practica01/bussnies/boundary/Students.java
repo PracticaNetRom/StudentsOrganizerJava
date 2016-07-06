@@ -28,11 +28,11 @@ public class Students implements Serializable {
     }
 
     public void studentEdit(Student student) {
-        em.persist(student);
+        em.merge(student);   
     }
 
     public void studentDelete(Student student) {
-        em.persist(student);
+        em.remove(em.merge(student)); 
     }
 
     public List<Student> getAllStudents() {
