@@ -17,7 +17,6 @@ import javax.inject.Named;
 import ro.netrom.practica.business.boundary.Students;
 import ro.netrom.practica.business.entity.Student;
 
-
 /**
  *
  * @author practice8
@@ -30,7 +29,6 @@ public class StudentView implements Serializable {
     private Students students;
     private Student student;
     private List<Student> studentsList;
-    private String message;
 
     @PostConstruct
     public void init() {
@@ -72,14 +70,6 @@ public class StudentView implements Serializable {
 
     public void setStudentsList(List<Student> studentsList) {
         this.studentsList = studentsList;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public List<Integer> getYears() {

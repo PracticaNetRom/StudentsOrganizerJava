@@ -10,36 +10,36 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import ro.netrom.practica.business.entity.Student;
+import ro.netrom.practica.business.entity.Event;
 
 /**
  *
- * @author practice8
+ * @author Oana
  */
 @Stateless
-public class Students implements Serializable {
+public class Events implements Serializable {
 
     @PersistenceContext(name = "practicaPU")
     private EntityManager em;
 
-    public void saveStudent(Student student) {
-        em.persist(student);
+    public void saveEvent(Event event) {
+        em.persist(event);
     }
 
-    public void deleteStudent(Student student) {
-        em.remove(em.merge(student));
-
-    }
-
-    public void editStudent(Student student) {
-        em.merge(student);
+    public void deleteEvent(Event event) {
+        em.remove(em.merge(event));
 
     }
 
-    public List<Student> getStudentsList() {
-        List<Student> rezult = em
-                .createQuery("Select a from Student a", Student.class)
+    public void editEvent(Event event) {
+        em.merge(event);
+
+    }
+
+    public List<Event> getEventsList() {
+        List<Event> rezulte = em
+                .createQuery("Select a from Event a", Event.class)
                 .getResultList();
-        return rezult;
+        return rezulte;
     }
 }

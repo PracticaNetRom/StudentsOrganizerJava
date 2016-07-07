@@ -19,13 +19,12 @@ import javax.persistence.Temporal;
  *
  * @author practice8
  */
-
 @Entity
-public class Event implements Serializable 
-{
+public class Event implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
     @Enumerated(EnumType.STRING)
     private Type event;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -36,15 +35,15 @@ public class Event implements Serializable
     private Departament departament;
     private String taskReceived;
     private String remarks;
-    
-    public enum Type
-    {
-        PRACTICE, INTERSHIP , NSA
+
+    public enum Type {
+
+        PRACTICE, INTERSHIP, NSA
     }
-    
-    public enum Departament
-    {
-        JAVA , NET
+
+    public enum Departament {
+
+        JAVA, NET
     }
 
     public Long getId() {
@@ -102,5 +101,5 @@ public class Event implements Serializable
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
-    
+
 }

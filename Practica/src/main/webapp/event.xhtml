@@ -1,16 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Events</title>
+            </f:facet>
+
+        </h:head>
+
+        <h:body >
+
+            <h:form id="eventForm">
+
+                <p:panel  header="New Event" >
+
+                    <p:panelGrid columns="2" columnClasses="label, value">
+
+
+                        <p:outputLabel for = "event" value="Event :" />
+                        <p:selectOneMenu id="event" value="#{eventView.event.event}">
+                            <f:selectItem itemLabel="Practica" itemValue="PRACTICE" />
+                            <f:selectItem itemLabel="Intership" itemValue="INTERSHIP" />
+                            <f:selectItem itemLabel="NSA" itemValue="NSA" />
+                        </p:selectOneMenu>
+
+
+                        <p:outputLabel for="startdate" value="Start Date : " />
+                        <p:calendar id="startdate" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask="true" />
+
+                        <p:outputLabel for="enddate" value="End Date : " />
+                        <p:calendar id="enddate" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" />
+
+                        <p:outputLabel for = "departament" value="Departament :" />
+                        <p:selectOneMenu id="departament" value="#{eventView.event.departament}">
+                            <f:selectItem itemLabel="Java" itemValue="JAVA" />
+                            <f:selectItem itemLabel=".NET" itemValue="NET" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
+                </p:panel>
+
+                <p:dataTable var="event" value="#{eventView.eventsList}" id="eventDataTable">
+
+                    <p:column headerText="Event">
+                        <h:outputText value="#{event.event}" />
+                    </p:column>
+
+                    <p:column headerText="Start Date">
+                        <h:outputText value="#{event.startDate}" />
+                    </p:column>
+
+                    <p:column headerText="End Date">
+                        <h:outputText value="#{event.endDate}" />
+                    </p:column>
+
+                    <p:column headerText="Departament">
+                        <h:outputText value="#{event.departament}" />
+                    </p:column>
+
+                    <p:column headerText="Actions">
+                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm" >
+                            <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
+                        </p:commandButton>
+
+                        <p:commandButton value="Delete" process="eventDataTable" action="#{eventView.deleteEvent()}" update=":eventForm">
+                            <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </h:body>
+
+    </f:view>
 </html>
