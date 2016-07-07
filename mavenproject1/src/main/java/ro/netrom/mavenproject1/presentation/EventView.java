@@ -13,6 +13,7 @@ import ro.netrom.mavenproject1.business.entity.Event;
  *
  * @author Clau
  */
+
 public class EventView {
     private Event event;
     private List<Event> events;

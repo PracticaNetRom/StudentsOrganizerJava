@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 import ro.netrom.mavenproject1.business.boundary.Students;
 import ro.netrom.mavenproject1.business.entity.Event;
 import ro.netrom.mavenproject1.business.entity.Student;
@@ -29,7 +30,7 @@ public class StudentView implements Serializable {
     private Students studentBoundary;
 
     private Student selectedStudent;
-    
+
     private List<Student> students;
 
     @PostConstruct
@@ -38,7 +39,6 @@ public class StudentView implements Serializable {
         students = studentBoundary.getStudents();
     }
 
-    
     public Student getSelectedStudent() {
         return selectedStudent;
     }
@@ -75,10 +75,9 @@ public class StudentView implements Serializable {
         studentBoundary.editStudent(selectedStudent);
 
     }
-
+    
     public void delete() {
-        
-        
+
         studentBoundary.deleteStudent(selectedStudent);
         students.remove(selectedStudent);
         selectedStudent = new Student();
@@ -86,5 +85,7 @@ public class StudentView implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Student deleted!"));
     }
+
+    
 
 }

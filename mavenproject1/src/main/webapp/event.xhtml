@@ -17,15 +17,16 @@
     <h:body>
         <h:form id="eventForm">
             
-            <p:outputLabel for="selectType" value = "#{eventView.event.type}"/>
-            <p:selectOneMenu id="selectType" >
+            
+            <p:outputLabel for="selectType" value = "Type of the event:"/>
+            <p:selectOneMenu id="selectType" value = "#{eventView.event.type}">
                 <f:selectItem itemLabel="Practice" itemValue="PRACTICE"/>
                 <f:selectItem itemLabel="Internship" itemValue="INTERNSHIP"/>
                 <f:selectItem itemLabel="NSA" itemValue="NSA"/>
             </p:selectOneMenu><br/>  
 
-            <p:outputLabel for="selectDepartment" value = "#{eventView.event.department}"/>
-            <p:selectOneMenu id="selectDepartment">
+            <p:outputLabel for="selectDepartment" value = "Department:"/>
+            <p:selectOneMenu id="selectDepartment" value = "#{eventView.event.department}">
                 <f:selectItem itemLabel="Java" itemValue="JAVA"/>
                 <f:selectItem itemLabel=".Net" itemValue="NET"/>
             </p:selectOneMenu><br/> 
@@ -37,10 +38,10 @@
                 <p:calendar id="mask" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" /><br/>
 
             <h3>Task</h3>
-            <p:inputTextarea rows="2" cols="33" /><br/>
+            <p:inputTextarea rows="2" cols="33" value="#{eventView.event.task}"  /><br/>
 
             <h3>Remarks</h3>
-            <p:inputTextarea rows="4" cols="33" /><br/>
+            <p:inputTextarea rows="4" cols="33" value="#{eventView.event.remarks}" /><br/>
         </h:form>
         
     </h:body>

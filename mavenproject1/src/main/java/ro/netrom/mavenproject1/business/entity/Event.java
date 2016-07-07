@@ -102,5 +102,6 @@ public class Event implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
+    
 }

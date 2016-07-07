@@ -38,6 +38,7 @@ public class Student implements Serializable {
     private String phoneNumbers;
     private String faculty;
     private int facultyStartYear;
+    //private int applicationYear;
     @OneToMany
     private List<Event> events;
 
@@ -123,4 +124,13 @@ public class Student implements Serializable {
         this.lastName = lastName;
     }
 
+    /*public int getApplicationYear() {
+        return applicationYear;
+    }
+
+    public void setApplicationYear(int applicationYear) {
+        this.applicationYear = applicationYear;
+    }*/
+
+    
 }
