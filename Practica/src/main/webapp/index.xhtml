@@ -63,7 +63,7 @@
                         
                         
                     </p:panelGrid>
-                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm:studentDataTable" icon="ui-icon-check"/>
+                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check"/>
                 </p:panel>
 
                 <p:dataTable var="student" value="#{studentView.studentsList}" id="studentDataTable">
@@ -101,8 +101,13 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton value="Edit"/>
-                        <p:commandButton value="Delete"/>
+                        <p:commandButton value="Edit" process="studentDataTable" update=":studentForm" >
+                            <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
+                        </p:commandButton>
+
+                        <p:commandButton value="Delete" process="studentDataTable" action="#{studentView.deleteStudent()}" update=":studentForm">
+                            <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>

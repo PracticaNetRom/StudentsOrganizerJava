@@ -11,13 +11,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import ro.netrom.practica.business.boundary.Students;
 import ro.netrom.practica.business.entity.Student;
-import ro.netrom.practica.business.entity.Student_;
+
 
 /**
  *
@@ -49,6 +48,8 @@ public class StudentView implements Serializable {
             students.editStudent(student);
         }
         student = new Student();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful!", null));
     }
 
     public void deleteStudent() {
