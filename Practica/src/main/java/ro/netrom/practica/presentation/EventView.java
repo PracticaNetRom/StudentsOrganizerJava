@@ -45,13 +45,19 @@ public class EventView implements Serializable {
             events.editEvent(event);
         }
         event = new Event();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful!", null));
+        addMessageToEvent("Successful!", "The event has been add.");
     }
     
     public void deleteEvent() {
         events.deleteEvent(event);
         eventsList.remove(event);
+        event = new Event();
+        addMessageToEvent("Successful!", "The event has been delete.");
+    }
+    
+    public void addMessageToEvent(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
     public Event getEvent() {

@@ -17,14 +17,14 @@
         <h:body >
 
             <h:form id="eventForm">
-
-                <p:panel  header="New Event" >
+                <p:growl  showDetail="true" />
+                <p:panel header="New Event">
 
                     <p:panelGrid columns="2" columnClasses="label, value">
 
-
                         <p:outputLabel for = "event" value="Event :" />
                         <p:selectOneMenu id="event" value="#{eventView.event.event}">
+                            <f:selectItem itemLabel=" "  />
                             <f:selectItem itemLabel="Practica" itemValue="PRACTICE" />
                             <f:selectItem itemLabel="Intership" itemValue="INTERSHIP" />
                             <f:selectItem itemLabel="NSA" itemValue="NSA" />
@@ -42,6 +42,9 @@
                             <f:selectItem itemLabel="Java" itemValue="JAVA" />
                             <f:selectItem itemLabel=".NET" itemValue="NET" />
                         </p:selectOneMenu>
+
+                        <p:outputLabel value="Task received : "/>
+                        <p:inputText value="#{eventView.event.taskReceived}"/>
                     </p:panelGrid>
                     <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
                 </p:panel>
@@ -64,14 +67,23 @@
                         <h:outputText value="#{event.departament}" />
                     </p:column>
 
+                    <p:column headerText="Task Received">
+                        <h:outputText value="#{event.taskReceived}" />
+                    </p:column>
+
                     <p:column headerText="Actions">
-                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm" >
+                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm" icon="ui-icon-pencil">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
 
-                        <p:commandButton value="Delete" process="eventDataTable" action="#{eventView.deleteEvent()}" update=":eventForm">
+                        <p:commandButton value="Delete" process="eventDataTable" action="#{eventView.deleteEvent()}" update=":eventForm" icon="ui-icon-trash">
+                            <p:confirm  message="Are you sure to delete this event?" icon="ui-icon-alert" />
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
                     </p:column>
                 </p:dataTable>
             </h:form>

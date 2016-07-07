@@ -46,14 +46,19 @@ public class StudentView implements Serializable {
             students.editStudent(student);
         }
         student = new Student();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful!", null));
+        addMessageToStudent("Successful!", "The student has been add.");
     }
 
     public void deleteStudent() {
         students.deleteStudent(student);
         studentsList.remove(student);
-
+        student = new Student();
+        addMessageToStudent("Successful!", "The student has been delete.");
+    }
+    
+    public void addMessageToStudent(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public Student getStudent() {
