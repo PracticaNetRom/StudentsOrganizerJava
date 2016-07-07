@@ -78,17 +78,6 @@ public class Studentview implements Serializable {
     public void setAllStudents(List<Student> allStudents) {
         this.allStudents = allStudents;
     }
-public class GrowlView {
-     
-    private String message;
 
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
     
-}
 }

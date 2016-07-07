@@ -1,16 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <h:form id="eventForm">
+                <p:growl id="growl" showDetail="true" sticky="true" />  
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Event:"/>
+                    <p:selectOneMenu id="event" value="#{eventview.event.event}" style="width:203px" >
+                        <f:selectItem itemLabel="Practice" itemValue="PRACTICE" />
+                        <f:selectItem itemLabel="Intership" itemValue="INTERSHIP" />
+                        <f:selectItem itemLabel="NSA" itemValue="NSA" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Start Date"/>
+                    <p:calendar id="mask" value="#{Eventview.event.startDate}" pattern="dd-MM-yyyy" mask="true" />
+                    <p:outputLabel value="End Date"/>
+                    <p:calendar id="mask" value="#{Eventview.event.endDate}" pattern="dd-MM-yyyy" mask="true" />
+                    <p:outputLabel value="Department:"/>
+                    <p:selectOneMenu id="department" value="#{Eventview.event.department}" style="width:203px" >
+                        <f:selectItem itemLabel="PHP" itemValue="PHP" />
+                        <f:selectItem itemLabel="Java" itemValue="JAVA" />
+                        <f:selectItem itemLabel="Mobile" itemValue="MOBILE" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Task Received"/>
+                    <p:inputText value="#{eventtview.event.taskReceived}"/>
+                    <p:outputLabel value="Remarks"/>
+                    <p:inputText value="#{eventtview.event.remarks}"/>
+                </p:panelGrid>
+                <p:commandButton value="Save Student" id="save"  actionListener="#{studentview.saveStudent}"  update="studentForm :studentDT" />
+            </h:form>
+
+            <h:form id="evententDT">
+                <p:dataTable var="event" id="datatable1" value="#{eventview.allEvents}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{event.id}" />
+                    </p:column>
+                    <p:column headerText="Event">
+                        <h:outputText value="#{Event.event}" />
+                    </p:column>
+                    <p:column headerText="Start Date">
+                        <h:outputText value="#{Event.startDate}" />
+                    </p:column>
+                    <p:column headerText="End Date">
+                        <h:outputText value="#{Event.endDate}" />
+                    </p:column>
+                    <p:column headerText="Department">
+                        <h:outputText value="#{Event.department}" />
+                    </p:column>
+                    <p:column headerText="Task Received">
+                        <h:outputText value="#{Event.taskReceived}" />
+                    </p:column>
+                    <p:column headerText="Remarks">
+                        <h:outputText value="#{Event.remarks}" />
+                    </p:column>
+                    <p:column headerText="Action">
+                        <p:commandButton update=":eventForm"  value="Edit">
+                            <f:setPropertyActionListener value="#{event}" target="#{eventview.event}" />
+                        </p:commandButton>
+                        <p:commandButton update=":eventDT" action="#{Eventview.deleteEventent()}" value="Delete" >
+                            <f:setPropertyActionListener value="#{event}" target="#{eventview.event}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+
+        </h:body>
+
+    </f:view>
 </html>
+
+

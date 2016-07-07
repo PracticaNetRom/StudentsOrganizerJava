@@ -46,7 +46,7 @@
                 </p:panelGrid>
                 <p:commandButton value="Save Student" id="save"  actionListener="#{studentview.saveStudent}"  update="studentForm :studentDT" />
             </h:form>
-            
+
             <h:form id="studentDT">
                 <p:dataTable var="student" id="datatable" value="#{studentview.allStudents}">
                     <p:column headerText="Id">
@@ -83,14 +83,12 @@
                         <p:commandButton update=":studentForm"  value="Edit">
                             <f:setPropertyActionListener value="#{student}" target="#{studentview.student}" />
                         </p:commandButton>
-                       <p:commandButton update=":studentDT" action="#{studentview.deleteStudent()}" value="Delete" >
+                        <p:commandButton update=":studentDT" action="#{studentview.deleteStudent()}" value="Delete" >
                             <f:setPropertyActionListener value="#{student}" target="#{studentview.student}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
-
-
         </h:body>
 
     </f:view>

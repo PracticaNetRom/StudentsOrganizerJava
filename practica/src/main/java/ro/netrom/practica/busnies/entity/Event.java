@@ -21,23 +21,34 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Event implements Serializable {
-     @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-     @Enumerated(EnumType.STRING)
-  private Type event;
-     @Temporal(javax.persistence.TemporalType.DATE)
-  private Date startDate;
-     @Temporal(javax.persistence.TemporalType.DATE)
-  private Date endDate;
-     @Enumerated(EnumType.STRING)
-  private Department department;
-  private String taskReceived;
-  private String remarks;
-  public enum Type{
-      PRACTICE, INTERSHIP, NSA
-  }
-  public enum Department{
-      PHP, JAVA, MOBILE 
-  }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Enumerated(EnumType.STRING)
+    private Type event;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date startDate;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date endDate;
+    @Enumerated(EnumType.STRING)
+    private Department department;
+    private String taskReceived;
+    private String remarks;
+
+    public Object getId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public enum Type {
+
+        PRACTICE, INTERSHIP, NSA
+    }
+
+    public enum Department {
+
+        PHP, JAVA, MOBILE
+    }
 }
