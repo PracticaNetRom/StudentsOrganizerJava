@@ -5,23 +5,38 @@
  */
 package ro.netrom.mavenproject1.presentation;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import ro.netrom.mavenproject1.business.boundary.Events;
 import ro.netrom.mavenproject1.business.entity.Event;
 
 /**
  *
  * @author Clau
  */
-
-public class EventView {
+@Named
+@ViewScoped
+public class EventView implements Serializable{
+    
+    @Inject
+    private Events eventBoundary;
+    
     private Event event;
+    
     private List<Event> events;
     
+        
     @PostConstruct
     public void init() {
         event = new Event();
-        //events = eventBoundary.getEvents();
+        events = eventBoundary.getEvents();
+     
     }
 
     public Event getEvent() {
@@ -40,5 +55,34 @@ public class EventView {
         this.events = events;
     }
     
+     public void save() {
+        if (event.getId() == null) {
+            eventBoundary.saveEvent(event);
+            events.add(event);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Event saved!"));
+        } else {
+            eventBoundary.editEvent(event);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Event edited!"));
+        }
+        event = new Event();
+
+    }
     
+    public void edit() {
+
+        eventBoundary.editEvent(event);
+
+    }
+    
+    public void delete() {
+
+        eventBoundary.deleteEvent(event);
+        events.remove(event);
+        event = new Event();
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Event deleted!"));
+    }
 }

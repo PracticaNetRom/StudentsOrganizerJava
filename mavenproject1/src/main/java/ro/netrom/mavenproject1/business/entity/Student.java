@@ -6,6 +6,7 @@
 package ro.netrom.mavenproject1.business.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -42,6 +43,10 @@ public class Student implements Serializable {
     @OneToMany
     private List<Event> events;
 
+    public Student() {
+        events = new ArrayList();
+    }
+
     public enum Gender {
 
         MALE, FEMALE
@@ -50,7 +55,6 @@ public class Student implements Serializable {
     public Long getId() {
         return id;
     }
-    
 
     public Gender getGender() {
         return gender;
@@ -125,12 +129,10 @@ public class Student implements Serializable {
     }
 
     /*public int getApplicationYear() {
-        return applicationYear;
-    }
+     return applicationYear;
+     }
 
-    public void setApplicationYear(int applicationYear) {
-        this.applicationYear = applicationYear;
-    }*/
-
-    
+     public void setApplicationYear(int applicationYear) {
+     this.applicationYear = applicationYear;
+     }*/
 }

@@ -6,6 +6,7 @@
 package ro.netrom.mavenproject1.presentation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -14,6 +15,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+import ro.netrom.mavenproject1.business.boundary.Events;
 import ro.netrom.mavenproject1.business.boundary.Students;
 import ro.netrom.mavenproject1.business.entity.Event;
 import ro.netrom.mavenproject1.business.entity.Student;
@@ -29,14 +31,20 @@ public class StudentView implements Serializable {
     @Inject
     private Students studentBoundary;
 
+    @Inject
+    private Events eventBoundary;
+
     private Student selectedStudent;
 
     private List<Student> students;
+
+    private List<Event> events;
 
     @PostConstruct
     public void init() {
         selectedStudent = new Student();
         students = studentBoundary.getStudents();
+        events = eventBoundary.getEvents();
     }
 
     public Student getSelectedStudent() {
@@ -53,6 +61,14 @@ public class StudentView implements Serializable {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public void save() {
@@ -75,7 +91,7 @@ public class StudentView implements Serializable {
         studentBoundary.editStudent(selectedStudent);
 
     }
-    
+
     public void delete() {
 
         studentBoundary.deleteStudent(selectedStudent);
@@ -85,7 +101,4 @@ public class StudentView implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Student deleted!"));
     }
-
-    
-
 }

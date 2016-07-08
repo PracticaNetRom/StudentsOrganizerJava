@@ -20,6 +20,7 @@
             
             <p:outputLabel for="selectType" value = "Type of the event:"/>
             <p:selectOneMenu id="selectType" value = "#{eventView.event.type}">
+                <f:selectItem itemLabel="-" itemValue=""/>
                 <f:selectItem itemLabel="Practice" itemValue="PRACTICE"/>
                 <f:selectItem itemLabel="Internship" itemValue="INTERNSHIP"/>
                 <f:selectItem itemLabel="NSA" itemValue="NSA"/>
@@ -27,6 +28,7 @@
 
             <p:outputLabel for="selectDepartment" value = "Department:"/>
             <p:selectOneMenu id="selectDepartment" value = "#{eventView.event.department}">
+                <f:selectItem itemLabel="-" itemValue=""/>
                 <f:selectItem itemLabel="Java" itemValue="JAVA"/>
                 <f:selectItem itemLabel=".Net" itemValue="NET"/>
             </p:selectOneMenu><br/> 
@@ -35,14 +37,68 @@
                 <p:calendar id="mask" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask="true" /><br/>
                 
             <p:outputLabel value = "End Date: "/>
-                <p:calendar id="mask" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" /><br/>
+                <p:calendar id="mask1" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" /><br/>
 
             <h3>Task</h3>
             <p:inputTextarea rows="2" cols="33" value="#{eventView.event.task}"  /><br/>
 
             <h3>Remarks</h3>
             <p:inputTextarea rows="4" cols="33" value="#{eventView.event.remarks}" /><br/>
+            
+            <p:commandButton value="Save" id="save" 
+                                 actionListener="#{eventView.save()}" 
+                                 update="eventForm :eventsDTForm"/>
+            
         </h:form>
+        
+         <h:form id="eventsDTForm" prependId="false">
+
+                <p:dataTable id="eventsDT" var="event" value="#{eventView.events}" paginator="true" rows="10" tableStyleClass="ui-table-columntoggle">
+
+                    <p:column headerText="Event Type" sortBy="#{event.type}">
+                        <h:outputText value="#{event.type}" />
+                    </p:column>
+                    
+                    <p:column headerText="Department">
+                        <h:outputText value="#{event.department}" />
+                    </p:column>
+                    
+                    <p:column headerText="Start Date">
+                        <h:outputText value="#{event.startDate}" />
+                    </p:column>
+                    
+                    <p:column headerText="End Date">
+                         <h:outputText value="#{event.endDate}" />
+                    </p:column>
+                    
+                     <p:column headerText="Task">
+                        <h:outputText value="#{event.task}" />
+                    </p:column>
+                    
+                     <p:column headerText="Start Date">
+                        <h:outputText value="#{event.remarks}" />
+                    </p:column>
+                    
+                    <p:column style="text-align: center" headerText="Action">
+                        <p:commandButton value="Edit" update="eventsDT :eventForm" action="#{eventView.edit()}" >
+                            <f:setPropertyActionListener value="#{event}" target="#{eventView.event}"/>
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:commandButton value="Delete" update="eventsDT" action="#{eventView.delete()}" >
+                            <f:setPropertyActionListener value="#{event}" target="#{eventView.event}"/>
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+
+                    </p:column> 
+                    
+                </p:dataTable>
+         </h:form>           
         
     </h:body>
         

@@ -48,8 +48,17 @@
 
                 <p:outputLabel value = "Faculty start year: "/>
                 <pe:inputNumber value ="#{studentView.selectedStudent.facultyStartYear}" decimalPlaces="0" thousandSeparator="" maxValue="2020" /><br/>
-                
 
+
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:outputLabel for="menu" value="Events:" />
+                    <p:selectCheckboxMenu id="menu" value="#{studentView.selectedStudent.events}" label="Events"
+                                          filter="true" filterMatchMode="startsWith" panelStyle="width:700px">
+                        <f:converter   converterId ="eventConverter" />
+                        <f:selectItems value="#{studentView.events}" var="event" itemLabel="#{event.type}" itemValue="#{event}" />
+                    </p:selectCheckboxMenu>
+
+                </h:panelGrid>
                 <p:commandButton value="Save" id="save" 
                                  actionListener="#{studentView.save()}" 
                                  update="studentForm :studentsDTForm"/>
@@ -90,10 +99,11 @@
                     <p:column headerText="Faculty start year" sortBy="#{student.facultyStartYear}" >
                         <h:outputText value="#{student.facultyStartYear}" />
                     </p:column>
-                    
+
+
 <!--                    <p:column headerText="Year of application" sortBy="#{student.applicationYear}" priority="1">
-                        <h:outputText value="#{student.applicationYear}" />
-                    </p:column>-->
+<h:outputText value="#{student.applicationYear}" />
+</p:column>-->
 
                     <p:column style="text-align: center" headerText="Action">
                         <p:commandButton value="Edit" update="studentsDT :studentForm" action="#{studentView.edit()}" >

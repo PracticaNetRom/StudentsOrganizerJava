@@ -7,6 +7,7 @@ package ro.netrom.mavenproject1.business.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,11 +48,11 @@ public class Event implements Serializable {
         JAVA, NET
     }
 
-    public EventType getEventType() {
+    public EventType getType() {
         return type;
     }
 
-    public void setEventType(EventType type) {
+    public void setType(EventType type) {
         this.type = type;
     }
 
@@ -101,6 +102,27 @@ public class Event implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Event other = (Event) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
     
