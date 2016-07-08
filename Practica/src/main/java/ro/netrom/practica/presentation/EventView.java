@@ -83,4 +83,5 @@ public class EventView implements Serializable {
     public void setEventsList(List<Event> eventsList) {
         this.eventsList = eventsList;
     }
+    
 }
