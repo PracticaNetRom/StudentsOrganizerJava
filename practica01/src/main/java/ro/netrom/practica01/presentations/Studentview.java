@@ -23,7 +23,7 @@ import ro.netrom.practica01.bussnies.entity.Student;
  */
 @Named
 @ViewScoped
-public class StudentView implements Serializable {
+public class StudentView implements Serializable { 
 
     @Inject
     private Students studentBoundary;
