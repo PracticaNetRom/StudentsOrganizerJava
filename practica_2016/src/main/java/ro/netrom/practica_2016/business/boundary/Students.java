@@ -37,8 +37,8 @@ public class Students implements Serializable {
 
     public List<Student> getStudents() {
         List<Student> listOfStudents = em
-                                         .createQuery("Select s from Student s", Student.class)
-                                         .getResultList();
+                .createQuery("Select s from Student s", Student.class)
+                .getResultList();
         return listOfStudents;
     }
 }

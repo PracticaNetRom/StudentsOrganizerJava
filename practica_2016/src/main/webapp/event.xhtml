@@ -27,10 +27,10 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel for="mask1" value="Start Date"/>
-                    <p:calendar id="mask1" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask1="true" />
+                    <p:calendar id="mask1" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask="true" />
 
                     <p:outputLabel for="mask2" value="Finish Date"/>
-                    <p:calendar id="mask2" value="#{eventView.event.finishDate}" pattern="dd-MM-yyyy" mask2="true" />
+                    <p:calendar id="mask2" value="#{eventView.event.finishDate}" pattern="dd-MM-yyyy" mask="true" />
 
                     <p:outputLabel value="Departament"/>
                     <p:inputText value="#{eventView.event.department}"/>

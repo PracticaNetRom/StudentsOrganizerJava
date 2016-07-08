@@ -14,65 +14,23 @@
         </h:head>
 
         <h:body>
-            <h:form id="studentForm">
 
-
-                <p:growl id="growl" showDetail="true" sticky="true" />  
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="First Name"/>
-                    <p:inputText value="#{studentView.student.firstName}"/>
-
-                    <p:outputLabel value="Last Name"/>
-                    <p:inputText value="#{studentView.student.lastName}"/>
-
-
-                    <p:outputLabel for="gender" value="Gender: " />
-                    <p:selectOneMenu id="gender" value="#{studentView.student.gender}">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItem itemLabel="female" itemValue="FEMALE" />
-                        <f:selectItem itemLabel="male" itemValue="MALE" />
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="mask" value="Birthay date:" />
-                    <p:calendar id="mask" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
-
-                    <p:outputLabel value="Email"/>
-                    <p:inputText value="#{studentView.student.email}"/>
-
-                    <p:outputLabel for="phone" value="Phone:" />
-                    <p:inputMask id="phone"  value="#{studentView.student.phoneNumbers}"  mask="(9999) 999-999"/>
-
-                    <p:outputLabel value="Faculty"/>
-                    <p:inputText value="#{studentView.student.faculty}"/>
-
-                    <p:outputLabel value="Faculty start year"/>
-                    <p:inputText value="#{studentView.student.facultyStartYear}"/>
-
-
-                    <p:outputLabel value="Event: " />
-                    <p:selectOneMenu id="studentEvent" value="#{studentView.studentevent.eventName}">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItem itemLabel="NSA" itemValue="NSA" />
-                        <f:selectItem itemLabel="Practice" itemValue="PRACTICE" />
-                        <f:selectItem itemLabel="Internship" itemValue="INTERNSHIP" />
-                    </p:selectOneMenu>
-
-                    <p:commandButton value="Save"  actionListener="#{studentView.save()}" update=":studentForm :datatableForm" />
-                </p:panelGrid>
-
-
-            </h:form>
 
             <h:form id="datatableForm">
-                <p:growl id="message" showDetail="true" />
-                <p:dataTable id="studentTable" var="student" value="#{studentView.students}"  
-                             rowKey="#{student.id}" selection="#{studentView.student}" selectionMode="single"
+                <p:commandButton value="Add Student" process="@this" 
+                                 onclick="PF('studentDialog').show();"
+                                 update=":studentForm" />
+                <p:growl id="message"/>
+
+
+                <p:dataTable widgetVar="studentTable" var="student" value="#{studentView.students}"  
+                             rowKey="#{student.id}" 
+                             selection="#{studentView.student}" 
+                             selectionMode="single"
                              paginator="true" rows="10"
                              paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              rowsPerPageTemplate="5,10,15">
 
-
-                    <!--<p:column selectionMode="single" style="width:16px;text-align:center"/>-->
                     <p:column headerText="First Name">
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
@@ -89,7 +47,7 @@
                         <h:outputText value="#{student.phoneNumbers}" />
                     </p:column>
 
-                    <p:column headerText="Birth date ">
+                    <p:column headerText="Birth date " >
                         <h:outputText value="#{student.birthDate}" />
                     </p:column>
 
@@ -101,16 +59,25 @@
                         <h:outputText value="#{student.faculty}" />
                     </p:column>
 
-                    <p:column headerText="Faculty start year">
+                    <p:column filterBy="#{student.facultyStartYear}" headerText="Faculty start year" filterMatchMode="lte" >
+                        <f:facet name="filter">
+                            <p:spinner onchange="PF('studentTable').filter()" styleClass="year-spinner"
+                                       onkeypress="if (event.keyCode === 13) {
+                                                   onchange();
+                                                   return false;
+                                               }" >
+                                <f:converter converterId="javax.faces.Integer" />
+                            </p:spinner>
+                        </f:facet>
                         <h:outputText value="#{student.facultyStartYear}" />
                     </p:column>
 
 
                     <f:facet name="footer">
 
+                        <p:commandButton update=":studentForm"  value="Update" onclick="PF('studentDialog').show();"   />
 
-
-                        <p:commandButton update=":studentForm:growl :datatableForm" value="Delete" action="#{studentView.delete()}" >
+                        <p:commandButton value="Delete" actionListener="#{studentView.delete()}" update=":datatableForm">
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                         </p:commandButton>
 
@@ -120,16 +87,12 @@
                         </p:confirmDialog>
 
 
-
-                        <p:commandButton update=":datatableForm :studentForm"  value="Update" onclick="PF('dlg2').show();"   />
-
                     </f:facet>
 
                 </p:dataTable>
             </h:form>
-<!--            <p:commandButton value="Delete"  actionListener="#{studentView.delete()}" update=":studentTable"/>
-            <p:commandButton value="Update"  actionListener="#{studentView.update()}" update=":studentTable"/>-->
 
+            <ui:include src="/WEB-INF/dialogs/edit-student.xhtml" />
         </h:body>
 
     </f:view>

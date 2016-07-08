@@ -57,15 +57,15 @@ public class EventView implements Serializable {
         if (event.getId() == null) {
             eventBoundary.saveEvent(event);
             events.add(event);
+            event = new Event();
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Event successfully added  "));
         } else {
             eventBoundary.updateEvent(event);
+            event = new Event();
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Student successfully edited  "));
+            context.addMessage(null, new FacesMessage("Event successfully edited  "));
         }
-
-        event = new Event();
 
     }
 
@@ -80,6 +80,6 @@ public class EventView implements Serializable {
         eventBoundary.deleteEvent(event);
         events.remove(event);
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Student successfully deleted  "));
+        context.addMessage(null, new FacesMessage("Event successfully deleted  "));
     }
 }

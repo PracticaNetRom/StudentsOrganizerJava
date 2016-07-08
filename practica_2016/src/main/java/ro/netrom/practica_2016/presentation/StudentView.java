@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import ro.netrom.practica_2016.business.boundary.Events;
 import ro.netrom.practica_2016.business.boundary.Students;
 import ro.netrom.practica_2016.business.entity.Event;
 import ro.netrom.practica_2016.business.entity.Student;
@@ -21,38 +22,56 @@ import ro.netrom.practica_2016.business.entity.Student;
 @ViewScoped
 public class StudentView implements Serializable {
 
-    // form to add a student (formular)
     @Inject
     private Students studentBoundary;
-
+    
+    @Inject
+    private Events eventBoundary;
+    
     private Student student;
-    private List<Student> selectedStudents;
 
-    private Event studentevent;
     private List<Student> students;
+    
+    private List<Event> events;
 
-    public List<Student> getSelectedStudents() {
-        return selectedStudents;
+    @PostConstruct
+    public void init() {
+        student = new Student();
+        students = studentBoundary.getStudents();
+        events = eventBoundary.getEvents();
+
     }
 
-    public void setSelectedStudents(List<Student> selectedStudents) {
-        this.selectedStudents = selectedStudents;
+    public void save() {
+        if (student.getId() == null) {
+            //student.getEvents().add(studentevent);
+            studentBoundary.saveStudent(student);
+            students.add(student);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Student successfully added  "));
+
+        } else {
+            studentBoundary.updateStudent(student);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Student successfully edited  "));
+        }
+        student = new Student();
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public void update() {
+        studentBoundary.updateStudent(student);
+        student = new Student();
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public Event getStudentevent() {
-        return studentevent;
-    }
-
-    public void setStudentevent(Event studentevent) {
-        this.studentevent = studentevent;
+    /**
+     *
+     */
+    public void delete() {
+        studentBoundary.deleteStudent(student);
+        students.remove(student);
+        student = new Student();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Student successfully deleted  "));
     }
 
     public Student getStudent() {
@@ -63,44 +82,12 @@ public class StudentView implements Serializable {
         this.student = student;
     }
 
-    @PostConstruct
-    public void init() {
-        student = new Student();
-       // studentevent = new Event();
-        students = studentBoundary.getStudents();
-
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void save() {
-        if (student.getId() == null) {
-            student.getEvents().add(studentevent);
-            studentBoundary.saveStudent(student);
-            students.add(student);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Student successfully added  "));
-        } else {
-            studentBoundary.updateStudent(student);
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Student successfully edited  "));
-        }
-
-        student = new Student();
-        studentevent = new Event();
-
-    }
-
-    public void update() {
-        studentBoundary.updateStudent(student);
-    }
-
-    /**
-     *
-     */
-    public void delete() {
-        studentBoundary.deleteStudent(student);
-        students.remove(student);
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Student successfully deleted  "));
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
 }
