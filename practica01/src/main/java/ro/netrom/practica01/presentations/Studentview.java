@@ -29,7 +29,6 @@ public class StudentView implements Serializable {
     private Students studentBoundary;
     private Student student;
     private List<Student> allStudents;
-   
 
     @PostConstruct
     public void init() {
@@ -57,17 +56,15 @@ public class StudentView implements Serializable {
         if (student.getId() == null) {
             studentBoundary.studentSave(student);
             allStudents.add(student);
-        }
-        else {
+        } else {
             studentBoundary.studentEdit(student);
         }
         student = new Student();
         FacesContext context = FacesContext.getCurrentInstance();
-         
-        context.addMessage(null, new FacesMessage("Successful",  null) ); 
+        context.addMessage(null, new FacesMessage("Successful", null));
 
     }
-    
+
     public void deleteStudent() {
         studentBoundary.studentDelete(student);
         allStudents.remove(student);
