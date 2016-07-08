@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -45,22 +47,30 @@
                 <h1 align="center">Participants</h1>
                 <p:dataTable var="student" value="#{studentView.students}" rows="10"
                              paginator="true"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15">
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Export}"
+                             rowsPerPageTemplate="5,10,15" >
 
-                    <p:column headerText="First Name">
+                    <f:facet name="{Export}">
+                        <h:commandLink>
+                            <p:graphicImage name="Image/PDF-icon.png" width="24" />
+                            <p:dataExporter type="pdf" target="tbl" fileName="Participants" />
+                        </h:commandLink> 
+                    </f:facet>
+
+
+                    <p:column headerText="First Name" filterBy="#{student.firstName}" footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
 
-                    <p:column headerText="Last Name">
+                    <p:column headerText="Last Name" filterBy="#{student.lastname}" footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{student.lastname}" />
                     </p:column>
 
-                    <p:column headerText="Gender">
+                    <p:column headerText="Gender" sortBy="#{student.gender}" >           
                         <h:outputText value="#{student.gender}" />
                     </p:column>
 
-                    <p:column headerText="Birth Day">
+                    <p:column headerText="Birth Day" sortBy="#{student.birthDay}">
                         <h:outputText value="#{student.birthDay}" />
                     </p:column>
 
@@ -68,7 +78,7 @@
                         <h:outputText value="#{student.email}" />
                     </p:column>
 
-                    <p:column headerText="Phone Number">
+                    <p:column headerText="Phone Number" filterBy="#{student.phoneNumber}" footerText="contains" filterMatchMode="contains">
                         <h:outputText value="#{student.phoneNumber}" />
                     </p:column>
 
@@ -76,12 +86,12 @@
                         <h:outputText value="#{student.faculty}" />
                     </p:column>
 
-                    <p:column headerText="Faculty Start Year">
+                    <p:column headerText="Faculty Start Year" sortBy="#{student.facultystartYear}">
                         <h:outputText value="#{student.facultystartYear}" />
                     </p:column>
 
                     <p:column headerText="Actions">
-                       
+
                         <p:commandButton icon="ui-icon-trash" onclick="PF('confirmDialog').show();">
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                         </p:commandButton>
