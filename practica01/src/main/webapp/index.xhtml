@@ -12,58 +12,26 @@
                 <title>Student</title>
             </f:facet>
         </h:head>
-
+         
         <h:head>
             <style>
                 body {
-                    background-color:lightgreen;
+                    background-color:lightblue;
                 }
             </style>
         </h:head>
+        
+        <p:graphicImage name="images/netrom.png" />
 
         <h:body> 
-            <p:spacer width="100" height="80" />
+            <p:spacer width="100" height="80" /> 
 
             <p:toolbar style="height:15px" />         
 
             <p:spacer width="100" height="60" />
 
             <h:form id="studentForm">
-                <p:growl id="growl" showDetail="true" sticky="true"/>
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="First Name:"/>
-                    <p:inputText value="#{studentView.student.firstName}" required="true" requiredMessage="First Name is required."/>
-
-                    <p:outputLabel value="Last Name:"/>
-                    <p:inputText value="#{studentView.student.lastName}" required="true" requiredMessage="Last Name is required."/>
-
-                    <p:outputLabel value="Gender:"/>
-                    <p:selectOneMenu id="gender" value="#{studentView.student.gender}" style="width:203px">
-                        <f:selectItem itemLabel="Male" itemValue="MALE"/>
-                        <f:selectItem itemLabel="Female" itemValue="FEMALE"/>
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Birth Date:" />
-                    <p:calendar id="mask" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
-
-                    <p:outputLabel value="Email:"/>
-                    <p:inputText value="#{studentView.student.email}" required="true" requiredMessage="Email is required."/>
-
-                    <p:outputLabel value="Phone Number:"/>
-                    <p:inputText value="#{studentView.student.phoneNumber}"/>
-
-                    <p:outputLabel value="Faculty:"/>
-                    <p:selectOneMenu id="faculty" value="#{studentView.student.faculty}" style="width:203px">
-                        <f:selectItem itemLabel="Automatica" itemValue="AUTOMATICA"/>
-                        <f:selectItem itemLabel="Matematica-Informatica" itemValue="MATEMATICA_INFORMATICA"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel value="Faculty Start Year:"/>
-                    <p:selectOneMenu id="facultyStartyear" value="#{studentView.student.facultyStartyear}" style="width:200px">
-                        <f:selectItems value="#{studentView.years}" />   
-                    </p:selectOneMenu>
-
-                </p:panelGrid>
-                <p:commandButton value="Save Student" id="save"  actionListener="#{studentView.saveStudent}" update="studentForm :studentsDT" style="color:greenyellow"/>               
+                <p:commandButton value="Add Student" id="save"  onclick="PF('editStudentDialog').show();"/>               
             </h:form>
 
             <p:spacer width="100" height="100" />
@@ -82,23 +50,28 @@
                     <p:column headerText="Gender">
                         <h:outputText value="#{student.gender}" />
                     </p:column>
+
                     <p:column headerText="Birth Date">
                         <h:outputText value="#{student.birthDate}" />
                     </p:column>
+
                     <p:column headerText="Email">
                         <h:outputText value="#{student.email}" />
                     </p:column>
+
                     <p:column headerText="Phone Number">
                         <h:outputText value="#{student.phoneNumber}" />
                     </p:column>
+
                     <p:column headerText="Faculty Start Year">
                         <h:outputText value="#{student.facultyStartyear}" />
                     </p:column>
+
                     <p:column headerText="Actions">
-                        <p:commandButton update=":studentForm" value="EDIT">
+                        <p:commandButton update=":editStudentForm" value="EDIT" onclick="PF('editStudentDialog').show();">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
-                        <p:dialog header="Effects" widgetVar="#{student}" showEffect="explode" hideEffect="bounce"/>
+
                         <p:commandButton update="datatable" action="#{studentView.deleteStudent()}" value="DELETE">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
@@ -106,7 +79,7 @@
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                        </p:confirmDialog> 
+                        </p:confirmDialog>
                     </p:column>
                 </p:dataTable>
                 <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
@@ -114,6 +87,50 @@
                 </p:commandButton>
 
             </h:form>
+
+
+            <p:dialog header="Student Edit" widgetVar="editStudentDialog" modal="true" >
+                <h:form id="editStudentForm">
+                    <p:growl id="growl1" showDetail="true" sticky="true"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="First Name:"/>
+                        <p:inputText value="#{studentView.student.firstName}" required="true" requiredMessage="First Name is required."/>
+
+                        <p:outputLabel value="Last Name:"/>
+                        <p:inputText value="#{studentView.student.lastName}" required="true" requiredMessage="Last Name is required."/>
+
+                        <p:outputLabel value="Gender:"/>
+                        <p:selectOneMenu id="gender1" value="#{studentView.student.gender}" style="width:203px">
+                            <f:selectItem itemLabel="Male" itemValue="MALE"/>
+                            <f:selectItem itemLabel="Female" itemValue="FEMALE"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Birth Date:" />
+                        <p:calendar id="mask1" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
+
+                        <p:outputLabel value="Email:"/>
+                        <p:inputText value="#{studentView.student.email}" required="true" requiredMessage="Email is required."/>
+
+                        <p:outputLabel value="Phone Number:"/>
+                        <p:inputText value="#{studentView.student.phoneNumber}"/>
+
+                        <p:outputLabel value="Faculty:"/>
+                        <p:selectOneMenu id="faculty1" value="#{studentView.student.faculty}" style="width:203px">
+                            <f:selectItem itemLabel="Automatica" itemValue="AUTOMATICA"/>
+                            <f:selectItem itemLabel="Matematica-Informatica" itemValue="MATEMATICA_INFORMATICA"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Faculty Start Year:"/>
+                        <p:selectOneMenu id="facultyStartyear1" value="#{studentView.student.facultyStartyear}" style="width:200px">
+                            <f:selectItems value="#{studentView.years}" />   
+                        </p:selectOneMenu>
+
+                    </p:panelGrid>
+                    <p:commandButton value="Save Student" id="save1"  actionListener="#{studentView.saveStudent}" update="editStudentForm :studentsDT" style="color:greenyellow" oncomplete="PF('editStudentDialog').hide();"/>               
+
+                </h:form>
+            </p:dialog>
+
 
 
         </h:body>

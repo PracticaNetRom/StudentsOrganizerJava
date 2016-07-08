@@ -61,6 +61,7 @@ public class EventView implements Serializable {
         allEvents.remove(event);
         event = new Event();   
     }
+     
     public List<Event> getAllEvents() {
         return allEvents;
     }

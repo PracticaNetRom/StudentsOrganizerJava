@@ -1,0 +1,36 @@
+            <!--            <h:form id="eventForm">
+                            <p:message for="remarks" />
+                            <p:growl id="growl" showDetail="true" sticky="true" />
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Event:"/>
+                                <p:selectOneMenu id="event" value="#{eventView.event.event}" style="width:203px">
+                                    <f:selectItem itemLabel="Practice" itemValue="PRACTICE"/>
+                                    <f:selectItem itemLabel="Intership" itemValue="INTERSHIP"/>
+                                    <f:selectItem itemLabel="Netrom Software Academy" itemValue="NSA"/>
+                                </p:selectOneMenu>
+            
+                                <p:outputLabel value="Start Date:" />
+                                <p:calendar id="mask" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask="true" />
+            
+                                <p:outputLabel value="End Date:" />
+                                <p:calendar id="mask1" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" />
+            
+                                <p:outputLabel value="Departments:"/>
+                                <p:selectOneMenu id="department" value="#{eventView.event.department}" style="width:203px">
+                                    <f:selectItem itemLabel="Java EE" itemValue="JAVA"/>
+                                    <f:selectItem itemLabel=".NET" itemValue="NET"/>
+                                    <f:selectItem itemLabel="Mobile" itemValue="MOBILE"/>
+                                </p:selectOneMenu>
+            
+                                <p:outputLabel value="Task Received:"/>
+                                <p:inputText value="#{eventView.event.taskReceived}"/>
+            
+                                <h:outputLabel for="remarks" value="Remarks:" style="height:100px"/>
+                                <p:inputTextarea id="remarks" value="#{eventView.event.remarks}" label="Remarks">
+                                    <f:validateLength minimum="3" maximum="10" /> 
+                                </p:inputTextarea>
+                                
+            
+                            </p:panelGrid>
+                            <p:commandButton value="Save Event" id="save"  actionListener="#{eventView.saveEvent}" update="eventForm :eventsDT" />
+                        </h:form>-->
