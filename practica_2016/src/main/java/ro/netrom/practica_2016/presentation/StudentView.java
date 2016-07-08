@@ -66,7 +66,7 @@ public class StudentView implements Serializable {
     @PostConstruct
     public void init() {
         student = new Student();
-        studentevent = new Event();
+       // studentevent = new Event();
         students = studentBoundary.getStudents();
 
     }

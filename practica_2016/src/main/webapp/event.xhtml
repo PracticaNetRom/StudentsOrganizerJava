@@ -1,16 +1,111 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Events</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form id="eventForm">
+                <p:growl id="growlEv" showDetail="true" sticky="true" />  
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel for="event" value="Event " />
+                    <p:selectOneMenu id="event" value="#{eventView.event.eventName}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItem itemLabel="NSA" itemValue="NSA" />
+                        <f:selectItem itemLabel="Practice" itemValue="PRACTICE" />
+                        <f:selectItem itemLabel="Internship" itemValue="INTERNSHIP" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="mask1" value="Start Date"/>
+                    <p:calendar id="mask1" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask1="true" />
+
+                    <p:outputLabel for="mask2" value="Finish Date"/>
+                    <p:calendar id="mask2" value="#{eventView.event.finishDate}" pattern="dd-MM-yyyy" mask2="true" />
+
+                    <p:outputLabel value="Departament"/>
+                    <p:inputText value="#{eventView.event.department}"/>
+
+                    <p:outputLabel value="Task"/>
+                    <p:inputTextarea  value="#{eventView.event.task}" rows="4" style="width: 300px;" />
+
+                    <p:outputLabel value="Remarks"/>
+                    <p:inputTextarea  value="#{eventView.event.remarks}" rows="6" style="width: 300px;" />
+
+                    <p:commandButton value="Save"  actionListener="#{eventView.saveEv()}" update=":eventForm :datatableEventForm" />
+
+
+                </p:panelGrid>
+            </h:form>
+
+            <h:form id="datatableEventForm">
+                <p:growl id="messageGrowl" showDetail="true" />
+                <p:dataTable id="eventTable" var="event" value="#{eventView.events}"  
+                             rowKey="#{event.id}" selection="#{eventView.event}" selectionMode="single"
+                             paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15">
+
+
+                    <!--<p:column selectionMode="single" style="width:16px;text-align:center"/>-->
+                    <p:column headerText="Event Name">
+                        <h:outputText value="#{event.eventName}" />
+                    </p:column>
+
+                    <p:column headerText="Start date">
+                        <h:outputText value="#{event.startDate}" />
+                    </p:column>
+
+                    <p:column headerText="Finish date">
+                        <h:outputText value="#{event.finishDate}" />
+                    </p:column>
+
+                    <p:column headerText="Departament">
+                        <h:outputText value="#{event.department}" />
+                    </p:column>
+
+                    <p:column headerText="Task">
+                        <h:outputText value="#{event.task}" />
+                    </p:column>
+
+                    <p:column headerText="Remarks">
+                        <h:outputText value="#{event.remarks}" />
+                    </p:column>
+
+
+                    <f:facet name="footer">
+
+
+
+                        <p:commandButton update=":eventForm:growlEv :datatableEventForm" value="Delete" action="#{eventView.deleteEv()}" >
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+
+
+
+                        <p:commandButton update=":datatableEventForm :eventForm"  value="Update" actionListener="#{eventView.updateEv()}" />
+
+                    </f:facet>
+
+                </p:dataTable>
+            </h:form>
+
+        </h:body>
+
+    </f:view>
 </html>
+

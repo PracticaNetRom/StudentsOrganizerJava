@@ -9,12 +9,14 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>Students</title>
             </f:facet>
         </h:head>
 
         <h:body>
             <h:form id="studentForm">
+
+
                 <p:growl id="growl" showDetail="true" sticky="true" />  
                 <p:panelGrid columns="2">
                     <p:outputLabel value="First Name"/>
@@ -57,12 +59,17 @@
 
                     <p:commandButton value="Save"  actionListener="#{studentView.save()}" update=":studentForm :datatableForm" />
                 </p:panelGrid>
+
+
             </h:form>
 
             <h:form id="datatableForm">
                 <p:growl id="message" showDetail="true" />
                 <p:dataTable id="studentTable" var="student" value="#{studentView.students}"  
-                             rowKey="#{student.id}" selection="#{studentView.student}" selectionMode="single">
+                             rowKey="#{student.id}" selection="#{studentView.student}" selectionMode="single"
+                             paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15">
 
 
                     <!--<p:column selectionMode="single" style="width:16px;text-align:center"/>-->
@@ -113,8 +120,8 @@
                         </p:confirmDialog>
 
 
-                        
-                        <p:commandButton update=":datatableForm :studentForm"  value="Update" actionListener="#{studentView.update()}" />
+
+                        <p:commandButton update=":datatableForm :studentForm"  value="Update" onclick="PF('dlg2').show();"   />
 
                     </f:facet>
 
