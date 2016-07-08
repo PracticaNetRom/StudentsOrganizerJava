@@ -1,6 +1,8 @@
 package ro.NRO.StudentsOrganizer.prezentation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,6 +24,16 @@ public class EventView implements Serializable {
     private Events eventBoundary;
 
     private Event event;
+    
+    private List<Event> events;
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     public Event getEvent() {
         return event;
@@ -33,11 +45,14 @@ public class EventView implements Serializable {
 @PostConstruct
     public void init(){
          event = new Event();
+         events = eventBoundary.getAll();
         
     }
     public void saveEvent() {
         eventBoundary.saveEvent(event);
+        events.add(event);
         event = new Event();
+        
         
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event Saved!!!", null);
         FacesContext.getCurrentInstance().addMessage(null, message);

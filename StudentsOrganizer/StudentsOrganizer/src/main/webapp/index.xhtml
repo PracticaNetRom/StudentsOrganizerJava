@@ -40,21 +40,22 @@
 
             <ui:include src="/WEB-INF/dialogs/add-student.xhtml" />
             <ui:include src="/WEB-INF/dialogs/add-event.xhtml" />
+            <ui:include src="/WEB-INF/dialogs/add-studentEvent.xhtml" />
 
 
             <h:form id="tableForm">
 
                 <h1 align="center">Participants</h1>
-                <p:dataTable var="student" value="#{studentView.students}" rows="10"
+                <p:dataTable id="tbl" var="student" value="#{studentView.students}" rows="10"
                              paginator="true"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Export}"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
                              rowsPerPageTemplate="5,10,15" >
 
-                    <f:facet name="{Export}">
+                    <f:facet name="{Exporters}">
                         <h:commandLink>
-                            <p:graphicImage name="Image/PDF-icon.png" width="24" />
-                            <p:dataExporter type="pdf" target="tbl" fileName="Participants" />
-                        </h:commandLink> 
+                            <p:graphicImage  style="vertical-align: middle; " value="/Image/PDF-icon.png" width="25"/>
+                            <p:dataExporter type="pdf" target="tbl" fileName="cars" pageOnly="true" />
+                        </h:commandLink>
                     </f:facet>
 
 
@@ -90,16 +91,17 @@
                         <h:outputText value="#{student.facultystartYear}" />
                     </p:column>
 
-                    <p:column headerText="Actions">
+                    <p:column headerText="Actions" exportable="false">
 
                         <p:commandButton icon="ui-icon-trash" onclick="PF('confirmDialog').show();">
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                         </p:commandButton>
 
-                        <p:commandButton  icon="ui-icon-gear" />
+                        <p:commandButton  icon="ui-icon-gear" onclick="PF('dialogSE').show();" />
                     </p:column> 
 
                 </p:dataTable>
+                
                 <p:confirmDialog widgetVar="confirmDialog" global="true" showEffect="fade" hideEffect="fade">
                     <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />

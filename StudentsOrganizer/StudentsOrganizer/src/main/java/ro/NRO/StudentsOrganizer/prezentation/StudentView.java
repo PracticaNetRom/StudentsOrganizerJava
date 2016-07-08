@@ -31,15 +31,6 @@ public class StudentView implements Serializable {
     
     private List<Student> students;
     
-    private List<Student> filteredCars;
-
-    public List<Student> getFilteredCars() {
-        return filteredCars;
-    }
-
-    public void setFilteredCars(List<Student> filteredCars) {
-        this.filteredCars = filteredCars;
-    }
 
     public Student getStudent() {
         return student;
