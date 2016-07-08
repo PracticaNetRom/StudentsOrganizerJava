@@ -13,8 +13,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import ro.netrom.practica.business.boundary.Events;
+import ro.netrom.practica.business.boundary.Students;
 import ro.netrom.practica.business.entity.Event;
+import ro.netrom.practica.business.entity.Student;
 
 /**
  *
@@ -26,11 +29,17 @@ public class EventView implements Serializable {
     
     @Inject
     private Events events;
+    @Inject
+    private Students students;
     private Event event;
     private List<Event> eventsList;
+    private Student student;
     
     @PostConstruct
     public void initEvent() {
+        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String studentId = req.getParameter("studentId");
+        student = students.findStudent(studentId);
         event = new Event();
         eventsList = events.getEventsList();
     }
@@ -39,7 +48,8 @@ public class EventView implements Serializable {
         
         if (event.getId() == null) {            
             events.saveEvent(event);
-            eventsList.add(event);
+            student.getEvents().add(event);
+            students.editStudent(student);
             
         } else {
             events.editEvent(event);
@@ -49,8 +59,9 @@ public class EventView implements Serializable {
     }
     
     public void deleteEvent() {
+        student.getEvents().remove(event);
+        students.editStudent(student);
         events.deleteEvent(event);
-        eventsList.remove(event);
         event = new Event();
         addMessageToEvent("Successful!", "The event has been delete.");
     }
@@ -83,5 +94,15 @@ public class EventView implements Serializable {
     public void setEventsList(List<Event> eventsList) {
         this.eventsList = eventsList;
     }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    
+    
     
 }

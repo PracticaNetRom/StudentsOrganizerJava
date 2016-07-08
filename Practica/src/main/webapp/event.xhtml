@@ -44,15 +44,18 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Task received : "/>
-                        <p:inputText value="#{eventView.event.taskReceived}"/>
+                        <p:inputTextarea rows="4" cols="33"  value="#{eventView.event.taskReceived}"/>
+                        
+                        <p:outputLabel value="Remarks : "/>
+                        <p:inputTextarea rows="8" cols="33"  value="#{eventView.event.remarks}"/>
                     </p:panelGrid>
                     <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
                 </p:panel>
 
-                <p:dataTable var="event" value="#{eventView.eventsList}" id="eventDataTable">
+                <p:dataTable var="event" value="#{eventView.student.events}" id="eventDataTable">
 
                     <p:column headerText="Event">
-                        <h:outputText value="#{event.event}" />
+                        <h:outputText value="#{event.event.toString()}" />
                     </p:column>
 
                     <p:column headerText="Start Date">
@@ -69,6 +72,10 @@
 
                     <p:column headerText="Task Received">
                         <h:outputText value="#{event.taskReceived}" />
+                    </p:column>
+                    
+                    <p:column headerText="Remarks">
+                        <h:outputText value="#{event.remarks}" />
                     </p:column>
 
                     <p:column headerText="Actions">

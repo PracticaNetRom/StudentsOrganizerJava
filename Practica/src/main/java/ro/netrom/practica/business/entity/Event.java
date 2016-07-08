@@ -38,15 +38,37 @@ public class Event implements Serializable {
 
     public enum Type {
 
-        PRACTICE, INTERSHIP, NSA
+        PRACTICE("Practica"), INTERSHIP("Intership"), NSA("NSA");
+
+        private Type(String name) {
+            this.name = name;
+        }
+
+        private final String name;
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
     public enum Departament {
 
-        JAVA, NET
+        JAVA("Java"), NET(".NET");
+        
+        private final String nameDEP;
+
+        private Departament(String nameDEP) {
+            this.nameDEP = nameDEP;
+        }
+        
+        @Override
+        public String toString() {
+            return nameDEP;
+        }
     }
 
-    public Long getId() {
+public Long getId() {
         return id;
     }
 

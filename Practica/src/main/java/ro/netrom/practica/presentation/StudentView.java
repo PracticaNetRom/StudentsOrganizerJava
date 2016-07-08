@@ -8,6 +8,7 @@ package ro.netrom.practica.presentation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -23,12 +24,14 @@ import ro.netrom.practica.business.entity.Student;
  */
 @Named
 @ViewScoped
+@ManagedBean
 public class StudentView implements Serializable {
 
     @Inject
     private Students students;
     private Student student;
     private List<Student> studentsList;
+    private String productId;
 
     @PostConstruct
     public void init() {
@@ -55,7 +58,7 @@ public class StudentView implements Serializable {
         student = new Student();
         addMessageToStudent("Successful!", "The student has been delete.");
     }
-    
+
     public void addMessageToStudent(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -64,9 +67,22 @@ public class StudentView implements Serializable {
     public Student getStudent() {
         return student;
     }
+    
+    public String goToPage()
+    {
+        return "event?faces-redirect=true&studentId=" + student.getId();
+    }
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Students getStudents() {
+        return students;
+    }
+
+    public void setStudents(Students students) {
+        this.students = students;
     }
 
     public List<Student> getStudentsList() {
@@ -77,6 +93,15 @@ public class StudentView implements Serializable {
         this.studentsList = studentsList;
     }
 
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+    
+
     public List<Integer> getYears() {
         ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 2000; i <= 2020; i++) {
@@ -84,5 +109,4 @@ public class StudentView implements Serializable {
         }
         return list;
     }
-
 }
