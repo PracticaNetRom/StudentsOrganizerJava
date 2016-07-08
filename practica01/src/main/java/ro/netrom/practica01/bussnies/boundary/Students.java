@@ -15,7 +15,7 @@ import ro.netrom.practica01.bussnies.entity.Student;
 
 /**
  *
- * @author practice11
+ * @author practice01
  */
 @Stateless
 public class Students implements Serializable {

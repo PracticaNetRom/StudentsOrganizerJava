@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author practice11
+ * @author practice01
  */
 @Entity
 public class Student implements Serializable {
