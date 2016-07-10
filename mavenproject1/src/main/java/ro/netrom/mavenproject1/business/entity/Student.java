@@ -35,6 +35,7 @@ public class Student implements Serializable {
     private Gender gender;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthDate;
+//    @Email(message = "must be a valid email")
     private String email;
     private String phoneNumbers;
     private String faculty;

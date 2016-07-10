@@ -36,12 +36,20 @@
                 <p:outputLabel value = "Birth Date: "/>
                 <p:calendar id="mask" value="#{studentView.selectedStudent.birthDate}" pattern="dd-MM-yyyy" mask="true" /><br/>
 
+                <p:outputLabel for="email" value = "Email:"/>
+                <p:inputText id="email" required="true" label="email" size="40"
+                             requiredMessage="Please enter your email address."
+                             validatorMessage="Invalid email format"
+                             value="#{studentView.selectedStudent.email}">
 
-                <p:outputLabel value = "Email: "/>
-                <p:inputText placeholder="Email: " value ="#{studentView.selectedStudent.email}"/><br/>
+                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.(com|net|org|edu|ro)"/>
+                </p:inputText>
+                <p:watermark for="email" value="email" />
+                <p:message for="email" />
 
-                <p:outputLabel value = "Phone number: "/>
-                <p:inputText placeholder="Phone number: " value ="#{studentView.selectedStudent.phoneNumbers}" maxlength="10" /><br/>
+                <p:outputLabel for="phone" value="Phone number:" />
+                <p:inputMask id="phone" value="#{studentView.selectedStudent.phoneNumbers}" mask="(9999) 999-999"/><br/>
+
 
                 <p:outputLabel value = "Faculty: "/>
                 <p:inputText placeholder="Faculty: " value ="#{studentView.selectedStudent.faculty}"/><br/>
@@ -88,6 +96,7 @@
                         <h:outputText value="#{student.gender}" />
                     </p:column>
 
+
                     <p:column headerText="Phone Numbers">
                         <h:outputText value="#{student.phoneNumbers}" />
                     </p:column>
@@ -100,8 +109,12 @@
                         <h:outputText value="#{student.facultyStartYear}" />
                     </p:column>
 
+                    <!--                    <p:column headerText="Events" >
+                                            <h:outputText value="#{student.events}" />
+                                        </p:column>-->
 
-<!--                    <p:column headerText="Year of application" sortBy="#{student.applicationYear}" priority="1">
+
+<!--                    <p:column headerText="Year of application" sortBy="#{student.applicationYear}" >
 <h:outputText value="#{student.applicationYear}" />
 </p:column>-->
 

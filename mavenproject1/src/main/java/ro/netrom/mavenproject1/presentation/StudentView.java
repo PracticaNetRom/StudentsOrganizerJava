@@ -8,6 +8,7 @@ package ro.netrom.mavenproject1.presentation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,6 +27,7 @@ import ro.netrom.mavenproject1.business.entity.Student;
  */
 @Named
 @ViewScoped
+@ManagedBean
 public class StudentView implements Serializable {
 
     @Inject

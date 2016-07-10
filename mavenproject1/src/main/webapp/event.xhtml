@@ -17,6 +17,7 @@
     <h:body>
         <h:form id="eventForm">
             
+            <p:growl id="growl" showDetail="true" sticky="true" />
             
             <p:outputLabel for="selectType" value = "Type of the event:"/>
             <p:selectOneMenu id="selectType" value = "#{eventView.event.type}">
