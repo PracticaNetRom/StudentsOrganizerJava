@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.netrom.practica.busnies.entity;
+package ro.netrom.practica.business.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author practice10
+ * @author practice8
  */
 @Entity
 public class Student implements Serializable {
@@ -37,7 +37,7 @@ public class Student implements Serializable {
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Faculty faculty;
-    private Integer facultyStartyear;
+    private Integer facultyStartYear;
     @OneToMany
     private List<Event> events;
 
@@ -48,7 +48,7 @@ public class Student implements Serializable {
 
     public enum Faculty {
 
-        AUTOMATICA, MATEMATICA_INFORMATICA
+        AUTOMATICA_CALCULATOARE_SI_ELECTRONICA, MATEMATICA_INFORMATICA
     }
 
     public Long getId() {
@@ -115,12 +115,12 @@ public class Student implements Serializable {
         this.faculty = faculty;
     }
 
-    public Integer getFacultyStartyear() {
-        return facultyStartyear;
+    public Integer getFacultyStartYear() {
+        return facultyStartYear;
     }
 
-    public void setFacultyStartyear(Integer facultyStartyear) {
-        this.facultyStartyear = facultyStartyear;
+    public void setFacultyStartYear(Integer facultyStartYear) {
+        this.facultyStartYear = facultyStartYear;
     }
 
     public List<Event> getEvents() {

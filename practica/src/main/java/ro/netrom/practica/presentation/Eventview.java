@@ -6,89 +6,103 @@
 package ro.netrom.practica.presentation;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import ro.netrom.practica.busnies.boundary.Events;
-import ro.netrom.practica.busnies.entity.Event;
+import javax.servlet.http.HttpServletRequest;
+import ro.netrom.practica.business.boundary.Events;
+import ro.netrom.practica.business.boundary.Students;
+import ro.netrom.practica.business.entity.Event;
+import ro.netrom.practica.business.entity.Student;
 
 /**
  *
- * @author practice10
+ * @author Oana
  */
 @Named
 @ViewScoped
-public class Eventview implements Serializable {
-
+public class EventView implements Serializable {
+    
     @Inject
     private Events events;
+    @Inject
+    private Students students;
     private Event event;
-    private List<Event> allEvents;
-
+    private List<Event> eventsList;
+    private Student student;
+    
     @PostConstruct
-    public void init() {
+    public void initEvent() {
+        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String studentId = req.getParameter("studentId");
+        student = students.findStudent(studentId);
         event = new Event();
-        allEvents = events.getAll();
+        eventsList = events.getEventsList();
     }
-
+    
+    public void saveEvent() {
+        
+        if (event.getId() == null) {            
+            events.saveEvent(event);
+            student.getEvents().add(event);
+            students.editStudent(student);
+            
+        } else {
+            events.editEvent(event);
+        }
+        event = new Event();
+        addMessageToEvent("Successful!", "The event has been add.");
+    }
+    
+    public void deleteEvent() {
+        student.getEvents().remove(event);
+        students.editStudent(student);
+        events.deleteEvent(event);
+        event = new Event();
+        addMessageToEvent("Successful!", "The event has been delete.");
+    }
+    
+    public void addMessageToEvent(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
     public Event getEvent() {
         return event;
     }
-
+    
     public void setEvent(Event event) {
         this.event = event;
     }
-
-    public List<Integer> getYears() {
-        ArrayList<Integer> lista = new ArrayList<>();
-        for (int i = 2010; i < 2030; i++) {
-            lista.add(i);
-        }
-        return lista;
-    }
-
-    public void saveEvent() {
-        if (event.getId() == null) {
-            events.eventSave(event);
-            allEvents.add(event);
-            
-        }
-               else{
-                 events.eventEdit(event);
-                }
-         event = new Event();
-    }
-
-
-
-    public void deleteEvent() {
-        
-        events.eventDelete(event);
-        allEvents.remove(event);
-        event = new Event();
-    }
-
-    public List<Event> getAllEvents() {
-        return allEvents;
-    }
-
-    public void setAllEvents(List<Event> allEvents) {
-        this.allEvents = allEvents;
-    }
-public class GrowlView {
-     
-    private String message;
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
     
-}
+    public Events getEvents() {
+        return events;
+    }
+    
+    public void setEvents(Events events) {
+        this.events = events;
+    }
+    
+    public List<Event> getEventsList() {
+        return eventsList;
+    }
+    
+    public void setEventsList(List<Event> eventsList) {
+        this.eventsList = eventsList;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    
+    
+    
 }

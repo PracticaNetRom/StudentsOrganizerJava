@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ro.netrom.practica.busnies.boundary;
+package ro.netrom.practica.business.boundary;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import ro.netrom.practica.busnies.entity.Student;
+import ro.netrom.practica.business.entity.Student;
 
 /**
  *
- * @author practice10
+ * @author practice8
  */
 @Stateless
 public class Students implements Serializable {
@@ -22,23 +22,27 @@ public class Students implements Serializable {
     @PersistenceContext(name = "practicaPU")
     private EntityManager em;
 
-    public void studentSave(Student student) {
+    public void saveStudent(Student student) {
         em.persist(student);
     }
 
-    public void studentEdit(Student student) {
-        em.merge(student);
-           }
-
-    public void studentDelete(Student student) {
+    public void deleteStudent(Student student) {
         em.remove(em.merge(student));
+
     }
 
-    public List<Student> getAll() {
-        List<Student> results = em
+    public void editStudent(Student student) {
+        em.merge(student);
+    }
+    
+    public Student findStudent(String studentId){
+       return em.find(Student.class, Long.valueOf(studentId));
+    }
+
+    public List<Student> getStudentsList() {
+        List<Student> rezult = em
                 .createQuery("Select a from Student a", Student.class)
                 .getResultList();
-        return results;
+        return rezult;
     }
-
 }
