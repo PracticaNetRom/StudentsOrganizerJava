@@ -9,20 +9,35 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>Students</title>
             </f:facet>
+
+            <style>
+                h1 {text-align:center; color:cadetblue;}
+                body {
+                    background-color: azure;
+                }
+                .ui-button .ui-button-text{
+                    font-size:15px;
+                }
+                form{
+                    font-family: times; font-size:12pt; font-style:inherit; 
+                }
+            </style>
 
         </h:head>
 
+        <h1 style="margin-top:5">Students Organizer</h1>
+
         <h:body >
 
-            <h:form id="studentForm">
+            <h:form id="studentForm" >
 
                 <p:panel  header="New Student" >
 
                     <p:growl  showDetail="true" />
 
-                    <p:panelGrid columns="2" columnClasses="label, value">
+                    <p:panelGrid columns="2" columnClasses="label, value" >
                         <p:outputLabel for="firstname" value="First Name : "/>
                         <p:inputText id="firstname" value="#{studentView.student.firstName}" required="true" label="FirstName" requiredMessage="Please enter the FirstName" validatorMessage="Invalid FirstName"/>                             
 
@@ -62,12 +77,16 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check"/>
+                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check" />
                 </p:panel>
 
-                <p:dataTable var="student" value="#{studentView.studentsList}" id="studentDataTable">
+                <p:dataTable  var="student" value="#{studentView.studentsList}" id="studentDataTable" rows="5"
+                              paginator="true"
+                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                              rowsPerPageTemplate="5,10,15" >
 
-                    <p:column headerText="First Name">
+
+                    <p:column headerText="First Name" >
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
 
@@ -119,7 +138,6 @@
 
                     </p:column>
                 </p:dataTable>
-
             </h:form>
 
         </h:body>

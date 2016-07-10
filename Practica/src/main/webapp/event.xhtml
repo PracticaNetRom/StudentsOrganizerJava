@@ -12,9 +12,22 @@
                 <title>Events</title>
             </f:facet>
 
+            <style>
+                body {
+                    background-color: azure;
+                }
+                .ui-button .ui-button-text{
+                    font-size:15px;
+                }
+                form{
+                    font-family: times; font-size:12pt; font-style:inherit; 
+                }
+            </style>
+
         </h:head>
 
         <h:body >
+
 
             <h:form id="eventForm">
                 <p:growl  showDetail="true" />
@@ -45,14 +58,17 @@
 
                         <p:outputLabel value="Task received : "/>
                         <p:inputTextarea rows="4" cols="33"  value="#{eventView.event.taskReceived}"/>
-                        
+
                         <p:outputLabel value="Remarks : "/>
                         <p:inputTextarea rows="8" cols="33"  value="#{eventView.event.remarks}"/>
                     </p:panelGrid>
                     <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
                 </p:panel>
 
-                <p:dataTable var="event" value="#{eventView.student.events}" id="eventDataTable">
+                <p:dataTable var="event" value="#{eventView.student.events}" id="eventDataTable" rows="5"
+                              paginator="true"
+                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                              rowsPerPageTemplate="5,10,15">
 
                     <p:column headerText="Event">
                         <h:outputText value="#{event.event.toString()}" />
@@ -73,7 +89,7 @@
                     <p:column headerText="Task Received">
                         <h:outputText value="#{event.taskReceived}" />
                     </p:column>
-                    
+
                     <p:column headerText="Remarks">
                         <h:outputText value="#{event.remarks}" />
                     </p:column>
