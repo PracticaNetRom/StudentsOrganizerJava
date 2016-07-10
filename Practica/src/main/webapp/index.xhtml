@@ -24,10 +24,10 @@
 
                     <p:panelGrid columns="2" columnClasses="label, value">
                         <p:outputLabel for="firstname" value="First Name : "/>
-                        <p:inputText id="firstname" value="#{studentView.student.firstName}" required="true" label="FirstName"/>                             
+                        <p:inputText id="firstname" value="#{studentView.student.firstName}" required="true" label="FirstName" requiredMessage="Please enter the FirstName" validatorMessage="Invalid FirstName"/>                             
 
                         <p:outputLabel for="lastname" value="Last Name : "/>
-                        <p:inputText id="lastname" value="#{studentView.student.lastName}" required="true" label="LastName"/>
+                        <p:inputText id="lastname" value="#{studentView.student.lastName}" required="true" label="LastName" requiredMessage="Please enter the LastName." validatorMessage="Invalid LastName"/>
 
                         <p:outputLabel for = "gender" value="Gender :" />
                         <p:selectOneMenu id="gender" value="#{studentView.student.gender}">
@@ -38,9 +38,9 @@
                         <p:outputLabel for="birthdate" value="Birth Date : " />
                         <p:calendar id="birthdate" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
 
-                        <p:outputLabel value="E-mail : "/>
-                        <p:inputText id="email" required="true" label="email" size="40"
-                                     requiredMessage="Please enter your email address."
+                        <p:outputLabel for="email" value="E-mail : "/>
+                        <p:inputText id="email" required="true" label="email" 
+                                     requiredMessage="Please enter the email address."
                                      validatorMessage="Invalid email format"
                                      value="#{studentView.student.email}">
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -119,6 +119,7 @@
 
                     </p:column>
                 </p:dataTable>
+
             </h:form>
 
         </h:body>
