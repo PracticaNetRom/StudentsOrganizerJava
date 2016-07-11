@@ -54,7 +54,8 @@ public class StudentView implements Serializable {
 
     public void save() {
         if (student.getId() == null) {
-            //student.getEvents().add(studentevent);
+            List<Event> studentEvents = student.getEvents(); 
+            
             studentBoundary.saveStudent(student);
             students.add(student);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -85,6 +86,9 @@ public class StudentView implements Serializable {
         context.addMessage(null, new FacesMessage("Student successfully deleted  "));
     }
 
+    public String goToPage(){
+        return "event?faces-redirect=true&studentId"+student.getId();
+    }
     public Student getStudent() {
         return student;
     }

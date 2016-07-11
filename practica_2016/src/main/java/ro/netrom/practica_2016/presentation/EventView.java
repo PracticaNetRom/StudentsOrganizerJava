@@ -53,6 +53,10 @@ public class EventView implements Serializable {
 
     }
 
+    public String goToPage() {
+        return "index.xhtml";
+    }
+
     public void saveEv() {
         if (event.getId() == null) {
             eventBoundary.saveEvent(event);

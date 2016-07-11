@@ -19,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 /**
  *
@@ -35,21 +37,25 @@ public class Student implements Serializable {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Temporal(TemporalType.DATE)
+
+    @Past
     private Date birthDate;
+    
     private String email;
     private String phoneNumbers;
     private String faculty;
     private int facultyStartYear;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
+//        (cascade = CascadeType.ALL)
     private List<Event> events;
 
     public enum Gender {
 
         FEMALE, MALE
     }
-    
-    public Student(){
+
+    public Student() {
         events = new ArrayList<>();
     }
 
@@ -85,6 +91,7 @@ public class Student implements Serializable {
         this.birthDate = birthDate;
     }
 
+    
     public String getEmail() {
         return email;
     }
@@ -132,6 +139,5 @@ public class Student implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
+
 }

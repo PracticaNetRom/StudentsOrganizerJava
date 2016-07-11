@@ -10,11 +10,14 @@
             <h:form id="studentForm">
                 <p:panelGrid columns="2">
                     <p:outputLabel value="First Name"/>
-                    <p:inputText value="#{studentView.student.firstName}"/>
+                    <p:inputText value="#{studentView.student.firstName}" label="first name">
+                        <f:validateLength minimum="3" />
+                    </p:inputText>
 
                     <p:outputLabel value="Last Name"/>
-                    <p:inputText value="#{studentView.student.lastName}"/>
-
+                    <p:inputText value="#{studentView.student.lastName}" label="last name">
+                        <f:validateLength minimum="3" />
+                    </p:inputText>
 
                     <p:outputLabel for="gender" value="Gender: " />
                     <p:selectOneMenu id="gender" value="#{studentView.student.gender}">
@@ -28,23 +31,32 @@
                     <p:calendar id="mask" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
 
                     <p:outputLabel value="Email"/>
-                    <p:inputText value="#{studentView.student.email}"/>
+                    <p:inputText id="email" required="true" requiredMessage="Please enter  your email"
+                                 validatorMessage="Enter a valid email" value="#{studentView.student.email}">
+                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9_]\.(com|ro|net|org|edu)"/>
 
+                    </p:inputText>
+                    <p:watermark for="email" value="email"/>
+                    <p:message for="email"/>
+                    
                     <p:outputLabel for="phone" value="Phone:" />
                     <p:inputMask id="phone"  value="#{studentView.student.phoneNumbers}"  mask="(9999) 999-999"/>
 
                     <p:outputLabel value="Faculty"/>
-                    <p:inputText value="#{studentView.student.faculty}"/>
+                    <p:inputText value="#{studentView.student.faculty}">
+                        <f:validateLength minimum="3" />
+                    </p:inputText>
 
                     <p:outputLabel value="Faculty start year"/>
-                    <p:inputText value="#{studentView.student.facultyStartYear}"/>
+                    <p:inputMask value="#{studentView.student.facultyStartYear}" mask="9999"/>
 
 
                     <h:outputLabel for="menu" value="Events:" />
                     <p:selectCheckboxMenu id="menu" value="#{studentView.student.events}" label="Events"
-                                          filter="true" filterMatchMode="startsWith" panelStyle="width:700px">
+                                          filter="true" filterMatchMode="startsWith" panelStyle="width:200px">
                         <f:converter   converterId ="eventConverter" />
-                        <f:selectItems value="#{studentView.events}" var="event" itemLabel="#{event.eventName}" itemValue="#{event}" />
+                        <f:selectItems value="#{studentView.events}" var="event" itemLabel="#{event.eventName}" 
+                                       itemValue="#{event}" />
                     </p:selectCheckboxMenu>
 
                     <!--                         
@@ -57,6 +69,7 @@
                     <p:commandButton value="Save" actionListener="#{studentView.save()}"
                                      update=":studentForm :datatableForm"
                                      oncomplete="PF('studentDialog').hide();"/>
+                   
                 </p:panelGrid>
             </h:form>
         </p:dialog>
