@@ -17,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.validation.constraints.Past;
+
 
 /**
  *
@@ -34,13 +36,13 @@ public class Student implements Serializable {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Past
     private Date birthDate;
-//    @Email(message = "must be a valid email")
     private String email;
     private String phoneNumbers;
     private String faculty;
     private int facultyStartYear;
-    //private int applicationYear;
+    
     @OneToMany
     private List<Event> events;
 
@@ -129,11 +131,4 @@ public class Student implements Serializable {
         this.lastName = lastName;
     }
 
-    /*public int getApplicationYear() {
-     return applicationYear;
-     }
-
-     public void setApplicationYear(int applicationYear) {
-     this.applicationYear = applicationYear;
-     }*/
 }

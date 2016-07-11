@@ -20,11 +20,20 @@
                 <p:growl id="growl" showDetail="true" sticky="true" />  
 
                 <p:outputLabel value = "First Name: "/>
-                <p:inputText placeholder="First Name: " value="#{studentView.selectedStudent.firstName}"/><br/>
+                <p:inputText placeholder="First Name: " value="#{studentView.selectedStudent.firstName}"
+                             validatorMessage="Invalid first name format">
+                    <f:validateLength minimum="3"/>
+                    <f:validateRegex pattern="[a-zA-Z]*"/>
+                </p:inputText>
+                <br/>
 
 
                 <p:outputLabel value = "Last Name: "/>
-                <p:inputText placeholder="Last Name: " value ="#{studentView.selectedStudent.lastName}"/><br/>
+                <p:inputText placeholder="Last Name: " value ="#{studentView.selectedStudent.lastName}"
+                             validatorMessage="Invalid first name format">
+                    <f:validateLength minimum="3"/>
+                    <f:validateRegex pattern="[a-zA-Z]*"/>
+                </p:inputText><br/>
 
                 <p:outputLabel for="select" value = "Gender: "/>
                 <p:selectOneMenu id="select" value="#{studentView.selectedStudent.gender}">
@@ -34,9 +43,9 @@
                 </p:selectOneMenu><br/>
 
                 <p:outputLabel value = "Birth Date: "/>
-                <p:calendar id="mask" value="#{studentView.selectedStudent.birthDate}" pattern="dd-MM-yyyy" mask="true" /><br/>
+                <p:calendar id="mask" value="#{studentView.selectedStudent.birthDate}" pattern="dd-MM-yyyy"  mask="true" /><br/>
 
-                <p:outputLabel for="email" value = "Email:"/>
+                <p:outputLabel for="email" value = "Email:"/>                
                 <p:inputText id="email" required="true" label="email" size="40"
                              requiredMessage="Please enter your email address."
                              validatorMessage="Invalid email format"
@@ -48,8 +57,11 @@
                 <p:message for="email" />
 
                 <p:outputLabel for="phone" value="Phone number:" />
-                <p:inputMask id="phone" value="#{studentView.selectedStudent.phoneNumbers}" mask="(9999) 999-999"/><br/>
-
+                <p:inputMask id="phone" required="true" value="#{studentView.selectedStudent.phoneNumbers}" 
+                             mask="(9999) 999-999" 
+                             requiredMessage="Please enter your phone number."
+                             validatorMessage="Invalid phone number format." /><br/>
+                <p:message for="phone" />
 
                 <p:outputLabel value = "Faculty: "/>
                 <p:inputText placeholder="Faculty: " value ="#{studentView.selectedStudent.faculty}"/><br/>
@@ -74,7 +86,9 @@
 
             <h:form id="studentsDTForm" prependId="false">
 
-                <p:dataTable id="studentsDT" var="student" value="#{studentView.students}" paginator="true" rows="10" tableStyleClass="ui-table-columntoggle">
+                <p:dataTable id="studentsDT" var="student" 
+                             value="#{studentView.students}" paginator="true" 
+                             rows="10" tableStyleClass="ui-table-columntoggle">
 
                     <p:column headerText="First Name" sortBy="#{student.firstName}">
                         <h:outputText value="#{student.firstName}" />
@@ -109,15 +123,6 @@
                         <h:outputText value="#{student.facultyStartYear}" />
                     </p:column>
 
-                    <!--                    <p:column headerText="Events" >
-                                            <h:outputText value="#{student.events}" />
-                                        </p:column>-->
-
-
-<!--                    <p:column headerText="Year of application" sortBy="#{student.applicationYear}" >
-<h:outputText value="#{student.applicationYear}" />
-</p:column>-->
-
                     <p:column style="text-align: center" headerText="Action">
                         <p:commandButton value="Edit" update="studentsDT :studentForm" action="#{studentView.edit()}" >
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.selectedStudent}"/>
@@ -133,6 +138,11 @@
                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
+
+                        <p:commandButton value="Events" actionListener="#{studentView.goToPage()}" update="studentsDT" >
+                            <f:setPropertyActionListener value="#{student}" target="studentView.selectedStudent"/>
+                        </p:commandButton>
+
 
                     </p:column>                    
 

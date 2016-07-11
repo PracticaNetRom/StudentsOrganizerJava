@@ -73,6 +73,10 @@ public class StudentView implements Serializable {
         this.events = events;
     }
 
+    public String goToPage(){
+        return "event?faces-redirect=true&studentId"+selectedStudent.getId();
+    }
+    
     public void save() {
         if (selectedStudent.getId() == null) {
             studentBoundary.saveStudent(selectedStudent);
