@@ -57,15 +57,14 @@ public class EventView implements Serializable {
         if (event.getId() == null) {
             eventBoundary.saveEvent(event);
             events.add(event);
-            event = new Event();
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Event successfully added  "));
         } else {
             eventBoundary.updateEvent(event);
-            event = new Event();
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Event successfully edited  "));
         }
+        event = new Event();
 
     }
 
@@ -79,6 +78,8 @@ public class EventView implements Serializable {
     public void deleteEv() {
         eventBoundary.deleteEvent(event);
         events.remove(event);
+        event = new Event();
+
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Event successfully deleted  "));
     }

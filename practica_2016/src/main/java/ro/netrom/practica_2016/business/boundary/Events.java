@@ -44,5 +44,8 @@ public class Events implements Serializable {
         emEv.remove(emEv.merge(event));
 
     }
+    public Event findById(Long id){
+        return emEv.find(Event.class, id);
+    }
 
 }

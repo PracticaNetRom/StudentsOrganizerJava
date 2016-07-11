@@ -39,12 +39,21 @@
                     <p:outputLabel value="Faculty start year"/>
                     <p:inputText value="#{studentView.student.facultyStartYear}"/>
 
-                    <p:outputLabel for="event" value="Event: " />
-                    <p:selectOneMenu id="event" value="#{eventView.event}" style="width:150px">
-                        <f:selectItem itemLabel="Select event"  noSelectionOption="true" />
-                        <f:selectItems value="#{eventView.events}" />
-                    </p:selectOneMenu>
-                    
+
+                    <h:outputLabel for="menu" value="Events:" />
+                    <p:selectCheckboxMenu id="menu" value="#{studentView.student.events}" label="Events"
+                                          filter="true" filterMatchMode="startsWith" panelStyle="width:700px">
+                        <f:converter   converterId ="eventConverter" />
+                        <f:selectItems value="#{studentView.events}" var="event" itemLabel="#{event.eventName}" itemValue="#{event}" />
+                    </p:selectCheckboxMenu>
+
+                    <!--                         
+                                        <p:outputLabel for="event" value="Event: " />
+                                        <p:selectOneMenu id="event" value="#{eventView.event}" style="width:150px">
+                                            <f:selectItem itemLabel="Select event"  noSelectionOption="true" />
+                                            <f:selectItems value="#{eventView.events}" />
+                                        </p:selectOneMenu>-->
+
                     <p:commandButton value="Save" actionListener="#{studentView.save()}"
                                      update=":studentForm :datatableForm"
                                      oncomplete="PF('studentDialog').hide();"/>

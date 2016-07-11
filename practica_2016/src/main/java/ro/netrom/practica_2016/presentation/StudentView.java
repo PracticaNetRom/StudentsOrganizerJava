@@ -7,6 +7,7 @@ package ro.netrom.practica_2016.presentation;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,6 +21,7 @@ import ro.netrom.practica_2016.business.entity.Student;
 
 @Named
 @ViewScoped
+@ManagedBean
 public class StudentView implements Serializable {
 
     @Inject
@@ -33,6 +35,14 @@ public class StudentView implements Serializable {
     private List<Student> students;
     
     private List<Event> events;
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     @PostConstruct
     public void init() {
@@ -60,7 +70,7 @@ public class StudentView implements Serializable {
 
     public void update() {
         studentBoundary.updateStudent(student);
-        student = new Student();
+        //student = new Student();
     }
 
     /**
@@ -70,6 +80,7 @@ public class StudentView implements Serializable {
         studentBoundary.deleteStudent(student);
         students.remove(student);
         student = new Student();
+        
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Student successfully deleted  "));
     }
