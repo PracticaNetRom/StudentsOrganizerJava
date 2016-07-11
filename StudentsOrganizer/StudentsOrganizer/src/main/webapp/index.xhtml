@@ -41,15 +41,16 @@
             <ui:include src="/WEB-INF/dialogs/add-student.xhtml" />
             <ui:include src="/WEB-INF/dialogs/add-event.xhtml" />
             <ui:include src="/WEB-INF/dialogs/add-studentEvent.xhtml" />
+            <ui:include src="/WEB-INF/dialogs/delete-student.xhtml" />
 
 
             <h:form id="tableForm">
-
+                <p:growl id="growl" life="2000" />
                 <h1 align="center">Participants</h1>
                 <p:dataTable id="tbl" var="student" value="#{studentView.students}" rows="10"
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
-                             rowsPerPageTemplate="5,10,15" >
+                             rowsPerPageTemplate="5,10,15" editable="true" editMode="cell">
 
                     <f:facet name="{Exporters}">
                         <h:commandLink>
@@ -58,54 +59,88 @@
                         </h:commandLink>
                     </f:facet>
 
-
-                    <p:column headerText="First Name" filterBy="#{student.firstName}" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{student.firstName}" />
+                    <p:ajax event="cellEdit" listener="#{studentView.onCellEdit(event)}"  />
+                     
+                    <p:column headerText="First Name" filterBy="#{student.firstName}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.firstName}"  /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{student.firstName}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Last Name" filterBy="#{student.lastname}" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{student.lastname}" />
+                    <p:column headerText="Last Name" filterBy="#{student.lastname}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.lastname}"  /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{student.lastname}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+
                     </p:column>
 
                     <p:column headerText="Gender" sortBy="#{student.gender}" >           
-                        <h:outputText value="#{student.gender}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.gender}"/></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu  value="#{student.gender}" style="width:125px">
+                                    <f:selectItem itemLabel="Male" itemValue="MALE" />
+                                    <f:selectItem itemLabel="Female" itemValue="FEMALE" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Birth Day" sortBy="#{student.birthDay}">
-                        <h:outputText value="#{student.birthDay}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.birthDay}"  /></f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{student.birthDay}" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+                            </f:facet>
+                        </p:cellEditor>
+
                     </p:column>
 
                     <p:column headerText="Email">
-                        <h:outputText value="#{student.email}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.email}"  /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{student.email}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Phone Number" filterBy="#{student.phoneNumber}" footerText="contains" filterMatchMode="contains">
-                        <h:outputText value="#{student.phoneNumber}" />
+                    <p:column headerText="Phone Number" filterBy="#{student.phoneNumber}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.phoneNumber}"  /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{student.phoneNumber}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Faculty">
-                        <h:outputText value="#{student.faculty}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.faculty}"  /></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu value="#{student.faculty}"  style="width:150px">
+                                    <f:selectItem itemLabel="MATE INFO" itemValue="MATE_INFO" />
+                                    <f:selectItem itemLabel="AUTOMATICA" itemValue="AUTOMATICA" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
                     </p:column>
 
                     <p:column headerText="Faculty Start Year" sortBy="#{student.facultystartYear}">
-                        <h:outputText value="#{student.facultystartYear}" />
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{student.facultystartYear}"  /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{student.facultystartYear}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
 
-                    <p:column headerText="Actions" exportable="false">
+                    <p:column headerText="Actions" exportable="false" >
 
-                        <p:commandButton icon="ui-icon-trash" onclick="PF('confirmDialog').show();">
-                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                        <p:commandButton icon="ui-icon-trash" onclick="PF('deleteStudent').show();" update="tableForm">
+
                         </p:commandButton>
 
-                        <p:commandButton  icon="ui-icon-gear" onclick="PF('dialogSE').show();" />
+                        <p:commandButton   icon="ui-icon-circle-plus" onclick="PF('dialogSE').show();" />
                     </p:column> 
 
                 </p:dataTable>
-                
-                <p:confirmDialog widgetVar="confirmDialog" global="true" showEffect="fade" hideEffect="fade">
-                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                </p:confirmDialog>
 
             </h:form>
 

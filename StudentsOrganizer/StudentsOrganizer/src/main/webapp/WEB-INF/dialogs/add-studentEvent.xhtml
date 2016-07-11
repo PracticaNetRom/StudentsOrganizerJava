@@ -7,18 +7,19 @@
 
     <ui:composition>
         <p:dialog  id="dialogSE" widgetVar="dialogSE" header="Add events for student" showEffect="clip" hideEffect="clip">
-
-
             <h1 align="center" >  
                 <img  src="Image/Student-3-icon.png" width="70" height="70" alt="Student-3-icon" />
                 <img  src="Image/Calendar-icon.png" width="70" height="70" alt="Student-3-icon" />
             </h1>
-            <h:form>
-            <p:outputLabel  value="Events: " />
-            <p:selectOneMenu id="event" value="#{eventView.events}" style="width:150px">
-                <f:selectItem itemLabel="Select Event"  noSelectionOption="true" />
-                <f:selectItems value="#{eventView.events}" var="event" itemLabel="#{event.type}" itemValue="#{event}"  />
-            </p:selectOneMenu>
+            <h:form id="eventAddStudentForm">
+                  <p:growl id="growl" life="2000" />
+                <p:selectOneMenu id="event" value="#{eventView.events}" style="width:150px">
+                    <f:selectItem itemLabel="Select Event"  noSelectionOption="true" />
+                    <f:selectItems value="#{eventView.events}" var="event" itemLabel="#{event.type}" itemValue="#{event}"  />
+                </p:selectOneMenu>
+                <h:panelGrid columns="1">
+                    <p:commandButton  actionListener="#{studentView.addEvent(event)}" update="growl eventAddStudentForm" oncomplete="PF('dialogSE').hide();" icon="ui-icon-circle-plus" style="vertical-align: central"/>
+                </h:panelGrid>
             </h:form>
         </p:dialog>
     </ui:composition>

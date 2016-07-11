@@ -6,12 +6,10 @@
 package ro.NRO.StudentsOrganizer.business.boundary;
 
 import java.io.Serializable;
-import java.time.Clock;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import ro.NRO.StudentsOrganizer.business.entity.Student;
 
@@ -28,6 +26,12 @@ public class Students implements Serializable {
     public void saveStudent(Student student) {
 
         em.persist(student);
+    }
+    
+    public void deleteStudent(Student student){
+        
+        em.remove(student);
+        
     }
 
     public List<Student> getAll() {
