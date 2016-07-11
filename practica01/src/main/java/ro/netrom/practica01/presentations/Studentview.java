@@ -95,6 +95,7 @@ public class StudentView implements Serializable {
 
     public void setAllStudents(List<Student> allStudents) {
         this.allStudents = allStudents;
-    }
+    } 
+
 
 }
