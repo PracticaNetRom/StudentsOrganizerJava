@@ -16,6 +16,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -27,13 +30,18 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Past
     private Date birthDate;
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
+    @Pattern(regexp="^\\d{3}-\\d{3}-\\d{4}$")
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Faculty faculty;
