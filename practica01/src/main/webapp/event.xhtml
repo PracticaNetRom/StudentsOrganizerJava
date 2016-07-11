@@ -12,12 +12,28 @@
             </f:facet>
         </h:head>
 
+        <h:head>
+            <style>
+                body {
+                    background-color: greenyellow;
+                }
+            </style>
+        </h:head>
+
         <h:body>
+            <h1 align="left">
+                <h:graphicImage value="resource/images/logo.png" style="width:150px; height:155px"/>
+            </h1>
+
+            <p:toolbar style="height:15px" /> 
+
+            <p:spacer width="100" height="60" />
+
             <h:form id="eventForm">
-                <p:commandButton value="Add Event" id="save"  onclick="PF('editEventDialog').show();" />
+                <p:commandButton value="Add Event" id="save" icon="ui-icon-calendar" onclick="PF('editEventDialog').show();" />
             </h:form>
-            
-            <p:spacer width="100" height="10" />
+
+            <p:spacer width="100" height="30" />
 
             <h:form id="eventsDT">
                 <p:growl id="message" showDetail="true"/>
@@ -47,10 +63,10 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton update=":editEventForm" value="EDIT" onclick="PF('editEventDialog').show();">
+                        <p:commandButton update=":editEventForm" value="EDIT" icon="ui-icon-edit" onclick="PF('editEventDialog').show();">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
-                        <p:commandButton update="datatable" action="#{eventView.deleteEvent()}" value="DELETE">
+                        <p:commandButton update="datatable" action="#{eventView.deleteEvent()}" value="DELETE" icon="ui-icon-close">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                         </p:commandButton>

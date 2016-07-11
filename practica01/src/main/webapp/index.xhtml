@@ -12,33 +12,35 @@
                 <title>Student</title>
             </f:facet>
         </h:head>
-         
+
         <h:head>
             <style>
                 body {
-                    background-color:lightblue;
+                    background-color: cadetblue;
                 }
             </style>
         </h:head>
-        
-        <p:graphicImage name="images/netrom.png" />
 
         <h:body> 
-            <p:spacer width="100" height="80" /> 
+            <h1 align="left">
+                <h:graphicImage value="resource/images/netrom.png" style="width:150px; height:155px"/>
+            </h1>
 
-            <p:toolbar style="height:15px" />         
+            <h1 align="center" style="background-color: #d5da32">Students Organizer</h1> 
 
             <p:spacer width="100" height="60" />
 
             <h:form id="studentForm">
-                <p:commandButton value="Add Student" id="save"  onclick="PF('editStudentDialog').show();"/>               
+                <p:commandButton value="Add Student" id="save" icon="ui-icon-check" onclick="PF('editStudentDialog').show();"/>               
             </h:form>
 
             <p:spacer width="100" height="100" />
-
             <h:form id="studentsDT">
                 <p:growl id="message" showDetail="true"/>
-                <p:dataTable var="student" id="datatable" value="#{studentView.allStudents}">
+                <p:dataTable var="student" id="datatable" value="#{studentView.allStudents}" rows="5"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
                     <p:column headerText="First Name">
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
@@ -68,11 +70,11 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton update=":editStudentForm" value="EDIT" onclick="PF('editStudentDialog').show();">
+                        <p:commandButton update=":editStudentForm" value="EDIT" icon="ui-icon-edit" onclick="PF('editStudentDialog').show();">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
 
-                        <p:commandButton update="datatable" action="#{studentView.deleteStudent()}" value="DELETE">
+                        <p:commandButton update="datatable" action="#{studentView.deleteStudent()}" value="DELETE" icon="ui-icon-close">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                         </p:commandButton>
@@ -80,8 +82,12 @@
                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
+                        <p:commandButton process="datatable" action="#{studentView.goToPage()}" value="Event" icon="ui-icon-calendar">
+                            <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
+
                 <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
                     <p:printer target="datatable" />
                 </p:commandButton>
@@ -89,7 +95,7 @@
             </h:form>
 
 
-            <p:dialog header="Student Edit" widgetVar="editStudentDialog" modal="true" >
+            <p:dialog header="Student" widgetVar="editStudentDialog" modal="true" >
                 <h:form id="editStudentForm">
                     <p:growl id="growl1" showDetail="true" sticky="true"/>
                     <p:panelGrid columns="2">
@@ -126,11 +132,10 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton value="Save Student" id="save1"  actionListener="#{studentView.saveStudent}" update="editStudentForm :studentsDT" style="color:greenyellow" oncomplete="PF('editStudentDialog').hide();"/>               
+                    <p:commandButton value="Save Student" id="save1"  actionListener="#{studentView.saveStudent}" update="editStudentForm :studentsDT" oncomplete="PF('editStudentDialog').hide();"/>               
 
                 </h:form>
             </p:dialog>
-
 
 
         </h:body>

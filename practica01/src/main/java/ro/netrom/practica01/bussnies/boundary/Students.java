@@ -34,6 +34,10 @@ public class Students implements Serializable {
     public void studentDelete(Student student) {
         em.remove(em.merge(student)); 
     }
+    
+     public Student findStudent(String studentId){
+       return em.find(Student.class, Long.valueOf(studentId));
+    }
 
     public List<Student> getAllStudents() {
         final String query = "SELECT s from Student s";

@@ -13,8 +13,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import ro.netrom.practica01.bussnies.boundary.Events;
+import ro.netrom.practica01.bussnies.boundary.Students;
 import ro.netrom.practica01.bussnies.entity.Event;
+import ro.netrom.practica01.bussnies.entity.Student;
 
 /**
  *
@@ -22,15 +25,21 @@ import ro.netrom.practica01.bussnies.entity.Event;
  */
 @Named
 @ViewScoped
-public class EventView implements Serializable {
-    
+public class EventView implements Serializable { 
+
     @Inject
     private Events eventBoundary;
+    @Inject
+    private Students studentBoundary;
     private Event event;
-    private List<Event> allEvents; 
+    private List<Event> allEvents;
+    private Student student;
 
     @PostConstruct
-    public void init() {
+    public void init() {    
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String studentId = req.getParameter("studentId");
+        student = studentBoundary.findStudent(studentId);
         event = new Event();
         allEvents = eventBoundary.getAllEvents();
     }
@@ -44,30 +53,41 @@ public class EventView implements Serializable {
     }
 
     public void saveEvent() {
-        if(event.getId() == null) {
-        eventBoundary.eventSave(event);
-        allEvents.add(event);
-        } 
-        else {
+        if (event.getId() == null) {
+            eventBoundary.eventSave(event);
+            student.getEvent().add(event); 
+            studentBoundary.studentEdit(student);
+        } else {
             eventBoundary.eventEdit(event);
         }
         event = new Event();
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful",  null) ); 
+        context.addMessage(null, new FacesMessage("Successful", "The event has been add."));
     }
-    
-     public void deleteEvent() {
+
+    public void deleteEvent() {
+        student.getEvent().remove(event);
+        studentBoundary.studentEdit(student);
         eventBoundary.eventDelete(event);
-        allEvents.remove(event);
-        event = new Event();   
+        event = new Event();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Successful", "The event has been delete."));
     }
-     
+
     public List<Event> getAllEvents() {
         return allEvents;
     }
 
     public void setAllEvents(List<Event> allEvents) {
         this.allEvents = allEvents;
+    }
+    
+     public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
 }
