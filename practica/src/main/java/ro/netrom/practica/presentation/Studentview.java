@@ -24,7 +24,6 @@ import ro.netrom.practica.business.entity.Student;
  */
 @Named
 @ViewScoped
-@ManagedBean
 public class StudentView implements Serializable {
 
     @Inject

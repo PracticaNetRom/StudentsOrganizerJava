@@ -13,46 +13,62 @@
             </f:facet>
 
         </h:head>
+        <h:head>
+            <style>
+                body {
+                    background-color: #996699;
+                }
+            </style>
+        </h:head>
 
         <h:body >
 
             <h:form id="eventForm">
                 <p:growl  showDetail="true" />
-                <p:panel header="New Event">
+                <p:dialog header="Add event" widgetVar="addEvent">
+                    <p:panel header="New Event">
 
-                    <p:panelGrid columns="2" columnClasses="label, value">
+                        <p:panelGrid columns="2" columnClasses="label, value" id="addEventPanel">
 
-                        <p:outputLabel for = "event" value="Event :" />
-                        <p:selectOneMenu id="event" value="#{eventView.event.event}">
-                            <f:selectItem itemLabel=" "  />
-                            <f:selectItem itemLabel="Practica" itemValue="PRACTICE" />
-                            <f:selectItem itemLabel="Intership" itemValue="INTERSHIP" />
-                            <f:selectItem itemLabel="NSA" itemValue="NSA" />
-                        </p:selectOneMenu>
+                            <p:outputLabel for = "event" value="Event :" />
+                            <p:selectOneMenu id="event" value="#{eventView.event.event}">
+                                <f:selectItem itemLabel=" "  />
+                                <f:selectItem itemLabel="Practica" itemValue="PRACTICE" />
+                                <f:selectItem itemLabel="Intership" itemValue="INTERSHIP" />
+                                <f:selectItem itemLabel="NSA" itemValue="NSA" />
+                            </p:selectOneMenu>
 
 
-                        <p:outputLabel for="startdate" value="Start Date : " />
-                        <p:calendar id="startdate" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask="true" />
+                            <p:outputLabel for="startdate" value="Start Date : " />
+                            <p:calendar id="startdate" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask="true" />
 
-                        <p:outputLabel for="enddate" value="End Date : " />
-                        <p:calendar id="enddate" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" />
+                            <p:outputLabel for="enddate" value="End Date : " />
+                            <p:calendar id="enddate" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" />
 
-                        <p:outputLabel for = "departament" value="Departament :" />
-                        <p:selectOneMenu id="departament" value="#{eventView.event.departament}">
-                            <f:selectItem itemLabel="Java" itemValue="JAVA" />
-                            <f:selectItem itemLabel=".NET" itemValue="NET" />
-                        </p:selectOneMenu>
+                            <p:outputLabel for = "departament" value="Departament :" />
+                            <p:selectOneMenu id="departament" value="#{eventView.event.departament}">
+                                <f:selectItem itemLabel="Java" itemValue="JAVA" />
+                                <f:selectItem itemLabel=".NET" itemValue="NET" />
+                            </p:selectOneMenu>
 
-                        <p:outputLabel value="Task received : "/>
-                        <p:inputTextarea rows="4" cols="33"  value="#{eventView.event.taskReceived}"/>
-                        
-                        <p:outputLabel value="Remarks : "/>
-                        <p:inputTextarea rows="8" cols="33"  value="#{eventView.event.remarks}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
-                </p:panel>
+                            <p:outputLabel value="Task received : "/>
+                            <p:inputTextarea rows="4" cols="33"  value="#{eventView.event.taskReceived}"/>
 
-                <p:dataTable var="event" value="#{eventView.student.events}" id="eventDataTable">
+                            <p:outputLabel value="Remarks : "/>
+                            <p:inputTextarea rows="8" cols="33"  value="#{eventView.event.remarks}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
+                    </p:panel>
+                </p:dialog>
+                <p:commandButton action="#{eventView.goToPage()}" value="Back">
+                </p:commandButton>
+                <p:commandButton value="Add Event" type="button" onclick="PF('addEvent').show();" />
+
+                <p:dataTable var="event" value="#{eventView.student.events}" id="eventDataTable"
+                             rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
 
                     <p:column headerText="Event">
                         <h:outputText value="#{event.event.toString()}" />
@@ -73,13 +89,13 @@
                     <p:column headerText="Task Received">
                         <h:outputText value="#{event.taskReceived}" />
                     </p:column>
-                    
+
                     <p:column headerText="Remarks">
                         <h:outputText value="#{event.remarks}" />
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm" icon="ui-icon-pencil">
+                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm:addEventPanel" icon="ui-icon-pencil"  onclick="PF('addEvent').show();">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
 

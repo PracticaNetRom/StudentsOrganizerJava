@@ -13,16 +13,22 @@
             </f:facet>
 
         </h:head>
+        <h:head>
+            <style>
+                body {
+                    background-color: #996699;
+                }
+            </style>
+        </h:head>
 
         <h:body >
 
             <h:form id="studentForm">
 
-                <p:panel  header="New Student" >
 
-                    <p:growl  showDetail="true" />
-
-                    <p:panelGrid columns="2" columnClasses="label, value">
+                <p:growl  showDetail="true" />
+                <p:dialog header="Add Student" widgetVar="addStudent">
+                    <p:panelGrid columns="2" columnClasses="label, value" id="addStudentPanel">
                         <p:outputLabel for="firstname" value="First Name : "/>
                         <p:inputText id="firstname" value="#{studentView.student.firstName}" required="true" label="FirstName" requiredMessage="Please enter the FirstName" validatorMessage="Invalid FirstName"/>                             
 
@@ -62,10 +68,16 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check"/>
-                </p:panel>
+                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check"  oncomplete="if (!args.validationFailed) testDialog.hide()"/>
+                </p:dialog>
 
-                <p:dataTable var="student" value="#{studentView.studentsList}" id="studentDataTable">
+                <p:commandButton value="Add Student" type="button" onclick="PF('addStudent').show();" />
+                
+                <p:dataTable var="student" value="#{studentView.studentsList}" id="studentDataTable"
+                             rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
 
                     <p:column headerText="First Name">
                         <h:outputText value="#{student.firstName}" />
@@ -100,7 +112,7 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton value="Edit" process="studentDataTable" update=":studentForm" icon="ui-icon-pencil">
+                        <p:commandButton value="Edit" process="studentDataTable"  update=":studentForm:addStudentPanel" icon="ui-icon-pencil"  onclick="PF('addStudent').show();">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
 
@@ -126,4 +138,3 @@
 
     </f:view>
 </html>
-

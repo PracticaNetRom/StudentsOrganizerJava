@@ -19,14 +19,10 @@ import ro.netrom.practica.business.boundary.Students;
 import ro.netrom.practica.business.entity.Event;
 import ro.netrom.practica.business.entity.Student;
 
-/**
- *
- * @author Oana
- */
 @Named
 @ViewScoped
 public class EventView implements Serializable {
-    
+
     @Inject
     private Events events;
     @Inject
@@ -34,30 +30,30 @@ public class EventView implements Serializable {
     private Event event;
     private List<Event> eventsList;
     private Student student;
-    
+
     @PostConstruct
     public void initEvent() {
-        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String studentId = req.getParameter("studentId");
         student = students.findStudent(studentId);
         event = new Event();
         eventsList = events.getEventsList();
     }
-    
+
     public void saveEvent() {
-        
-        if (event.getId() == null) {            
+
+        if (event.getId() == null) {
             events.saveEvent(event);
             student.getEvents().add(event);
             students.editStudent(student);
-            
+
         } else {
             events.editEvent(event);
         }
         event = new Event();
         addMessageToEvent("Successful!", "The event has been add.");
     }
-    
+
     public void deleteEvent() {
         student.getEvents().remove(event);
         students.editStudent(student);
@@ -65,32 +61,36 @@ public class EventView implements Serializable {
         event = new Event();
         addMessageToEvent("Successful!", "The event has been delete.");
     }
-    
+
     public void addMessageToEvent(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
+
     public Event getEvent() {
         return event;
     }
-    
+
     public void setEvent(Event event) {
         this.event = event;
     }
-    
+
     public Events getEvents() {
         return events;
     }
-    
+        public String goToPage()
+    {
+        return "index.xhtml";
+    }
+
     public void setEvents(Events events) {
         this.events = events;
     }
-    
+
     public List<Event> getEventsList() {
         return eventsList;
     }
-    
+
     public void setEventsList(List<Event> eventsList) {
         this.eventsList = eventsList;
     }
@@ -102,7 +102,5 @@ public class EventView implements Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
-    
-    
-    
+
 }
