@@ -8,6 +8,7 @@ package ro.netrom.practica01.bussnies.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,7 +39,7 @@ public class Student implements Serializable {
     @Enumerated(EnumType.STRING)
     private Faculty faculty;
     private Integer facultyStartyear;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Event> event;
 
     public enum Gender {

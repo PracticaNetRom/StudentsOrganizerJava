@@ -32,7 +32,6 @@ public class EventView implements Serializable {
     @Inject
     private Students studentBoundary;
     private Event event;
-    private List<Event> allEvents;
     private Student student;
 
     @PostConstruct
@@ -41,7 +40,6 @@ public class EventView implements Serializable {
         String studentId = req.getParameter("studentId");
         student = studentBoundary.findStudent(studentId);
         event = new Event();
-        allEvents = eventBoundary.getAllEvents();
     }
 
     public Event getEvent() {
@@ -68,26 +66,22 @@ public class EventView implements Serializable {
     public void deleteEvent() {
         student.getEvent().remove(event);
         studentBoundary.studentEdit(student);
-        eventBoundary.eventDelete(event);
         event = new Event();
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Successful", "The event has been delete."));
     }
-
-    public List<Event> getAllEvents() {
-        return allEvents;
-    }
-
-    public void setAllEvents(List<Event> allEvents) {
-        this.allEvents = allEvents;
-    }
-    
+   
      public Student getStudent() {
         return student;
     }
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+    
+     public String goToPage()
+    {
+        return "index.xhtml";
     }
 
 }

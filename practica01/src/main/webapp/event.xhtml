@@ -15,7 +15,7 @@
         <h:head>
             <style>
                 body {
-                    background-color: greenyellow;
+                    background-color: cadetblue;
                 }
             </style>
         </h:head>
@@ -25,11 +25,12 @@
                 <h:graphicImage value="resource/images/logo.png" style="width:150px; height:155px"/>
             </h1>
 
-            <p:toolbar style="height:15px" /> 
+            <h1 align="center" style="background-color: darkkhaki">Event Students</h1> 
 
             <p:spacer width="100" height="60" />
 
             <h:form id="eventForm">
+                <p:commandButton action="#{eventView.goToPage()}" value="Return to Student"/>
                 <p:commandButton value="Add Event" id="save" icon="ui-icon-calendar" onclick="PF('editEventDialog').show();" />
             </h:form>
 
@@ -37,7 +38,7 @@
 
             <h:form id="eventsDT">
                 <p:growl id="message" showDetail="true"/>
-                <p:dataTable var="event" id="datatable" value="#{eventView.allEvents}">
+                <p:dataTable var="event" id="datatable" value="#{eventView.student.event}">
                     <p:column headerText="Event">
                         <h:outputText value="#{event.event}" />
                     </p:column>
@@ -113,7 +114,7 @@
                             <f:validateLength minimum="3" maximum="50" /> 
                         </p:inputTextarea>
                     </p:panelGrid>
-                    <p:commandButton value="Save Event" id="save2"  actionListener="#{eventView.saveEvent()}" update="editEventForm :eventsDT" oncomplete="PF('editEventDialog').hide();"/>
+                    <p:commandButton value="Save Event" id="save2"  actionListener="#{eventView.saveEvent}" update="editEventForm :eventsDT" oncomplete="PF('editEventDialog').hide();"/>
                 </h:form>
 
             </p:dialog>

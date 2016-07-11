@@ -21,7 +21,7 @@ import ro.netrom.practica01.bussnies.entity.Student;
 public class Students implements Serializable {
 
     @PersistenceContext(name = "practicapu")
-    private EntityManager em;
+    private EntityManager em; 
 
     public void studentSave(Student student) {
         em.persist(student);
