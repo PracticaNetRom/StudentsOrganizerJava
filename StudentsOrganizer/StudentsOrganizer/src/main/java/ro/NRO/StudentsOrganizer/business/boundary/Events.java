@@ -33,4 +33,7 @@ public class Events implements Serializable{
         return query.getResultList();
     }
     
+      public Event findEventById(Long id) {
+        return em.find(Event.class, id);
+    }
 }

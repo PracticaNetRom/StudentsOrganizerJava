@@ -27,15 +27,22 @@ public class Students implements Serializable {
 
         em.persist(student);
     }
+
+    public void deleteStudent(Student student) {
+        
+        em.remove(em.merge(student));
+
+    }
     
-    public void deleteStudent(Student student){
+    public void editStudent(Student student){
         
-        em.remove(student);
-        
+        em.merge(student);
     }
 
     public List<Student> getAll() {
         TypedQuery<Student> query = em.createQuery("SELECT s FROM Student s", Student.class);
         return query.getResultList();
     }
+
+   
 }

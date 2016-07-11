@@ -20,12 +20,11 @@ import ro.NRO.StudentsOrganizer.business.entity.Event;
 @ViewScoped
 public class EventView implements Serializable {
 
-    @Inject
-    private Events eventBoundary;
+    
 
     private Event event;
+
     
-    private List<Event> events;
 
     public List<Event> getEvents() {
         return events;
@@ -42,18 +41,19 @@ public class EventView implements Serializable {
     public void setEvent(Event event) {
         this.event = event;
     }
-@PostConstruct
-    public void init(){
-         event = new Event();
-         events = eventBoundary.getAll();
+
+    @PostConstruct
+    public void init() {
+        event = new Event();
         
+
     }
+
     public void saveEvent() {
         eventBoundary.saveEvent(event);
         events.add(event);
         event = new Event();
-        
-        
+
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event Saved!!!", null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
