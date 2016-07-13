@@ -30,7 +30,7 @@
             <p:spacer width="100" height="60" />
 
             <h:form id="eventForm">
-                <p:commandButton action="#{eventView.goToPage()}" value="Return to Student"/>
+                <p:commandButton action="#{eventView.goToPage()}" value="Return to Student" />
                 <p:commandButton value="Add Event" id="save" icon="ui-icon-calendar" onclick="PF('editEventDialog').show();" />
             </h:form>
 
@@ -43,11 +43,11 @@
                         <h:outputText value="#{event.event}" />
                     </p:column>
 
-                    <p:column headerText="Start Date">
+                    <p:column headerText="Start Event">
                         <h:outputText value="#{event.startDate}" />
                     </p:column>
 
-                    <p:column headerText="End Date">
+                    <p:column headerText="End Event">
                         <h:outputText value="#{event.endDate}" />
                     </p:column>
 
@@ -64,10 +64,10 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton update=":editEventForm" value="EDIT" icon="ui-icon-edit" onclick="PF('editEventDialog').show();">
+                        <p:commandButton update=":editEventForm" value="EDIT" icon="ui-icon-pencil" onclick="PF('editEventDialog').show();">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
-                        <p:commandButton update="datatable" action="#{eventView.deleteEvent()}" value="DELETE" icon="ui-icon-close">
+                        <p:commandButton update="datatable" action="#{eventView.deleteEvent()}" value="DELETE" icon="ui-icon-trash">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                         </p:commandButton>
@@ -80,7 +80,7 @@
                 </p:dataTable>
             </h:form>
 
-            <p:dialog header="Student Edit" widgetVar="editEventDialog" modal="true" style="width:500px;height:500px">
+            <p:dialog header="Event" widgetVar="editEventDialog" modal="true" style="width:500px;height:500px">
                 <h:form id="editEventForm">
                     <p:growl id="growl2" showDetail="true" sticky="true" />
                     <p:panelGrid columns="2">
@@ -91,10 +91,10 @@
                             <f:selectItem itemLabel="Netrom Software Academy" itemValue="NSA"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="Start Date:" />
+                        <p:outputLabel value="Start Event:" />
                         <p:calendar id="mask2" value="#{eventView.event.startDate}" pattern="dd-MM-yyyy" mask="true" />
 
-                        <p:outputLabel value="End Date:" />
+                        <p:outputLabel value="End Event:" />
                         <p:calendar id="mask3" value="#{eventView.event.endDate}" pattern="dd-MM-yyyy" mask="true" />
 
                         <p:outputLabel value="Departments:"/>
@@ -117,7 +117,7 @@
                     <p:commandButton value="Save Event" id="save2"  actionListener="#{eventView.saveEvent}" update="editEventForm :eventsDT" oncomplete="PF('editEventDialog').hide();"/>
                 </h:form>
 
-            </p:dialog>
+            </p:dialog> 
 
         </h:body>
 

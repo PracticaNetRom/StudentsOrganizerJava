@@ -31,16 +31,18 @@
             <p:spacer width="100" height="60" />
 
             <h:form id="studentForm">
-                <p:commandButton value="Add Student" id="save" icon="ui-icon-check" onclick="PF('editStudentDialog').show();"/>               
+                <p:commandButton value="Add Student" id="save" icon="ui-icon-plus" onclick="PF('editStudentDialog').show();"/>               
             </h:form>
 
             <p:spacer width="100" height="100" />
+
             <h:form id="studentsDT">
                 <p:growl id="message" showDetail="true"/>
-                <p:dataTable var="student" id="datatable" value="#{studentView.allStudents}" rows="5"
+                <p:dataTable var="student" id="datatable" value="#{studentsView.allStudents}" rows="5"
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15">
+
                     <p:column headerText="First Name">
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
@@ -65,25 +67,29 @@
                         <h:outputText value="#{student.phoneNumber}" />
                     </p:column>
 
+                    <p:column headerText="Faculty">
+                        <h:outputText value="#{student.faculty}"/>
+                    </p:column>
+
                     <p:column headerText="Faculty Start Year">
                         <h:outputText value="#{student.facultyStartyear}" />
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton update=":editStudentForm" value="EDIT" icon="ui-icon-edit" onclick="PF('editStudentDialog').show();">
-                            <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
+                        <p:commandButton update=":editStudentForm" value="EDIT" icon="ui-icon-pencil" onclick="PF('editStudentDialog').show();">
+                            <f:setPropertyActionListener value="#{student}" target="#{studentsView.student}" />
                         </p:commandButton>
 
-                        <p:commandButton update="datatable" action="#{studentView.deleteStudent()}" value="DELETE" icon="ui-icon-close">
-                            <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
+                        <p:commandButton update="datatable" action="#{studentsView.deleteStudent()}" value="DELETE" icon="ui-icon-trash">
+                            <f:setPropertyActionListener value="#{student}" target="#{studentsView.student}" />
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
                         </p:commandButton>
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
-                        <p:commandButton process="datatable" action="#{studentView.goToPage()}" value="Event" icon="ui-icon-calendar">
-                            <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
+                        <p:commandButton process="datatable" action="#{studentsView.goToPage()}" value="Event" icon="ui-icon-calendar">
+                            <f:setPropertyActionListener value="#{student}" target="#{studentsView.student}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
@@ -91,6 +97,14 @@
                 <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
                     <p:printer target="datatable" />
                 </p:commandButton>
+
+                <f:facet name="{Exporters}">
+                    <h:commandLink>
+                        <h:graphicImage name="resource/images/excel.png" width="24"/>
+                        <p:dataExporter type="xls" target="datatable" fileName="student"/>
+                    </h:commandLink>
+                </f:facet>
+
             </h:form>
 
 
@@ -98,43 +112,43 @@
                 <h:form id="editStudentForm">
                     <p:growl id="growl1" showDetail="true" sticky="true"/>
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="First Name:"/>
-                        <p:inputText value="#{studentView.student.firstName}" required="true" requiredMessage="First Name is required."/>
+                        <p:outputLabel for="fname"  value="First Name:"/>
+                        <p:inputText id="fname" value="#{studentsView.student.firstName}" required="true" label="fname" requiredMessage="First Name is required."/>
 
-                        <p:outputLabel value="Last Name:"/>
-                        <p:inputText value="#{studentView.student.lastName}" required="true" requiredMessage="Last Name is required."/>
+                        <p:outputLabel for="lname" value="Last Name:"/>
+                        <p:inputText id="lname" value="#{studentsView.student.lastName}" required="true" label="lname" requiredMessage="Last Name is required."/>
 
                         <p:outputLabel value="Gender:"/>
-                        <p:selectOneMenu id="gender1" value="#{studentView.student.gender}" style="width:203px">
+                        <p:selectOneRadio id="gender1" value="#{studentsView.student.gender}" style="width:203px">
                             <f:selectItem itemLabel="Male" itemValue="MALE"/>
                             <f:selectItem itemLabel="Female" itemValue="FEMALE"/>
-                        </p:selectOneMenu>
+                        </p:selectOneRadio>
 
                         <p:outputLabel value="Birth Date:" />
-                        <p:calendar id="mask1" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
+                        <p:calendar id="mask1" value="#{studentsView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
 
                         <p:outputLabel for="email" value="Email:"/>
                         <p:inputText id="email" label="email"
                                      validatorMessage="Invalid email format"
-                                     value="#{studentView.student.email}" required="true" requiredMessage="Email is required.">
+                                     value="#{studentsView.student.email}" required="true" requiredMessage="Email is required.">
                         </p:inputText>    
 
                         <p:outputLabel value="Phone Number:"/>
-                        <p:inputMask id="phone" value="#{studentView.student.phoneNumber}" mask="(9999)999-9999"/>
+                        <p:inputMask id="phone" value="#{studentsView.student.phoneNumber}" mask="(9999)999-9999"/>
 
                         <p:outputLabel value="Faculty:"/>
-                        <p:selectOneMenu id="faculty1" value="#{studentView.student.faculty}" style="width:203px">
+                        <p:selectOneMenu id="faculty1" value="#{studentsView.student.faculty}" style="width:203px">
                             <f:selectItem itemLabel="Automatica" itemValue="AUTOMATICA"/>
                             <f:selectItem itemLabel="Matematica-Informatica" itemValue="MATEMATICA_INFORMATICA"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Faculty Start Year:"/>
-                        <p:selectOneMenu id="facultyStartyear1" value="#{studentView.student.facultyStartyear}" style="width:200px">
-                            <f:selectItems value="#{studentView.years}" />   
+                        <p:selectOneMenu id="facultyStartyear1" value="#{studentsView.student.facultyStartyear}" style="width:200px">
+                            <f:selectItems value="#{studentsView.years}" />   
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton value="Save Student" id="save1"  actionListener="#{studentView.saveStudent}" update="editStudentForm :studentsDT" oncomplete="PF('editStudentDialog').hide();"/>               
+                    <p:commandButton value="Save Student" id="save1"  actionListener="#{studentsView.saveStudent}" update="editStudentForm :studentsDT" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('editStudentDialog').hide();"/>               
 
                 </h:form>
             </p:dialog>
