@@ -24,7 +24,7 @@ import ro.netrom.practica.business.entity.Student;
  */
 @Named
 @ViewScoped
-public class StudentView implements Serializable {
+public class Studentview implements Serializable {
 
     @Inject
     private Students students;

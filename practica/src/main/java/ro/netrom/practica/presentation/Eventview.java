@@ -21,7 +21,7 @@ import ro.netrom.practica.business.entity.Student;
 
 @Named
 @ViewScoped
-public class EventView implements Serializable {
+public class Eventview implements Serializable {
 
     @Inject
     private Events events;

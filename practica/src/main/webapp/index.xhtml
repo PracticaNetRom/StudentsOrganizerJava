@@ -68,7 +68,7 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check"  oncomplete="if (!args.validationFailed) testDialog.hide()"/>
+                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check"  oncomplete="if(!args.validationFailed) PF('studentDialog').hide();"/>
                 </p:dialog>
 
                 <p:commandButton value="Add Student" type="button" onclick="PF('addStudent').show();" />
