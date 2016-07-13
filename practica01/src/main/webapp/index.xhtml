@@ -91,7 +91,7 @@
                 <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
                     <p:printer target="datatable" />
                 </p:commandButton>
-        </h:form>
+            </h:form>
 
 
             <p:dialog header="Student" widgetVar="editStudentDialog" modal="true" >
@@ -113,8 +113,11 @@
                         <p:outputLabel value="Birth Date:" />
                         <p:calendar id="mask1" value="#{studentView.student.birthDate}" pattern="dd-MM-yyyy" mask="true" />
 
-                        <p:outputLabel value="Email:"/>
-                        <p:inputText value="#{studentView.student.email}" required="true" requiredMessage="Email is required."/>
+                        <p:outputLabel for="email" value="Email:"/>
+                        <p:inputText id="email" label="email"
+                                     validatorMessage="Invalid email format"
+                                     value="#{studentView.student.email}" required="true" requiredMessage="Email is required.">
+                        </p:inputText>    
 
                         <p:outputLabel value="Phone Number:"/>
                         <p:inputMask id="phone" value="#{studentView.student.phoneNumber}" mask="(9999)999-9999"/>

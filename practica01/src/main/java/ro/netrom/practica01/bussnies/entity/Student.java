@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Student implements Serializable {
     private Gender gender;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthDate;
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
     private String phoneNumber;
     @Enumerated(EnumType.STRING)

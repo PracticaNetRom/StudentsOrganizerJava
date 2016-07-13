@@ -106,12 +106,12 @@
 
                         <p:outputLabel value="Task Received:"/>
                         <p:inputTextarea id="task1" value="#{eventView.event.taskReceived}" label="Task Received" style="width:203px;height:100px">
-                            <f:validateLength minimum="3" maximum="50" /> 
+                            <f:validateLength minimum="1" maximum="50" /> 
                         </p:inputTextarea>
 
                         <h:outputLabel for="remarks1" value="Remarks:"/>
                         <p:inputTextarea id="remarks1" value="#{eventView.event.remarks}" label="Remarks" style="width:203px;height:100px">
-                            <f:validateLength minimum="3" maximum="50" /> 
+                            <f:validateLength minimum="1" maximum="50" /> 
                         </p:inputTextarea>
                     </p:panelGrid>
                     <p:commandButton value="Save Event" id="save2"  actionListener="#{eventView.saveEvent}" update="editEventForm :eventsDT" oncomplete="PF('editEventDialog').hide();"/>
