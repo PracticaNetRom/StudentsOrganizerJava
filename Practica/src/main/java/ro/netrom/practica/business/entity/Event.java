@@ -26,7 +26,7 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.STRING)
-    private Type event;
+    private Type eventType;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -38,34 +38,12 @@ public class Event implements Serializable {
 
     public enum Type {
 
-        PRACTICE("Practica"), INTERSHIP("Intership"), NSA("NSA");
-
-        private Type(String name) {
-            this.name = name;
-        }
-
-        private final String name;
-
-        @Override
-        public String toString() {
-            return name;
-        }
+        PRACTICE, INTERSHIP, NSA;
     }
 
     public enum Departament {
 
-        JAVA("Java"), NET(".NET");
-        
-        private final String nameDEP;
-
-        private Departament(String nameDEP) {
-            this.nameDEP = nameDEP;
-        }
-        
-        @Override
-        public String toString() {
-            return nameDEP;
-        }
+        JAVA, NET;
     }
 
 public Long getId() {
@@ -76,12 +54,12 @@ public Long getId() {
         this.id = id;
     }
 
-    public Type getEvent() {
-        return event;
+    public Type getEventType() {
+        return eventType;
     }
 
-    public void setEvent(Type event) {
-        this.event = event;
+    public void setEventType(Type eventType) {
+        this.eventType = eventType;
     }
 
     public Date getStartDate() {

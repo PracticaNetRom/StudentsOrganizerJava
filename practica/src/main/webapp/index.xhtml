@@ -19,15 +19,13 @@
                     background-color: #996699;
                 }
             </style>
+            <h:graphicImage value="images/logo.png" height="100" width="100"/>
         </h:head>
 
         <h:body >
+            <p:dialog header="Add Student Dialog" widgetVar="addStudentDialog" dynamic="true">
+                <h:form id="studentForm">
 
-            <h:form id="studentForm">
-
-
-                <p:growl  showDetail="true" />
-                <p:dialog header="Add Student" widgetVar="addStudent">
                     <p:panelGrid columns="2" columnClasses="label, value" id="addStudentPanel">
                         <p:outputLabel for="firstname" value="First Name : "/>
                         <p:inputText id="firstname" value="#{studentView.student.firstName}" required="true" label="FirstName" requiredMessage="Please enter the FirstName" validatorMessage="Invalid FirstName"/>                             
@@ -57,7 +55,7 @@
 
                         <p:outputLabel for = "faculty" value="Faculty :" />
                         <p:selectOneMenu id="faculty" value="#{studentView.student.faculty}">
-                            <f:selectItem itemLabel="Automatica,Calculatoare si Electronica" itemValue="AUTOMATICA_CALCULATOARE_SI_ELECTRONICA" />
+                            <f:selectItem itemLabel="Automatica,Calculatoare si Electronica" itemValue="AUTOMATICA" />
                             <f:selectItem itemLabel="Matematica-Informatica" itemValue="MATEMATICA_INFORMATICA" />
                         </p:selectOneMenu>
 
@@ -68,16 +66,21 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}" update=":studentForm" icon="ui-icon-check"  oncomplete="if(!args.validationFailed) PF('studentDialog').hide();"/>
-                </p:dialog>
+                    <p:commandButton value="SAVE" actionListener="#{studentView.saveStudent()}"
+                                     update=":studentForm :studentsDTForm" icon="ui-icon-check"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addStudentDialog').hide();"/>
+                </h:form>
+            </p:dialog>
 
-                <p:commandButton value="Add Student" type="button" onclick="PF('addStudent').show();" />
-                
+            <h:form id="studentsDTForm" prependId="false">
+                <p:growl  showDetail="true" />
+                <p:commandButton value="Add Student" type="button" onclick="PF('addStudentDialog').show();" />
+                <p:spacer width="100" height="150"/>
                 <p:dataTable var="student" value="#{studentView.studentsList}" id="studentDataTable"
                              rows="10"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
 
                     <p:column headerText="First Name">
                         <h:outputText value="#{student.firstName}" />
@@ -112,7 +115,7 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton value="Edit" process="studentDataTable"  update=":studentForm:addStudentPanel" icon="ui-icon-pencil"  onclick="PF('addStudent').show();">
+                        <p:commandButton value="Edit" process="studentDataTable"  update=":studentForm" icon="ui-icon-pencil"  onclick="PF('addStudentDialog').show();">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
 
@@ -131,7 +134,6 @@
 
                     </p:column>
                 </p:dataTable>
-
             </h:form>
 
         </h:body>

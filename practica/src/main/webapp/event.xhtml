@@ -23,15 +23,16 @@
 
         <h:body >
 
-            <h:form id="eventForm">
-                <p:growl  showDetail="true" />
-                <p:dialog header="Add event" widgetVar="addEvent">
+
+
+            <p:dialog header="Add event" widgetVar="addEventDialog">
+                <h:form id="eventForm">
                     <p:panel header="New Event">
 
                         <p:panelGrid columns="2" columnClasses="label, value" id="addEventPanel">
 
                             <p:outputLabel for = "event" value="Event :" />
-                            <p:selectOneMenu id="event" value="#{eventView.event.event}">
+                            <p:selectOneMenu id="event" value="#{eventView.event.eventType}">
                                 <f:selectItem itemLabel=" "  />
                                 <f:selectItem itemLabel="Practica" itemValue="PRACTICE" />
                                 <f:selectItem itemLabel="Intership" itemValue="INTERSHIP" />
@@ -57,21 +58,26 @@
                             <p:outputLabel value="Remarks : "/>
                             <p:inputTextarea rows="8" cols="33"  value="#{eventView.event.remarks}"/>
                         </p:panelGrid>
-                        <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
+                        <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" 
+                                         update=":eventForm :studentEventsForm" icon="ui-icon-check"
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('addEventDialog').hide();"/>
                     </p:panel>
-                </p:dialog>
+                </h:form>
+            </p:dialog>
+
+            <h:form id="studentEventsForm">
                 <p:commandButton action="#{eventView.goToPage()}" value="Back">
                 </p:commandButton>
-                <p:commandButton value="Add Event" type="button" onclick="PF('addEvent').show();" />
-
+                <p:commandButton value="Add Event" type="button" onclick="PF('addEventDialog').show();" />
+                <p:growl  showDetail="true" />
                 <p:dataTable var="event" value="#{eventView.student.events}" id="eventDataTable"
                              rows="10"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
 
                     <p:column headerText="Event">
-                        <h:outputText value="#{event.event.toString()}" />
+                        <h:outputText value="#{event.eventType}" />
                     </p:column>
 
                     <p:column headerText="Start Date">
@@ -95,11 +101,13 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm:addEventPanel" icon="ui-icon-pencil"  onclick="PF('addEvent').show();">
+                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm" icon="ui-icon-pencil" 
+                                         onclick="PF('addEventDialog').show();">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
 
-                        <p:commandButton value="Delete" process="eventDataTable" action="#{eventView.deleteEvent()}" update=":eventForm" icon="ui-icon-trash">
+                        <p:commandButton value="Delete" process="eventDataTable" action="#{eventView.deleteEvent()}" 
+                                         update=":studentEventsForm" icon="ui-icon-trash">
                             <p:confirm  message="Are you sure to delete this event?" icon="ui-icon-alert" />
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
