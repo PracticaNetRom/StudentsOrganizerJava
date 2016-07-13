@@ -33,6 +33,12 @@ public class Events implements Serializable {
 
         em.merge(event);
     }
+    
+    public void deleteEvent(Event student) {
+        
+        em.remove(em.merge(student));
+
+    }
 
     public List<Event> getAll() {
         TypedQuery<Event> query = em.createQuery("SELECT e FROM Event e", Event.class);
@@ -42,4 +48,5 @@ public class Events implements Serializable {
     public Event findEventById(Long id) {
         return em.find(Event.class, id);
     }
+    
 }

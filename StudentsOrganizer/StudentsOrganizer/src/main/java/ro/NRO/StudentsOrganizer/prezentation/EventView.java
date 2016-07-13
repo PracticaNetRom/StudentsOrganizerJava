@@ -30,7 +30,7 @@ public class EventView implements Serializable {
     private Events eventBoundary;
 
     private Event event;
-
+    
     private List<Event> events;
 
     public List<Event> getEvents() {
@@ -41,21 +41,6 @@ public class EventView implements Serializable {
         this.events = events;
     }
 
-    public Events getEventBoundary() {
-        return eventBoundary;
-    }
-
-    public void setEventBoundary(Events eventBoundary) {
-        this.eventBoundary = eventBoundary;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
 
     @PostConstruct
     public void init() {
@@ -63,6 +48,7 @@ public class EventView implements Serializable {
         events = eventBoundary.getAll();
     }
 
+    
     public void saveEvent() {
 
         eventBoundary.saveEvent(event);
@@ -87,5 +73,23 @@ public class EventView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
         }
+    }
+    
+    public void deleteEvent() {
+
+        eventBoundary.deleteEvent(event);
+        events.remove(event);
+        event = new Event();
+
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event Deleted!!!", null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

@@ -38,9 +38,10 @@
                     <img src="Image/Student-3-icon.png" width="50" height="55" alt="Student-3-icon"/>
                     <p:commandButton   value="New Participant" onclick="PF('dialogS').show();"></p:commandButton>
                     <img align="" src="Image/Calendar-icon.png" width="48" height="48" alt="Calendar-icon"/>
-                    <p:commandButton  value="New Event" onclick="PF('dialogE').show();"></p:commandButton>
+                    <p:commandButton  value="New Event" onclick="PF('dialogE').show();"/>
                     <p:spacer/>
-                    <p:commandButton  value="View Events" onclick="PF('dialogViewEvents').show();"></p:commandButton>
+                    <p:commandButton  value="View Events" onclick="PF('dialogViewEvents').show();"/>
+                    <p:spacer/>
                 </h:panelGrid>
             </h:form>
 
@@ -136,6 +137,10 @@
                             <f:facet name="input"><p:inputText value="#{student.facultystartYear}" style="width:100%"/></f:facet>
                         </p:cellEditor>
                     </p:column>
+                    
+                    <p:column headerText="Event" >
+                        <h:outputText value="#{studentView.getEventsAsString(student)}"/>
+                    </p:column>
 
                     <p:column headerText="Actions" exportable="false" >
 
@@ -143,14 +148,17 @@
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}"/>
                         </p:commandButton>
 
-                        <p:commandButton   icon="ui-icon-circle-plus" onclick="PF('dialogSE').show();" >
+                        <p:commandButton   icon="ui-icon-circle-plus" onclick="PF('dialogSE').show();" update=":eventAddStudentForm" >
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}"/>
                         </p:commandButton>
+                        
                     </p:column> 
 
                 </p:dataTable>
 
             </h:form>
+            
+            
 
 
         </h:body>

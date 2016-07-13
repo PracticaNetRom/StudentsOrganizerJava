@@ -12,7 +12,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <ui:composition>
-    <p:dialog id="dialogE"  widgetVar="dialogE" header="New Event" showEffect="clip" hideEffect="clip">
+        <p:dialog id="dialogE"  widgetVar="dialogE" header="New Event" showEffect="clip" hideEffect="clip" dynamic="true">
                 <h1 align="center" >  <img  src="Image/Calendar-icon.png" width="70" height="70"  /></h1>
                 <h:form id="eventForm">
                     <p:growl id="growl" life="2000" />
@@ -38,12 +38,12 @@ and open the template in the editor.
                         </p:selectOneMenu>
 
                         <p:outputLabel  value="Task Received" />
-                        <p:inputTextarea rows="5" cols="50" completeMethod="#{eventView.event.taskReceived}" queryDelay="750" minQueryLength="4" />
+                        <p:inputTextarea rows="5" cols="50" value="#{eventView.event.taskReceived}" queryDelay="750" minQueryLength="4" />
 
                         <p:outputLabel  value="Remarks" />
-                        <p:inputTextarea rows="5" cols="50" completeMethod="#{eventView.event.remarks}" queryDelay="750" minQueryLength="4" />
+                        <p:inputTextarea rows="5" cols="50" value="#{eventView.event.remarks}" queryDelay="750" minQueryLength="4" />
 
-                        <p:commandButton value="Save" process="@this" actionListener="#{eventView.saveEvent()}" update="growl eventForm" oncomplete="PF('dialogE').hide();" />
+                        <p:commandButton value="Save" actionListener="#{eventView.saveEvent()}" update="growl eventForm" oncomplete="PF('dialogE').hide();" />
 
                     </h:panelGrid>
                 </h:form>

@@ -30,7 +30,7 @@ public class StudentView implements Serializable {
     @Inject
     private Students studentBoundary;
 
-    private Event eventS;
+    private Event event;
     private EventView eventView;
 
     public EventView getEventView() {
@@ -42,11 +42,11 @@ public class StudentView implements Serializable {
     }
 
     public Event getEvent() {
-        return eventS;
+        return event;
     }
 
     public void setEvent(Event event) {
-        this.eventS = event;
+        this.event = event;
     }
 
     private Student student;
@@ -96,11 +96,21 @@ public class StudentView implements Serializable {
 
     public void addStudentEvent() {
 
-        student.getEventList().add(eventS);
+        student.getEventList().add(event);
+        studentBoundary.editStudent(student);
 
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event Saved!!!", null);
         FacesContext.getCurrentInstance().addMessage(null, message);
 
+    }
+    
+    public String getEventsAsString(Student student){
+        
+        String eventsAsString = "";
+        for(Event ev : student.getEventList()){
+           eventsAsString =eventsAsString + ev.getType()+" ";
+         }
+        return eventsAsString;
     }
 
     public void onCellEdit(CellEditEvent event) {
