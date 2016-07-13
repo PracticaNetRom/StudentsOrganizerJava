@@ -70,7 +70,7 @@
                               paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                               rowsPerPageTemplate="5,10,15">
 
-                    <p:column headerText="Event">
+                    <p:column headerText="Event" width="100" style="text-align: center;">
                         <h:outputText value="#{event.event.toString()}" />
                     </p:column>
 
@@ -82,15 +82,15 @@
                         <h:outputText value="#{event.endDate}" />
                     </p:column>
 
-                    <p:column headerText="Departament">
-                        <h:outputText value="#{event.departament}" />
+                    <p:column headerText="Departament" width="120" style="text-align: center;">
+                        <h:outputText value="#{event.departament.toString()}" />
                     </p:column>
 
-                    <p:column headerText="Task Received">
+                    <p:column headerText="Task Received" width="250">
                         <h:outputText value="#{event.taskReceived}" />
                     </p:column>
 
-                    <p:column headerText="Remarks">
+                    <p:column headerText="Remarks" width="300">
                         <h:outputText value="#{event.remarks}" />
                     </p:column>
 

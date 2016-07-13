@@ -80,6 +80,8 @@
             <h:form id="formTabel">
                 <p:growl  showDetail="true" />
                 <p:commandButton value="Add New Student" onclick="PF('studentDialog').show()" update=":studentForm"/>
+                
+                <br/> <br/> <br/>
 
                 <p:dataTable  var="student" value="#{studentView.studentsList}" id="studentDataTable" rows="5"
                               paginator="true"
@@ -87,35 +89,35 @@
                               rowsPerPageTemplate="5,10,15" >
 
 
-                    <p:column headerText="First Name" >
+                    <p:column headerText="First Name" width="150" style="text-align: center;" >
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
 
-                    <p:column headerText="Last Name">
+                    <p:column headerText="Last Name" style="text-align: center;">
                         <h:outputText value="#{student.lastName}" />
                     </p:column>
 
-                    <p:column headerText="Gender">
-                        <h:outputText value="#{student.gender}" />
+                    <p:column headerText="Gender" width="70" style="text-align: center;">
+                        <h:outputText value="#{student.gender.toString()}" />
                     </p:column>
 
                     <p:column headerText="Birth Date">
                         <h:outputText value="#{student.birthDate}" />
                     </p:column>
 
-                    <p:column headerText="Email">
+                    <p:column headerText="Email" width="230" style="text-align: center;">
                         <h:outputText value="#{student.email}" />
                     </p:column>
 
-                    <p:column headerText="Phone Number">
+                    <p:column headerText="Phone Number" width="150" style="text-align: center;">
                         <h:outputText value="#{student.phoneNumber}" />
                     </p:column>
 
-                    <p:column headerText="Faculty">
-                        <h:outputText value="#{student.faculty}" />
+                    <p:column headerText="Faculty" width="200" style="text-align: center;">
+                        <h:outputText value="#{student.faculty.toString()}" />
                     </p:column>
 
-                    <p:column headerText="Faculty Start Year">
+                    <p:column headerText="Faculty Start Year" width="70" style="text-align: center;">
                         <h:outputText value="#{student.facultyStartYear}" />
                     </p:column>
 

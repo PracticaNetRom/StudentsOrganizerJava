@@ -51,12 +51,34 @@ public class Student implements Serializable {
 
     public enum Gender {
 
-        MALE, FEMALE
+        MALE("Male"), FEMALE("Female");
+        
+        private Gender(String name1) {
+            this.name1 = name1;
+        }
+        
+        private final String name1;
+        
+        @Override
+        public String toString(){
+            return name1;
+        }
     }
 
     public enum Faculty {
 
-        AUTOMATICA_CALCULATOARE_SI_ELECTRONICA, MATEMATICA_INFORMATICA
+        AUTOMATICA_CALCULATOARE_SI_ELECTRONICA("Automatica,Calculatoare si Electronica"),MATEMATICA_INFORMATICA("Matematica-Informatica");
+        
+         private Faculty(String name2) {
+            this.name2 = name2;
+        }
+
+        private final String name2;
+
+        @Override
+        public String toString() {
+            return name2;
+        }
     }
 
     public Long getId() {

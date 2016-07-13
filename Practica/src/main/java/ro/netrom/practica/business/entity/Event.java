@@ -40,35 +40,34 @@ public class Event implements Serializable {
 
         PRACTICE("Practica"), INTERSHIP("Intership"), NSA("NSA");
 
-        private Type(String name) {
-            this.name = name;
+        private Type(String name1) {
+            this.name1 = name1;
         }
 
-        private final String name;
+        private final String name1;
 
         @Override
         public String toString() {
-            return name;
+            return name1;
         }
     }
 
     public enum Departament {
 
         JAVA("Java"), NET(".NET");
-        
-        private final String nameDEP;
 
-        private Departament(String nameDEP) {
-            this.nameDEP = nameDEP;
+        private Departament(String name2) {
+            this.name2 = name2;
         }
-        
+        private final String name2;
+
         @Override
         public String toString() {
-            return nameDEP;
+            return name2;
         }
     }
 
-public Long getId() {
+    public Long getId() {
         return id;
     }
 
