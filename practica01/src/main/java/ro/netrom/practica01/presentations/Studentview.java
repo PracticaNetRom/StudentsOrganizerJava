@@ -22,10 +22,10 @@ import ro.netrom.practica01.bussnies.entity.Student;
  *
  * @author practice01
  */
-@Named 
-@ViewScoped 
-@ManagedBean
-public class StudentView implements Serializable {   
+@Named  
+@ViewScoped  
+@ManagedBean 
+public class StudentView implements Serializable {    
 
     @Inject
     private Students studentBoundary;
