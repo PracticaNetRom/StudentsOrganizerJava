@@ -16,15 +16,15 @@
         
         <p:growl id="growl" sticky="true" showDetail="true"/> 
         
-        <h:form>
+        <h:form id="formLogin">
             <p:panelGrid columns="2" style="position: absolute; top: 250px; left: 500px;">
                 <f:facet name="header">Login</f:facet>
-                <h:outputText value="username"/>
-                <p:inputText value="#{loginController.username}"/>
-                <h:outputText value="password"/>
-                <p:password value="#{loginController.password}"/>
+                <h:outputText value="Username"/>
+                <p:inputText value="#{loginController.username}" />
+                <h:outputText value="Password"/>
+                <p:password value="#{loginController.password}" />
             <f:facet name="footer">
-                <p:commandButton value="Login" action="#{loginController.loginControl()}" ajax="false"/>
+                <p:commandButton value="Login" action="#{loginController.loginControl()}" icon="ui-icon-power" update="formLogin"/>
             </f:facet>
             </p:panelGrid>
         </h:form>

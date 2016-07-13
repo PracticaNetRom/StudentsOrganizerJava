@@ -22,14 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Oana
  */
 @Entity
-//@Table(name = "login")
-//@XmlRootElement
-//@NamedQueries({
-//    @NamedQuery(name = "Login.control", query = "SELECT l FROM Login l WHERE l.username = :username and l.password = :password"),
-//    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
-//    @NamedQuery(name = "Login.findById", query = "SELECT l FROM Login l WHERE l.id = :id"),
-//    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l WHERE l.username = :username"),
-//    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l WHERE l.password = :password")})
 public class Login implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -25,11 +25,15 @@
                 }
             </style>
 
+            <h:form >
+                <p:commandButton value="LogOut" action="#{loginController.logoutControl()}" icon="ui-icon-unlocked" style="float: right;"/>
+            </h:form>
+
         </h:head>
 
-        <h1 style="margin-top:5">Students Organizer</h1>
+        <h1>Students Organizer</h1>
 
-        <h:body >
+        <h:body>
 
             <p:dialog header="New Student" widgetVar="studentDialog">
 
@@ -80,7 +84,7 @@
             <h:form id="formTabel">
                 <p:growl  showDetail="true" />
                 <p:commandButton value="Add New Student" onclick="PF('studentDialog').show()" update=":studentForm"/>
-                
+
                 <br/> <br/> <br/>
 
                 <p:dataTable  var="student" value="#{studentView.studentsList}" id="studentDataTable" rows="5"
@@ -121,7 +125,7 @@
                         <h:outputText value="#{student.facultyStartYear}" />
                     </p:column>
 
-                    <p:column headerText="Actions">
+                    <p:column headerText="Actions" exportable="false">
                         <p:commandButton value="Edit" process="studentDataTable" update=":studentForm" icon="ui-icon-pencil"  onclick="PF('studentDialog').show()">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
@@ -141,6 +145,11 @@
 
                     </p:column>
                 </p:dataTable>
+                <h:commandLink>
+                    <p:graphicImage value="pdf.png" />
+                    <p:dataExporter type="pdf" target="studentDataTable" fileName="students" pageOnly="true" />
+                </h:commandLink>
+
             </h:form>
 
         </h:body>

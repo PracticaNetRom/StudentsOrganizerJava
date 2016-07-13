@@ -5,59 +5,34 @@
  */
 package ro.netrom.practica.business.boundary;
 
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import ro.netrom.practica.business.entity.Login;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-;
 import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Oana
  */
-
-
 @Stateless
 public class DataQuery {
 
     @PersistenceContext(name = "practicaPU")
     EntityManager em;
 
-    public boolean loginControl() {
+    public boolean loginControl(String username, String password) {
         try {
-            List<Login> l = em
-                    .createQuery("Select a from Login a", Login.class)
-                    .getResultList();
-            if (l != null) {
-                return true;
-            }
-            return false;
+            Login l = em
+                    .createQuery("SELECT l FROM Login l WHERE l.username = :username and l.password = :password", Login.class)
+                    .setParameter("username", username)
+                    .setParameter("password", password)
+                    .getSingleResult();
+            return true;
         } catch (Exception e) {
+            Logger.getLogger("DataQuery").log(Level.SEVERE, e.getMessage());
             return false;
         }
     }
-    
-//    EntityManagerFactory emf;
-//    EntityManager em;
-//
-//    public DataQuery() {
-//        emf = Persistence.createEntityManagerFactory("PracticaPU");
-//        em = emf.createEntityManager();
-//        em.getTransaction().begin();
-//    }
-//    
-//    public boolean loginControl(String username, String password){
-//        try{
-//            List<Login> l = em.createNamedQuery("Login.control", Login.class).setParameter("username", username).setParameter("password", password).getResultList();
-//            if(l != null){
-//                return true;
-//            }
-//            return false;
-//        }catch(Exception e){
-//            return false;
-//        }
-//    }
 }
