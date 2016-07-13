@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Student Events</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form id="datatableEventForm">
+                <p:dataTable id="eventTable" var="event" value="#{eventView.studentEvents}"  
+                             rowKey="#{event.id}" selection="#{eventView.event}" selectionMode="single"
+                             paginator="true" rows="10"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="5,10,15">
+
+
+                    <p:column headerText="Event Name">
+                        <h:outputText value="#{event.eventName}" />
+                    </p:column>
+
+                    <p:column headerText="Start date">
+                        <h:outputText value="#{event.startDate}" />
+                    </p:column>
+
+                    <p:column headerText="Finish date">
+                        <h:outputText value="#{event.finishDate}" />
+                    </p:column>
+
+                    <p:column headerText="Departament">
+                        <h:outputText value="#{event.department}" />
+                    </p:column>
+
+                    <p:column headerText="Task">
+                        <h:outputText value="#{event.task}" />
+                    </p:column>
+
+                    <p:column headerText="Remarks">
+                        <h:outputText value="#{event.remarks}" />
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton action="index?faces-redirect=true" value="back" />
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+
+        </h:body>
+
+    </f:view>
+</html>
+

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Log in</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Log in"/><br/>
+
+                    <p:outputLabel value="User"/>
+                    <p:inputText value="#{logIn.user}" label="User" required="true"/>
+
+                    <p:outputLabel value="Password"/>
+                    <p:password id="pwd1" value="#{logIn.password}" label="Password " required="true" />
+
+                    <p:commandButton value="Sign in"/>
+
+                </p:panelGrid>
+            </h:form>
+
+            <h:form>
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel value="Register"/><br/>
+
+                    <p:outputLabel value="User"/>
+                    <p:inputText value="#{register.user}" label="User" required="true"/>
+
+                    <p:outputLabel value="First Name"/>
+                    <p:inputText value="#{register.firstName}"/>
+
+                    <p:outputLabel value="Last Name"/>
+                    <p:inputText value="#{register.lastName}"/>
+
+                    
+                    <h:outputLabel for="pwd1" value="Password 1: *" />
+                    <p:password id="pwd1" value="#{register.password1}" match="pwd2" label="Password 1" required="true" />
+
+                    <h:outputLabel for="pwd2" value="Password 2: *" />
+                    <p:password id="pwd2" value="#{register.password2}" label="Password 2" required="true" />
+
+                    <p:commandButton value="Submit"/>
+                </p:panelGrid>
+            </h:form>
+        </h:body>
+
+    </f:view>
+</html>
+

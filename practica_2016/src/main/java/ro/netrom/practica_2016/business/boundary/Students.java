@@ -20,26 +20,35 @@ import ro.netrom.practica_2016.business.entity.Student;
  */
 @Stateless
 public class Students implements Serializable {
-
+    
     @PersistenceContext(name = "practica_2016PU")
     private EntityManager em;
-
+    
     public void saveStudent(Student student) {
         em.persist(student);
     }
-
+    
     public void updateStudent(Student student) {
         em.merge(student);
     }
-
+    
     public void deleteStudent(Student student) {
         em.remove(em.merge(student));
     }
-
+    
     public List<Student> getStudents() {
         List<Student> listOfStudents = em
                 .createQuery("Select s from Student s", Student.class)
                 .getResultList();
         return listOfStudents;
+    }
+    
+    public List<Event> getEventsByStudentId(Long studentId) {
+        Student student = em
+                .createQuery("Select s from Student s where s.id = :studentId", Student.class)
+                .setParameter("studentId", studentId)
+                .getSingleResult();
+        
+        return student.getEvents();
     }
 }

@@ -7,7 +7,6 @@ package ro.netrom.practica_2016.presentation;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -21,19 +20,18 @@ import ro.netrom.practica_2016.business.entity.Student;
 
 @Named
 @ViewScoped
-@ManagedBean
 public class StudentView implements Serializable {
 
     @Inject
     private Students studentBoundary;
-    
+
     @Inject
     private Events eventBoundary;
-    
+
     private Student student;
 
     private List<Student> students;
-    
+
     private List<Event> events;
 
     public List<Event> getEvents() {
@@ -54,8 +52,6 @@ public class StudentView implements Serializable {
 
     public void save() {
         if (student.getId() == null) {
-            List<Event> studentEvents = student.getEvents(); 
-            
             studentBoundary.saveStudent(student);
             students.add(student);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -81,14 +77,15 @@ public class StudentView implements Serializable {
         studentBoundary.deleteStudent(student);
         students.remove(student);
         student = new Student();
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Student successfully deleted  "));
     }
 
-    public String goToPage(){
-        return "event?faces-redirect=true&studentId"+student.getId();
+    public String goToPage() {
+        return "/faces/student-events?studentId=".concat(student.getId().toString()).concat("&faces-redirect=true");
     }
+
     public Student getStudent() {
         return student;
     }

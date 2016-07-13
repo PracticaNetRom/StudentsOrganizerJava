@@ -23,13 +23,16 @@
                 <p:growl id="message"/>
 
 
-                <p:dataTable widgetVar="studentTable" var="student" value="#{studentView.students}"  
-                             rowKey="#{student.id}" 
-                             selection="#{studentView.student}" 
-                             selectionMode="single"
-                             paginator="true" rows="10"
-                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                             rowsPerPageTemplate="5,10,15">
+                <p:dataTable
+                    id="studentTabelForm"
+                    widgetVar="studentTable" 
+                    var="student" value="#{studentView.students}"  
+                    rowKey="#{student.id}" 
+                    selection="#{studentView.student}" 
+                    selectionMode="single"
+                    paginator="true" rows="10"
+                    paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                    rowsPerPageTemplate="5,10,15">
 
                     <p:column headerText="First Name">
                         <h:outputText value="#{student.firstName}" />
@@ -86,12 +89,16 @@
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
 
-                        <p:commandButton process=":datatableForm" action="#{studentView.goToPage()}" value="Student event"  >
-                            <f:setPropertyActionListener value="#{student}" target="#{studentView.student}"/>
+                        <p:commandButton action="#{studentView.goToPage()}" value="Student event"/>
+
+                        <p:commandButton value="Print" type="button" icon="ui-icon-print" style="display:block;margin-bottom: 20px">
+                            <p:printer target=":datatableForm:studentTabelForm" />
                         </p:commandButton>
 
-
-
+                        <<h:commandLink>
+                            <p:graphicImage name="Icon" width="24"/>
+                            <p:dataExporter type="pdf" target="studentTabelForm" fileName="students"/>
+                        </h:commandLink>
                     </f:facet>
 
                 </p:dataTable>
