@@ -86,10 +86,12 @@
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
 
-                        <p:commandButton process=":datatableForm" value="Student event" 
-                                         actionListener="#{studentView.goToPage()}">
+                        <p:commandButton process=":datatableForm" action="#{studentView.goToPage()}" value="Student event"  >
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}"/>
                         </p:commandButton>
+
+
+
                     </f:facet>
 
                 </p:dataTable>
