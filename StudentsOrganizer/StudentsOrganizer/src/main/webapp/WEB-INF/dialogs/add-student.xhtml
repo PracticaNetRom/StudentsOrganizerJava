@@ -42,6 +42,11 @@
 
                     <p:outputLabel value="Faculty Start Year: " ></p:outputLabel>
                     <p:inputText value="#{studentView.student.facultystartYear}"></p:inputText>
+
+                    <p:selectOneMenu id="event" value="#{studentView.event}" style="width:150px" converter="eventConverter">
+                        <f:selectItems value="#{studentView.eventView.events}" var="event" itemLabel="#{event.type}" itemValue="#{event}" />
+                    </p:selectOneMenu>
+
                     <p:spacer/>
                     <p:spacer/>
                     <p:commandButton value="Save" actionListener="#{studentView.saveStudent()}" update="growl studentForm :tableForm"

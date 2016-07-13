@@ -13,7 +13,7 @@ and open the template in the editor.
     
     <ui:composition>
     <p:dialog id="dialogE"  widgetVar="dialogE" header="New Event" showEffect="clip" hideEffect="clip">
-                <h1 align="center" >  <img  src="Image/Calendar-icon.png" width="70" height="70" alt="Student-3-icon" /></h1>
+                <h1 align="center" >  <img  src="Image/Calendar-icon.png" width="70" height="70"  /></h1>
                 <h:form id="eventForm">
                     <p:growl id="growl" life="2000" />
                     <h:panelGrid id="eventDetails" columns="1" style="margin-bottom:10px" cellpadding="5">
@@ -43,7 +43,7 @@ and open the template in the editor.
                         <p:outputLabel  value="Remarks" />
                         <p:inputTextarea rows="5" cols="50" completeMethod="#{eventView.event.remarks}" queryDelay="750" minQueryLength="4" />
 
-                        <p:commandButton value="Save" actionListener="#{eventView.saveEvent()}" update="growl eventForm" oncomplete="PF('dialogE').hide();" />
+                        <p:commandButton value="Save" process="@this" actionListener="#{eventView.saveEvent()}" update="growl eventForm" oncomplete="PF('dialogE').hide();" />
 
                     </h:panelGrid>
                 </h:form>

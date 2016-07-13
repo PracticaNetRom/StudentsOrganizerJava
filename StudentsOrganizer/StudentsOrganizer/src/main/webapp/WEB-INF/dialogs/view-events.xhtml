@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+        <p:dialog  id="dialogViewEvents" widgetVar="dialogViewEvents" header="View Events" showEffect="clip" hideEffect="clip">
+            <h1 align="center" >  
+                <img  src="Image/Calendar-icon.png" width="70" height="70" alt="Calendar-icon" />
+            </h1>
+
+            <h:form id="eventsForm"  >
+                
+                <h1 align="center">Events</h1>
+
+                <p:dataTable id="tblE" var="event" value="#{eventView.events}" rows="10"
+                             paginator="true"
+                             selection="#{eventView.event}" 
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                             editable="true" editMode="cell">
+
+
+                    <p:ajax event="cellEdit" listener="#{studentView.onCellEdit}"  />
+
+                    <p:column headerText="Type" sortBy="#{event.type}" >           
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{event.type}"/></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu  value="#{event.type}" style="width:125px">
+                                    <f:selectItem itemLabel="PRACTICE" itemValue="PRACTICE" />
+                                    <f:selectItem itemLabel="INTERNSHIP" itemValue="INTERNSHIP" />
+                                    <f:selectItem itemLabel="NSA" itemValue="NSA" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Start Date">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{event.startDate}"  /></f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{event.startDate}" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="End Date" >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{event.endDate}"  /></f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{event.endDate}" pattern="dd/MM/yyyy " navigator="true" showOn="button" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Technology" >           
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{event.technology}"/></f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu  value="#{event.technology}" style="width:125px">
+                                    <f:selectItem itemLabel="NET" itemValue="NET" />
+                                    <f:selectItem itemLabel="JAVA EE" itemValue="JAVA" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+
+                    <p:column headerText="Task Received">           
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{event.taskReceived}"/></f:facet>
+                            <f:facet name="input">
+                                <p:inputTextarea rows="5" cols="50" completeMethod="#{event.taskReceived}" queryDelay="750" minQueryLength="4" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Remarks" >
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{event.remarks}"  /></f:facet>
+                            <f:facet name="input">
+                                <p:inputTextarea rows="5" cols="50" completeMethod="#{event.remarks}" queryDelay="750" minQueryLength="4" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </p:dialog>
+    </ui:composition>
+
+</html>

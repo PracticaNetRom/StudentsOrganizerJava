@@ -8,6 +8,7 @@ package ro.NRO.StudentsOrganizer.business.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,7 +48,7 @@ public class Student implements Serializable {
 
     private int facultystartYear;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<Event> eventList;
 
     public List<Event> getEventList() {

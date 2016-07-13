@@ -14,11 +14,11 @@
             <h:form id="eventAddStudentForm">
                 <p:growl id="growl" life="2000" />
                 <p:selectOneMenu id="event" value="#{studentView.event}" style="width:150px" converter="eventConverter">
-                    <f:selectItems value="#{studentView.events}" var="event" itemLabel="#{event.type}" itemValue="#{event}" />
+                    <f:selectItems value="#{studentView.eventView.events}" var="event" itemLabel="#{event.type}" itemValue="#{event}" />
                 </p:selectOneMenu>
 
                 <h:panelGrid columns="1">
-                    <p:commandButton   actionListener="#{studentView.addEvent}" update="growl eventAddStudentForm" oncomplete="PF('dialogSE').hide();" icon="ui-icon-circle-plus" />
+                    <p:commandButton   actionListener="#{studentView.addStudentEvent()}" update="growl eventAddStudentForm" oncomplete="PF('dialogSE').hide();" icon="ui-icon-circle-plus" />
                 </h:panelGrid>
             </h:form>
         </p:dialog>

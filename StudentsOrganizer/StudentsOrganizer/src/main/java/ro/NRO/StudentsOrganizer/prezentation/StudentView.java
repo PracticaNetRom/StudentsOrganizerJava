@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.CellEditEvent;
-import ro.NRO.StudentsOrganizer.business.boundary.Events;
 import ro.NRO.StudentsOrganizer.business.boundary.Students;
 import ro.NRO.StudentsOrganizer.business.entity.Event;
 import ro.NRO.StudentsOrganizer.business.entity.Student;
@@ -31,32 +30,28 @@ public class StudentView implements Serializable {
     @Inject
     private Students studentBoundary;
 
-    @Inject
-    private Events eventBoundary;
+    private Event eventS;
+    private EventView eventView;
+
+    public EventView getEventView() {
+        return eventView;
+    }
+
+    public void setEventView(EventView eventView) {
+        this.eventView = eventView;
+    }
+
+    public Event getEvent() {
+        return eventS;
+    }
+
+    public void setEvent(Event event) {
+        this.eventS = event;
+    }
 
     private Student student;
 
     private List<Student> students;
-
-    private Event event;
-
-    private List<Event> events;
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
 
     public Student getStudent() {
         return student;
@@ -66,20 +61,18 @@ public class StudentView implements Serializable {
         this.student = student;
     }
 
-    @PostConstruct
-    public void init() {
-        student = new Student();
-        
-        students = studentBoundary.getAll();
-        events = eventBoundary.getAll();
-    }
-
     public List<Student> getStudents() {
         return students;
     }
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    @PostConstruct
+    public void init() {
+        student = new Student();
+        students = studentBoundary.getAll();
     }
 
     public void saveStudent() {
@@ -101,9 +94,9 @@ public class StudentView implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    public void addEvent() {
+    public void addStudentEvent() {
 
-        student.getEventList().add(event);
+        student.getEventList().add(eventS);
 
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event Saved!!!", null);
         FacesContext.getCurrentInstance().addMessage(null, message);

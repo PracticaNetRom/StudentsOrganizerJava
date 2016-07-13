@@ -18,22 +18,28 @@ import ro.NRO.StudentsOrganizer.business.entity.Event;
  * @author Balaci
  */
 @Stateless
-public class Events implements Serializable{
-    
+public class Events implements Serializable {
+
     @PersistenceContext(name = "EventsOrganizerPU")
     private EntityManager em;
-    
+
     public void saveEvent(Event event) {
 
         em.persist(event);
     }
-    
-     public List<Event> getAll() {
+
+
+    public void editEvent(Event event) {
+
+        em.merge(event);
+    }
+
+    public List<Event> getAll() {
         TypedQuery<Event> query = em.createQuery("SELECT e FROM Event e", Event.class);
         return query.getResultList();
     }
-    
-      public Event findEventById(Long id) {
+
+    public Event findEventById(Long id) {
         return em.find(Event.class, id);
     }
 }

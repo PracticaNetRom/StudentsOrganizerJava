@@ -23,6 +23,11 @@
                 <h1 align="center" style="background-color: #d5da32">Students Organizer</h1>
             </h1>
 
+            <ui:include src="/WEB-INF/dialogs/add-student.xhtml" />
+            <ui:include src="/WEB-INF/dialogs/add-event.xhtml" />
+            <ui:include src="/WEB-INF/dialogs/add-studentEvent.xhtml" />
+            <ui:include src="/WEB-INF/dialogs/delete-student.xhtml" />
+            <ui:include src="/WEB-INF/dialogs/view-events.xhtml" />
 
             <h:form>
                 <h:panelGrid  columns="2" >
@@ -34,14 +39,13 @@
                     <p:commandButton   value="New Participant" onclick="PF('dialogS').show();"></p:commandButton>
                     <img align="" src="Image/Calendar-icon.png" width="48" height="48" alt="Calendar-icon"/>
                     <p:commandButton  value="New Event" onclick="PF('dialogE').show();"></p:commandButton>
+                    <p:spacer/>
+                    <p:commandButton  value="View Events" onclick="PF('dialogViewEvents').show();"></p:commandButton>
                 </h:panelGrid>
             </h:form>
 
 
-            <ui:include src="/WEB-INF/dialogs/add-student.xhtml" />
-            <ui:include src="/WEB-INF/dialogs/add-event.xhtml" />
-            <ui:include src="/WEB-INF/dialogs/add-studentEvent.xhtml" />
-            <ui:include src="/WEB-INF/dialogs/delete-student.xhtml" />
+
 
 
             <h:form id="tableForm"  prependId="false">
