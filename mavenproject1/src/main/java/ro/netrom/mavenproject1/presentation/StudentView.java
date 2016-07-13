@@ -74,7 +74,8 @@ public class StudentView implements Serializable {
     }
 
     public String goToPage(){
-        return "event?faces-redirect=true&studentId"+selectedStudent.getId();
+        
+        return "/faces/student-events?studentId=".concat(selectedStudent.getId().toString()).concat("faces-redirect=true");
     }
     
     public void save() {

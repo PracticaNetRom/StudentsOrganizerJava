@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import ro.netrom.mavenproject1.business.entity.Event;
 import ro.netrom.mavenproject1.business.entity.Student;
 
 /**
@@ -45,4 +46,13 @@ public class Students implements Serializable {
         List<Student> studentsList = em.createQuery("Select s from Student s", Student.class).getResultList();
         return studentsList;
     }
+    
+    public List<Event> getEventsByStudentId(Long studentId) {
+        Student student = em.createQuery("Select s from Student s where s.id= :studentId", Student.class)
+                .setParameter("studentId", studentId).getSingleResult();
+        return student.getEvents();
+    }
+    
+     
+
 }

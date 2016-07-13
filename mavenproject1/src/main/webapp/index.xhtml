@@ -90,6 +90,14 @@
                              value="#{studentView.students}" paginator="true" 
                              rows="10" tableStyleClass="ui-table-columntoggle">
 
+                    
+                        <h:commandLink>
+                            <p:graphicImage name="/demo/images/excel.png" width="24"/>
+                            <p:dataExporter type="xls" target="tbl" fileName="students" />
+                        </h:commandLink>
+
+                    
+
                     <p:column headerText="First Name" sortBy="#{student.firstName}">
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
@@ -139,8 +147,8 @@
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
 
-                        <p:commandButton value="Events" actionListener="#{studentView.goToPage()}" update="studentsDT" >
-                            <f:setPropertyActionListener value="#{student}" target="studentView.selectedStudent"/>
+                        <p:commandButton value="Events" action="#{studentView.goToPage()}">
+                            <f:setPropertyActionListener value="#{student}" target="#{studentView.selectedStudent}"/>
                         </p:commandButton>
 
 

@@ -13,8 +13,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import ro.netrom.mavenproject1.business.boundary.Events;
+import ro.netrom.mavenproject1.business.boundary.Students;
 import ro.netrom.mavenproject1.business.entity.Event;
+import ro.netrom.mavenproject1.business.entity.Student;
 
 /**
  *
@@ -27,16 +30,27 @@ public class EventView implements Serializable{
     @Inject
     private Events eventBoundary;
     
+    @Inject
+    private Students studentBoundary;
+    
     private Event event;
     
     private List<Event> events;
+    
+    private List<Event> studentEvents;
+    
+      
     
         
     @PostConstruct
     public void init() {
         event = new Event();
         events = eventBoundary.getEvents();
-     
+        
+                
+        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String studentId = req.getParameter("studentId");
+        studentEvents = studentBoundary.getEventsByStudentId(Long.valueOf(studentId));      
     }
 
     public Event getEvent() {
@@ -54,10 +68,20 @@ public class EventView implements Serializable{
     public void setEvents(List<Event> events) {
         this.events = events;
     }
-    
-    public String goToPage(){
-        return "index.xhtml";
+
+    public List<Event> getStudentEvents() {
+        return studentEvents;
     }
+
+    public void setStudentEvents(List<Event> studentEvents) {
+        this.studentEvents = studentEvents;
+    }
+    
+    
+    
+   /*public String goToPage(){
+        return "index.xhtml";
+    }*/
     
      public void save() {
         if (event.getId() == null) {
