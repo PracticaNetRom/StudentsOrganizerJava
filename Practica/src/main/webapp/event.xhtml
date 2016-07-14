@@ -13,6 +13,7 @@
             </f:facet>
 
             <style>
+                h1 {text-align:left; color:cadetblue;}
                 body {
                     background-color: azure;
                 }
@@ -27,11 +28,11 @@
         </h:head>
 
         <h:body >
+            <h1>Student Events</h1>
 
+            <p:dialog header="New Event" widgetVar="eventDialog">
 
-            <h:form id="eventForm">
-                <p:growl  showDetail="true" />
-                <p:panel header="New Event">
+                <h:form id="eventForm">
 
                     <p:panelGrid columns="2" columnClasses="label, value">
 
@@ -62,23 +63,31 @@
                         <p:outputLabel value="Remarks : "/>
                         <p:inputTextarea rows="8" cols="33"  value="#{eventView.event.remarks}"/>
                     </p:panelGrid>
-                    <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update=":eventForm" icon="ui-icon-check"/>
-                </p:panel>
+                    <p:commandButton value="SAVE" actionListener="#{eventView.saveEvent()}" update="eventForm :formTabel" icon="ui-icon-check" oncomplete="if(!args.validationFailed) PF('eventDialog').hide();"/>
 
+                </h:form>
+            </p:dialog>
+
+            <h:form id="formTabel">
+                <p:growl  showDetail="true" />
+                <br/>
+                <p:commandButton id="add" value="Add New Event" onclick="PF('eventDialog').show()" update=":eventForm" icon="ui-icon-plus"/>
+                <p:tooltip id="addStudent" for="add" value="Add New Event" trackMouse="true" />
+                <br/><br/><br/>
                 <p:dataTable var="event" value="#{eventView.student.events}" id="eventDataTable" rows="5"
-                              paginator="true"
-                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                              rowsPerPageTemplate="5,10,15">
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
 
                     <p:column headerText="Event" width="100" style="text-align: center;">
                         <h:outputText value="#{event.event.toString()}" />
                     </p:column>
 
-                    <p:column headerText="Start Date">
+                    <p:column filterBy="#{event.startDate}" headerText="Start Date">
                         <h:outputText value="#{event.startDate}" />
                     </p:column>
 
-                    <p:column headerText="End Date">
+                    <p:column filterBy="#{event.endDate}" headerText="End Date">
                         <h:outputText value="#{event.endDate}" />
                     </p:column>
 
@@ -95,14 +104,16 @@
                     </p:column>
 
                     <p:column headerText="Actions">
-                        <p:commandButton value="Edit" process="eventDataTable" update=":eventForm" icon="ui-icon-pencil">
+                        <p:commandButton id="edit"  process="eventDataTable" update=":eventForm" icon="ui-icon-pencil" onclick="PF('eventDialog').show()">
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
+                        <p:tooltip id="editEvent" for="edit" value="Edit" trackMouse="true" />
 
-                        <p:commandButton value="Delete" process="eventDataTable" action="#{eventView.deleteEvent()}" update=":eventForm" icon="ui-icon-trash">
+                        <p:commandButton id="delete"  process="eventDataTable" action="#{eventView.deleteEvent()}" update=":formTabel" icon="ui-icon-trash">
                             <p:confirm  message="Are you sure to delete this event?" icon="ui-icon-alert" />
                             <f:setPropertyActionListener value="#{event}" target="#{eventView.event}" />
                         </p:commandButton>
+                        <p:tooltip id="deleteEvent" for="delete" value="Delete" trackMouse="true" />
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
@@ -110,7 +121,7 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
-            
+
             <p:button onclick="history.back();" value="Back"  icon="ui-icon-circle-arrow-w"/>
 
         </h:body>

@@ -83,21 +83,28 @@
 
             <h:form id="formTabel">
                 <p:growl  showDetail="true" />
-                <p:commandButton value="Add New Student" onclick="PF('studentDialog').show()" update=":studentForm"/>
+                <p:commandButton id="add" value="Add New Student" onclick="PF('studentDialog').show()" update=":studentForm" icon="ui-icon-plus"/>
+                <p:tooltip id="addStudent" for="add" value="Add New Student" trackMouse="true" />
 
-                <br/> <br/> <br/>
+                <br/>
+                <h:outputText value="Print table:" style="font-size:20px;" />
+                <h:commandLink>
+                    <p:graphicImage value="pdf.png" />
+                    <p:dataExporter type="pdf" target="studentDataTable" fileName="students" pageOnly="true" />
+                </h:commandLink>   
+
+                <br/><br/><br/>
 
                 <p:dataTable  var="student" value="#{studentView.studentsList}" id="studentDataTable" rows="5"
                               paginator="true"
                               paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                               rowsPerPageTemplate="5,10,15" >
 
-
-                    <p:column headerText="First Name" width="150" style="text-align: center;" >
+                    <p:column  headerText="First Name" width="150" style="text-align: center;" >
                         <h:outputText value="#{student.firstName}" />
                     </p:column>
 
-                    <p:column headerText="Last Name" style="text-align: center;">
+                    <p:column sortBy="#{student.lastName}" headerText="Last Name" style="text-align: center;" width="90">
                         <h:outputText value="#{student.lastName}" />
                     </p:column>
 
@@ -113,7 +120,7 @@
                         <h:outputText value="#{student.email}" />
                     </p:column>
 
-                    <p:column headerText="Phone Number" width="150" style="text-align: center;">
+                    <p:column headerText="Phone Number" width="130" style="text-align: center;">
                         <h:outputText value="#{student.phoneNumber}" />
                     </p:column>
 
@@ -121,34 +128,34 @@
                         <h:outputText value="#{student.faculty.toString()}" />
                     </p:column>
 
-                    <p:column headerText="Faculty Start Year" width="70" style="text-align: center;">
+                    <p:column filterBy="#{student.facultyStartYear}" headerText="Faculty Start Year" width="110" style="text-align: center;">
                         <h:outputText value="#{student.facultyStartYear}" />
                     </p:column>
 
                     <p:column headerText="Actions" exportable="false">
-                        <p:commandButton value="Edit" process="studentDataTable" update=":studentForm" icon="ui-icon-pencil"  onclick="PF('studentDialog').show()">
+
+                        <p:commandButton id="edit"  process="studentDataTable" update=":studentForm" icon="ui-icon-pencil"  onclick="PF('studentDialog').show()">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
+                        <p:tooltip id="editStudent" for="edit" value="Edit" trackMouse="true" />
 
-                        <p:commandButton value="Delete" process="studentDataTable" action="#{studentView.deleteStudent()}" update=":formTabel" icon="ui-icon-trash">
+                        <p:commandButton id="delete"  process="studentDataTable" action="#{studentView.deleteStudent()}" update=":formTabel" icon="ui-icon-trash">
                             <p:confirm  message="Are you sure to delete this student?" icon="ui-icon-alert" />
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
+                        <p:tooltip id="deleteStudent" for="delete" value="Delete" trackMouse="true" />
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                         </p:confirmDialog>
 
-                        <p:commandButton process="studentDataTable" action="#{studentView.goToPage()}" value="Event" icon="ui-icon-folder-open">
+                        <p:commandButton id="event"  process="studentDataTable" action="#{studentView.goToPage()}"  icon="ui-icon-folder-open">
                             <f:setPropertyActionListener value="#{student}" target="#{studentView.student}" />
                         </p:commandButton>
+                        <p:tooltip id="eventStudent" for="event" value="Event" trackMouse="true" />
 
                     </p:column>
                 </p:dataTable>
-                <h:commandLink>
-                    <p:graphicImage value="pdf.png" />
-                    <p:dataExporter type="pdf" target="studentDataTable" fileName="students" pageOnly="true" />
-                </h:commandLink>
 
             </h:form>
 
